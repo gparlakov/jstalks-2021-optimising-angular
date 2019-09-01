@@ -14,7 +14,8 @@ git clone https://github.com/gparlakov/angular-realworld-example-app
  2. Construct the component in a test case and verify it actually instantiates successfully
   - no dependencies
   - simple logic
-
+ 3. Test the `toggleFavorite` with argument `true`
+ 4. Test the `toggleFavorite` with argument `false`
 
 
 #### NOTES
