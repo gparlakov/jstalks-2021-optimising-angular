@@ -12,8 +12,7 @@ git clone https://github.com/gparlakov/angular-realworld-example-app
 npm i -g @angular/cli @briebug/jest-schematic
 ng g @briebug/jest-schematic:add
 ```
-
-`npx -p @angular/cli@6.2.9 ng add @briebug/jest-schematic`
+(if you don't want global install on any of those `npx -p @angular/cli@6.2.9 ng add @briebug/jest-schematic`)
 
 ## 1. Basic testing
 Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
