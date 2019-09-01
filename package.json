@@ -6,9 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod  --base-href ./ && cp CNAME dist/CNAME",
-    "test": "ng test",
+    "test": "jest",
     "lint": "ng lint --force",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "test:watch": "jest --watch"
   },
   "pre-commit": [
     "lint"
@@ -40,12 +41,9 @@
     "codelyzer": "^4.5.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
-    "karma": "~1.7.0",
-    "karma-chrome-launcher": "~2.1.1",
+    "jest": "24.9.0",
+    "jest-preset-angular": "7.1.1",
     "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^1.2.1",
-    "karma-jasmine": "~1.1.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
     "pre-commit": "^1.2.2",
     "protractor": "^5.4.2",
     "ts-node": "~4.1.0",
