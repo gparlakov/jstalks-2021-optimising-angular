@@ -1,4 +1,10 @@
-# Task list
+# Workshop Angular
+## Index
+ - [Setup](#setup)
+ - [Basic](#1-basic-testing)
+    - [With Dependencies](#2-basic-testing---dependencies)
+
+###### TODO - generate index https://ecotrust-canada.github.io/markdown-toc/
 
 ## Setup
 
@@ -7,7 +13,7 @@
     git clone https://github.com/gparlakov/angular-realworld-example-app
     ```
 
-- [Optional] [after 1.2] setup jest - ([doc](https://github.com/briebug/jest-schematic#usage-))
+- [_Optional_ _after 1.2_] setup jest - ([doc](https://github.com/briebug/jest-schematic#usage-))
     ```bash
     npm i -g @angular/cli @briebug/jest-schematic
     ng g @briebug/jest-schematic:add
@@ -24,6 +30,8 @@ Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
  4. Test the `toggleFavorite` with argument `false`
 
  ## 2. Basic testing - Dependencies
+ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-Snippets)  to skip some of the code boilerplate
+
   1. Create the test file for the [AppComponent](./src/app/app.component.ts)
   2. Test cases
       - it's constructed successfully
@@ -39,8 +47,10 @@ Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
   2. Add injected dependency - the `NotificationService`
   3. Now we need to provide that
 
+# Resources
+IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2-typescript-live-templates/versions
 
-#### NOTES
+# NOTES
 - FormBuilder - inject vs instantiate
   - it's a case of some logic that is really tightly coupled with the UI logic so it makes sense to instantiate the FormBuilder or the FormGroup itself
   - if we inject it and try to mock it - it is a large API surface area i.e. a lot of mocking would be required
