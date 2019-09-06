@@ -101,3 +101,4 @@ IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2
 - AuthGuardService to promise (for promise testing)
 - add a service LogService - error
 - add a service NotifyService - success/info/error
+- talk about CI - Already doing it? AzureDevOps is great for GitHub integration.
