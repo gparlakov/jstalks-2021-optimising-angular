@@ -15,6 +15,10 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "autoSpy": ["./src/app/auto-spy"]
+    }
   }
 }
