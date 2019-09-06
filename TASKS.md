@@ -44,8 +44,12 @@ Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
 
 ## 3. Basic testing - Using the CLI generated tests
   1. Create a new component using the `ng generate component shared/notification`
-  2. Add injected dependency - the `NotificationService`
-  3. Now we need to provide that
+  2. Run `nmg test -- --watch`  (see the singe test pass)
+  3. Update the component and test
+      - Copy paste the [this](files/notifications.component.ts.help) in the notifications.component.ts
+      - Add injected dependency - the `NotificationService` in the providers (why?)
+  4. Add a test for the case of success and for the case of error (populates the correct input)
+  5. !!//TODO Fix the jasmine.createSpy is not a function
 
 # Resources
 IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2-typescript-live-templates/versions
