@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 
 import { NotificationsComponent } from './notifications.component';
 import { NotificationsService } from '../../core/services/notifications.service';
-import { Subject } from 'rxjs';
+import { Subject, ReplaySubject } from 'rxjs';
 import { NotificationModel } from '../../core/models/notification-model';
 
 describe('NotificationsComponent', () => {
@@ -11,7 +11,8 @@ describe('NotificationsComponent', () => {
   let notificationsService: any;
 
   beforeEach(async(() => {
-    notificationsService = jasmine.createSpyObj('notificationsService', ['success', 'error']);
+    // notificationsService = jasmine.createSpyObj('notificationsService', ['success', 'error']);
+    notificationsService = { message$: new ReplaySubject<any>(1), success: jest.fn(), error: jest.fn() };
 
     TestBed.configureTestingModule({
       declarations: [NotificationsComponent],

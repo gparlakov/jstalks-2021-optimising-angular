@@ -28,19 +28,25 @@ Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
     - simple logic
  3. Test the `toggleFavorite` with argument `true`
  4. Test the `toggleFavorite` with argument `false`
+ 5. Review
 
- ## 2. Basic testing - Dependencies
+## 2. Basic testing - Dependencies
  DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-Snippets)  to skip some of the code boilerplate
 
   1. Create the test file for the [AppComponent](./src/app/app.component.ts)
   2. Test cases
       - it's constructed successfully
       - when ngOnInit will call the `populate` method on the `userService`
-  3. Add a dependency - the `LogService` (and/or `NotificationService`)
-  4. Mock out the dependency (using spyOf / jest.fn for jasmine / jest respectively)
+  3. Mock out the dependency (using spyOf / jest.fn for jasmine / jest respectively)
       ```ts
-      const dep = jasmine.createSpy('test', {});
+      //jest
+      const dep = { populate: jest:fn() }
+      // jasmine
+      const dep = jasmine.createSpy('UserService', ['populate']);
       ```
+  4. Add another dependency - the `NotificationService` (and/or `LogService`)
+      - mock it and include it in the TestBed
+  5. Review
 
 ## 3. Basic testing - Using the CLI generated tests
   1. Create a new component using the `ng generate component shared/notification`
@@ -48,8 +54,10 @@ Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
   3. Update the component and test
       - Copy paste the [this](files/notifications.component.ts.help) in the notifications.component.ts
       - Add injected dependency - the `NotificationService` in the providers (why?)
-  4. Add a test for the case of success and for the case of error (populates the correct input)
-  5. !!//TODO Fix the jasmine.createSpy is not a function
+  4. Add a test for the case of success and for the case of error (populates the correct input) (see [help](./files/notificatons.component.spec.ts.help))
+  5. Review of 3
+
+
 
 # Resources
 IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2-typescript-live-templates/versions
