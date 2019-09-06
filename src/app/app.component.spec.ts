@@ -12,8 +12,6 @@ describe('AppComponent', () => {
     // assert
     // expect(c).toEqual
   });
-
-  
 });
 
 function setup() {
@@ -24,7 +22,7 @@ function setup() {
       return builder;
     },
     build() {
-      return new AppComponent(userService,);
+      return new AppComponent(userService);
     }
   };
 
