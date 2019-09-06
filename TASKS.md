@@ -73,7 +73,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 
 1. Install `npm install --save-dev scuri` (or short `npm i -D scuri`)
 2. Run `ng g scuri:spec src\app\shared\layout\header.component.ts`
-3. Run `ng g scuri:autospy` for autospy generation
+3. Run `ng g scuri:autospy` for autospy generation // TODO - fix scuri to actually include the files ...
 4. Add the paths to tsconfig.json
    ```json
    {
