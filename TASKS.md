@@ -48,6 +48,8 @@ Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
       - mock it and include it in the TestBed
   5. Review
 
+// TODO - test out the points
+
 ## 3. Basic testing - Using the CLI generated tests
   1. Create a new component using the `ng generate component shared/notification`
   2. Run `nmg test -- --watch`  (see the singe test pass)
@@ -57,6 +59,9 @@ Demo - on the [ListErrorsComponent](./src/app/shared/list-errors.component.ts)
   4. Add a test for the case of success and for the case of error (populates the correct input) (see [help](./files/notificatons.component.spec.ts.help))
   5. Review of 3
 
+## 4. Automate unit test create/update
+  1. Install `npm i -g scuri`
+  4. For VS Code - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
 
 
 # Resources
