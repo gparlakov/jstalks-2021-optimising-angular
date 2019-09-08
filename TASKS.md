@@ -73,7 +73,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 2. Run `ng g scuri:spec src\app\shared\layout\header.component.ts`
 3. Run `ng g scuri:autospy` to generate the autospy
     - move the created `auto-spy.ts` to `./src/app/auto-spy.ts`
-4. Add the paths to tsconfig.json
+4. Add the paths to tsconfig.json ([help](./files/tsconfig.json.help))
    ```json
    {
      "baseUrl": ".",
@@ -82,7 +82,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
      }
    }
    ```
-5. Add the path to jest.config.js (if applicable)
+5. Add the path to jest.config.js (if applicable) ([help](./files/jest.config.js.help))
    ```js
     moduleNameMapper: {
       ...
