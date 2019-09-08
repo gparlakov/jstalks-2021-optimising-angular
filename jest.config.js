@@ -10,6 +10,7 @@ module.exports = {
     '@env': '<rootDir>/src/environments/environment',
     '@src/(.*)': '<rootDir>/src/src/$1',
     '@state/(.*)': '<rootDir>/src/app/state/$1'
+    ,'autoSpy':'<rootDir>/src/app/auto-spy.ts'
   },
   transformIgnorePatterns: ['node_modules/(?!(jest-test))']
 };

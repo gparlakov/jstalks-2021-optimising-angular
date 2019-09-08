@@ -44,7 +44,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 2. Test cases
    - it's constructed successfully
    - when ngOnInit will call the `populate` method on the `userService`
-3. Mock out the dependency (using spyOf / jest.fn for jasmine / jest respectively)
+3. Mock out the dependency (using createSpy / _jest.fn_ for jasmine / _jest_ respectively)
    ```ts
    //jest
    const dep = { populate: jest:fn() }
@@ -69,11 +69,10 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 
 ## 4. Automate unit test create/update
 
-(0. Change working directory in root of the project)
-
 1. Install `npm install --save-dev scuri` (or short `npm i -D scuri`)
 2. Run `ng g scuri:spec src\app\shared\layout\header.component.ts`
-3. Run `ng g scuri:autospy` for autospy generation // TODO - fix scuri to actually include the files ...
+3. Run `ng g scuri:autospy` to generate the autospy
+    - move the created `auto-spy.ts` to `./src/app/auto-spy.ts`
 4. Add the paths to tsconfig.json
    ```json
    {
@@ -83,7 +82,16 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
      }
    }
    ```
-5. For VS Code - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
+5. Add the path to jest.config.js (if applicable)
+   ```js
+    moduleNameMapper: {
+      ...
+      'autoSpy':'<rootDir>/src/app/auto-spy.ts'
+    }
+   ```
+6. Run `npm test` (or `npm test -- --watch`)
+
+7. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
 
 # Resources
 

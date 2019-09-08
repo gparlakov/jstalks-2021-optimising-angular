@@ -1,6 +1,7 @@
-import { UserService } from '../../core';
+import { UserService, User } from '../../core';
 import { HeaderComponent } from './header.component';
 import { autoSpy } from 'autoSpy';
+import { of } from 'rxjs';
 
 describe('HeaderComponent', () => {
   it('when ngOnInit is called it should', () => {
@@ -19,6 +20,7 @@ function setup() {
   const builder = {
     userService,
     default() {
+      userService.currentUser = of({} as User);
       return builder;
     },
     build() {
