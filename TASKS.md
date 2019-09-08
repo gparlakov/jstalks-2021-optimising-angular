@@ -93,6 +93,23 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 
 7. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
 
+## 5. TDD
+// TODO - try it out
+1. Create a `log.service.spec.ts` *use t-describe-it (if available)
+2. Import the LogService from `./log.service`
+3. Run the `npm test -- --watch log` to run the log service tests in watch mode
+4. See the failure
+5. Create the `log.service` file - all green
+6. Create a `it` test case that the LogService instantiates
+7. See it fail - create LogService class - all green
+8. Add a `it` test case that the LogService has a `error` method
+9. See it fail - create the `error` method - all green
+10. Add a `it` test case that the `error` method invokes the console.log (jest module mocking)
+11. See it fail - add the logic - all green
+12. Congrats - now you are a TDD dev!
+
+6. Promise testing - async and fake async
+
 # Resources
 
 IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2-typescript-live-templates/versions
