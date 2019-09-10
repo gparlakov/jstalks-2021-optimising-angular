@@ -127,3 +127,4 @@ IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2
 - add a service LogService - error
 - add a service NotifyService - success/info/error
 - talk about CI - Already doing it? AzureDevOps is great for GitHub integration.
+- Pusher - https://dashboard.pusher.com/apps/858014/keys, https://www.pusher.com/docs/channels/getting_started/javascript (UPDATE KEY)

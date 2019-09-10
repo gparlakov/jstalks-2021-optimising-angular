@@ -7,8 +7,8 @@
     "types": []
   },
   "exclude": [
-    "test.ts",
+    "setup-jest.ts",
     "**/*.spec.ts",
-    "./src/auto-spy.ts"
+    "./app/auto-spy.ts"
   ]
 }
