@@ -38,6 +38,7 @@
     "@angular/language-service": "7.2.4",
     "@types/jest": "^24.0.18",
     "@types/node": "^9.4.0",
+    "@types/pusher-js": "^4.2.2",
     "codelyzer": "^4.5.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",

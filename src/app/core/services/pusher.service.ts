@@ -1,48 +1,33 @@
 import { Injectable } from '@angular/core';
+import * as pusherConstructor from 'pusher-js';
 import { Pusher } from 'pusher-js';
 import { Observable } from 'rxjs';
 
+// make the pusher instance global
+let instance: Pusher;
 @Injectable()
 export class PusherService {
-  private state: 'new' | 'initializing' | 'ready' = 'new';
-
-  private resolve: (value?: Pusher) => void;
-  private instance = new Promise<Pusher>(res => {
-    this.resolve = res;
-  });
-
-  private initialize() {
-    if (this.state === 'new') {
-      this.state = 'initializing';
-      import('pusher-js/dist/web/pusher').then((p: Pusher) => {
-        // Enable pusher logging - don't include this in production
-        p.logToConsole = true;
-
-        const pusher = new p('9f8f05d0ef12f10ded99', {
-          cluster: 'eu',
-          forceTLS: true
-        });
-
-        this.resolve(pusher);
+  private getInstance() {
+    if (instance == null) {
+      instance = new pusherConstructor('bab3acb87e71b32c150b', {
+        cluster: 'eu',
+        forceTLS: true
       });
-    } else if (this.state === 'initializing') {
-    } else {
-      // we are ready = no need to do anything
     }
-    return this.instance;
+    return instance;
   }
 
-  listenForNotifications(userId: string): Promise<Observable<string>> {
-    return this.initialize().then(p => {
-      return new Observable<string>(s => {
-        const channel = p.subscribe(userId);
-        channel.bind('notify', function(data) {
-          s.next(JSON.stringify(data));
-        });
-        return () => {
-          channel.unbind('notify');
-        };
+  listenForNotifications(userEmail: string): Observable<string> {
+    return new Observable<string>(s => {
+      const p1 = this.getInstance();
+      const channel = p1.subscribe(userEmail);
+      channel.bind('notify', function(data) {
+        s.next(JSON.stringify(data));
       });
+
+      return () => {
+        channel.unbind('notify');
+      };
     });
   }
 }

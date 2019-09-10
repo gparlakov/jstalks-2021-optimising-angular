@@ -108,7 +108,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 11. See it fail - add the logic - all green
 12. Congrats - now you are a TDD dev!
 
-6. Promise testing - async and fake async
+## 6. Promise testing - async and fake async
 
 # Resources
 
