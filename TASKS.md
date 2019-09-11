@@ -115,7 +115,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 ## 6. Promise testing - async and fake async
 
 ### 6.1. Async testing
-1. Create a `profile-resolver.service.spec.ts` (try using SCuri)
+1. Create a `profile-resolver.service.spec.ts` (try using SCuri `ng g scuri:spec profile\profile-resolver.service.ts`)
 2. Create a test case for `when resolve is called and the profileService.get rejects should call router.navigate("/")`
 3. Use `async` to wrap it
 4. See [file](files/src/profile/profile-resolver.service.spec.ts.help) for help
