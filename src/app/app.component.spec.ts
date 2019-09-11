@@ -15,14 +15,16 @@ describe('AppComponent', () => {
 });
 
 function setup() {
+  const pusher = '';
   const userService = autoSpy(UserService);
   const builder = {
+    pusher,
     userService,
     default() {
       return builder;
     },
     build() {
-      return new AppComponent(userService);
+      return new AppComponent(userService, pusher);
     }
   };
 

@@ -8,6 +8,7 @@
 
 ###### TODO - generate index https://ecotrust-canada.github.io/markdown-toc/
 
+# Day 1
 ## Setup
 
 - fork/clone https://github.com/gparlakov/angular-realworld-example-app
@@ -23,6 +24,7 @@
   ```
   - if you don't want global install on any of those just use - `npx -p @angular/cli@6.2.9 ng add @briebug/jest-schematic`. That will just do the install and not leave anything in the global `npm` folder
   - TODO - `npm un @types/jasmine @types/jasminewd2` `npm i @types/jest` and change the types in tsconfig.spec.json (exclude jasmine and include jest)
+
 
 ## 1. Basic testing
 
@@ -93,6 +95,8 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 
 7. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
 
+# DAY 2
+
 ## 5. TDD
 // TODO - try it out
 1. Create a `log.service.spec.ts` *use t-describe-it (if available)
@@ -109,6 +113,15 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 12. Congrats - now you are a TDD dev!
 
 ## 6. Promise testing - async and fake async
+
+### 6.1. Async testing
+1. Create a `profile-resolver.service.spec.ts` (try using SCuri)
+2. Create a test case for `when resolve is called and the profileService.get rejects should call router.navigate("/")`
+3. Use `async` to wrap it
+4. See [file](files/src/profile/profile-resolver.service.spec.ts.help) for help
+
+### 6.2. Fake async testing
+
 
 # Resources
 

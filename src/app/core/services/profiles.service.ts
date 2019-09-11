@@ -11,9 +11,9 @@ export class ProfilesService {
     private apiService: ApiService
   ) {}
 
-  get(username: string): Observable<Profile> {
+  get(username: string): Promise<Profile> {
     return this.apiService.get('/profiles/' + username)
-      .pipe(map((data: {profile: Profile}) => data.profile));
+      .pipe(map((data: {profile: Profile}) => data.profile)).toPromise();
   }
 
   follow(username: string): Observable<Profile> {
