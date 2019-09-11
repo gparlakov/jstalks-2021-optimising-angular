@@ -123,6 +123,24 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 ### 6.2. Fake async testing
 
 
+### N State management
+
+// TODO test suggestion out
+
+All 3 HomeComponent, ProfileArticlesComponent, ProfileFavoritesComponent use the articles filter functionality and separately change the filter of the articl.
+Home toggles between `Feed`, `Global feed` (i.e. latest) and `Tags` in the filter
+ProfileArticlesComponent, ProfileFavoritesComponent toggles between `Own` and `Favorites`.
+It seems the Article Service would not be ideal to keep the state (for now it's ok - since it's only shown in one place)
+
+What could be improved - we could store the state in the ArticlesService and only inform it that an event has happened:
+`onYourFeedPageEnter` would trigger the initial loading for that page and keep the result in memory.
+`onYourFeedAddAuthor` would renew the cache
+`onGlobalFeedEnter` would take the articles
+`onGlobalFeedSelectPage` would store the selected page in the filter for that - so that we could come back to the same result
+..
+
+
+
 # Resources
 
 IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2-typescript-live-templates/versions
