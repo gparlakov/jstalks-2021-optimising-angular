@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build --prod  --base-href ./ && cp CNAME dist/CNAME",
     "test": "jest",
-    "lint": "echo ng lint --force",
+    "lint": "echo disabling this for now | ng lint --force",
     "e2e": "ng e2e",
     "test:watch": "jest --watch"
   },
