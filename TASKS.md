@@ -92,13 +92,14 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
     }
    ```
 6. Run `npm test` (or `npm test -- --watch`)
+7. Review
 
-7. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
+8. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
 
 # DAY 2
 
 ## 5. TDD
-// TODO - try it out
+// TODO - try it out and add help
 1. Create a `log.service.spec.ts` *use t-describe-it (if available)
 2. Import the LogService from `./log.service`
 3. Run the `npm test -- --watch log` to run the log service tests in watch mode
@@ -111,6 +112,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 10. Add a `it` test case that the `error` method invokes the console.log (jest module mocking)
 11. See it fail - add the logic - all green
 12. Congrats - now you are a TDD dev!
+13. Review
 
 ## 6. Promise testing - async and fake async
 
@@ -118,9 +120,33 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 1. Create a `profile-resolver.service.spec.ts` (try using SCuri `ng g scuri:spec profile\profile-resolver.service.ts`)
 2. Create a test case for `when resolve is called and the profileService.get rejects should call router.navigate("/")`
 3. Use `async` to wrap it
-4. See [file](files/src/profile/profile-resolver.service.spec.ts.help) for help
+4. Review
+5. See [file](files/src/profile/profile-resolver.service.spec.ts.help) for help
 
 ### 6.2. Fake async testing
+
+_Example with the `flushMicrotasks thing` article and presentation._
+
+1. Create a `article.component.spec.ts` file with the test infrastructure - describe, it ...
+2. Create a test case `when populateComments is called and getAll comments promise resolves it should set the comments to the result`
+3. We need to provide a Promise and then do something on it's resolution(in the `then()` callback)
+4. Add a test case for `addComments` promise resolves
+5. Add a test case for `addComments` promise rejects
+6. Add a test case for `deleteComment` success
+
+// TODO - see help and finish the tests
+
+### M Observable testing / Forms testing
+1. Auth component  - start test (automate?)
+2. Add test case for `when ngOnInit is called and url ends with 'login' should set title and authType`
+3. Add test case for `when ngOnInit is called and url ends with 'register' should set title and authType and add a 'username' control`
+4. // TODO check Add test case `when submitForm called it should set the isSubmitting to true and clear out the errors`
+5. // TODO check Add test case `when submitForm called it should call attemptAuth with the auth type and credentials`
+6. // TODO check Add test case `when submitForm called and attemptAuth result emits it should navigate to /`
+7. // TODO check Add test case `when submitForm called and attemptAuth result emits error it should set errors and isSubmitting to false`
+
+
+
 
 
 ### N State management
@@ -131,6 +157,7 @@ All 3 HomeComponent, ProfileArticlesComponent, ProfileFavoritesComponent use the
 Home toggles between `Feed`, `Global feed` (i.e. latest) and `Tags` in the filter
 ProfileArticlesComponent, ProfileFavoritesComponent toggles between `Own` and `Favorites`.
 It seems the Article Service would not be ideal to keep the state (for now it's ok - since it's only shown in one place)
+
 
 What could be improved - we could store the state in the ArticlesService and only inform it that an event has happened:
 `onYourFeedPageEnter` would trigger the initial loading for that page and keep the result in memory.
