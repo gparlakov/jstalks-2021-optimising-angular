@@ -64,9 +64,9 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 1. Create a new component using the `ng generate component shared/notification`
 2. Run `nmg test -- --watch` (see the singe test pass)
 3. Update the component and test
-   - Copy paste the [this](files/notifications.component.ts.help) in the notifications.component.ts
+   - Copy paste the [this](./files/src/app/shared/notifications/notifications.component.ts.help) in the notifications.component.ts
    - Add injected dependency - the `NotificationService` in the providers (why?)
-4. Add a test for the case of success and for the case of error (populates the correct input) (see [help](./files/notificatons.component.spec.ts.help))
+4. Add a test for the case of success and for the case of error (populates the correct input) (see [help](./files/src/app/shared/notifications/notificatons.component.spec.ts.help))
 5. Review of 3
 
 ## 4. Automate unit test create/update
@@ -121,7 +121,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 2. Create a test case for `when resolve is called and the profileService.get rejects should call router.navigate("/")`
 3. Use `async` to wrap it
 4. Review
-5. See [file](files/src/profile/profile-resolver.service.spec.ts.help) for help
+5. See [file](files/src/app/profile/profile-resolver.service.spec.ts.help) for help
 
 ### 6.2. Fake async testing
 
@@ -133,9 +133,7 @@ _Example with the `flushMicrotasks thing` article and presentation._
 4. Add a test case for `addComments` promise resolves
 5. Add a test case for `addComments` promise rejects
 6. Add a test case for `deleteComment` success
-
-// TODO - see help and finish the tests
-
+7. See [help](./files/src/app/article/article.component.spec.ts.help) file
 ### M Observable testing / Forms testing
 1. Auth component  - start test (automate?)
 2. Add test case for `when ngOnInit is called and url ends with 'login' should set title and authType`
