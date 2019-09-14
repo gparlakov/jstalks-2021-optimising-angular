@@ -10,5 +10,5 @@ export function autoSpy<T>(obj: new (...args: any[]) => T): SpyOf<T> {
 }
 
 /** Keeps the types of properties of a type but assigns type of Spy to the methods */
-type SpyOf<T> = T &
+export type SpyOf<T> = T &
     Partial<{ [k in keyof T]: T[k] extends (...args: any[]) => infer R ? jest.SpyInstance<R, any[]> : T[k] }>;
