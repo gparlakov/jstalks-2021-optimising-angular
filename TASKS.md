@@ -56,10 +56,10 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 4. Add another dependency - the `NotificationService` (and/or `LogService`)
    - mock it and include it in the TestBed
 5. Review
+6. See [help](./files/src/app/app.component.spec.ts.help)
 
-// TODO - test out the points
-
-## 3. Basic testing - Using the CLI generated tests
+// TODO - revisit to align with point 4. above - TestBed
+# # 3. Basic testing - Using the CLI generated tests
 
 1. Create a new component using the `ng generate component shared/notification`
 2. Run `nmg test -- --watch` (see the singe test pass)
@@ -184,3 +184,10 @@ IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2
 - add a service NotifyService - success/info/error
 - talk about CI - Already doing it? AzureDevOps is great for GitHub integration.
 - Pusher - https://dashboard.pusher.com/apps/858014/keys, https://www.pusher.com/docs/channels/getting_started/javascript (UPDATE KEY)
+
+# TODO
+- review app.component's constructor and the Pusher init logic
+- Why jump from TestBed to setup?
+ - control
+ - speed (no need to compile components/for services - unneeded)
+ - implementation details in tests! (mockReturnValue(of{})) and if we switch the type of response or need some extra stuff - go and change all tests for that
