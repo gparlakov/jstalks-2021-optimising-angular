@@ -59,6 +59,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 6. See [help](./files/src/app/app.component.spec.ts.help)
 
 // TODO - revisit to align with point 4. above - TestBed
+// Notes: Talk a bit about implementation details in tests ?
 # # 3. Basic testing - Using the CLI generated tests
 
 1. Create a new component using the `ng generate component shared/notification`
