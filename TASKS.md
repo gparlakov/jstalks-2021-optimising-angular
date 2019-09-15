@@ -119,7 +119,6 @@ Note - revisit the `notification.component` tests and do the setup manually.
    2. In VS Code - command - SCuri code - create test (overwrite)
 8. Review
 
-
 ## 6. Promise testing - async and fake async
 
 ### 6.1. Async testing
@@ -142,8 +141,19 @@ _Example with the `flushMicrotasks thing` article and presentation._
 6. Add a test case for `deleteComment` success
 7. See [help](./files/src/app/article/article.component.spec.ts.help) file
 
+### 7. Observable testing
 
-### 8.  Forms / Observable testing
+1. Start `user.service.spec.ts` - manually, snippet or scuri
+2. Add test case `when populate called and token in localStorage and user fetch succeeds should emit the user`
+3. Add test case `when populate called and token in localStorage and user fetch succeeds should emit isAuthenticated`
+4. Try subscribe utility [subscribe-in-test](./src/app/testing/subscribe-in-test.ts)
+5. Add test case `when populate called and empty token in localStorage should emit the empty user and isAuthenticated false`
+6. Add test case `when attemptAuth called and POST succeeds should emit "success" and currentUser should also emit`
+7. Add test case `when attemptAuth called and POST fails should emit the error and current user should not emit`
+8. [Optional] Test the rest of the methods - `update`, `purgeAuth`(is this already tested?) and `getCurrentUser`
+9. Review and See [help](./files/src/app/core/services/user.service.ts.help)
+
+### 8. Forms / Observable testing
 
 1. Auth component - start test (automate?)
 2. Add test case for `when ngOnInit is called and url ends with 'login' should set title and authType`
@@ -154,6 +164,7 @@ _Example with the `flushMicrotasks thing` article and presentation._
 7. Add test case `when submitForm called and attemptAuth result emits error it should set errors and isSubmitting to false`
 8. See [help](./files/src/app/auth/auth.component.spec.ts.help)
 9. Review
+
 ### N State management
 
 // TODO test suggestion out
