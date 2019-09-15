@@ -35,7 +35,7 @@ describe('NotificationsComponent', () => {
     (n: NotificationsService) => {
       n.message$ = new Subject<NotificationModel>();
       component.ngOnInit();
-      notificationsService.message$.next(new NotificationModel('Test this'));
+      (n as any).message$.next(new NotificationModel('Test this'));
       expect(component.success).toEqual('Test this');
     }
   ));
