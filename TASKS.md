@@ -184,7 +184,6 @@ _Example with the `flushMicrotasks thing` article and presentation._
 2. Demo sign-up tests [demo help](./files/cypress/integration/sign-up/sign-up.spec.js.help)
 
 ### 11. End to end tests - Sign Up
-
 1. Create a folder in `cypress\integration\app\sign-up` and `sign-up.spec.js`
 2. Create a test case `should see the sign-up form with 2 "text" inputs - user and email`
 3. Create a test case `should see the sign-up form with 1 "password" input`
