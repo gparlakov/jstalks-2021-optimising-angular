@@ -9,6 +9,7 @@
 ###### TODO - generate index https://ecotrust-canada.github.io/markdown-toc/
 
 # Day 1
+
 ## Setup
 
 - fork/clone https://github.com/gparlakov/angular-realworld-example-app
@@ -24,7 +25,6 @@
   ```
   - if you don't want global install on any of those just use - `npx -p @angular/cli@6.2.9 ng add @briebug/jest-schematic`. That will just do the install and not leave anything in the global `npm` folder
   - TODO - `npm un @types/jasmine @types/jasminewd2` `npm i @types/jest` and change the types in tsconfig.spec.json (exclude jasmine and include jest)
-
 
 ## 1. Basic testing
 
@@ -70,12 +70,33 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 4. Add a test for the case of success and for the case of error (populates the correct input) (see [help](./files/src/app/shared/notifications/notificatons.component.spec.ts.help))
 5. Review
 
-## 4. Automate unit test create/update
+## 4. TDD Test Driven Development
+
+1. Create a `log.service.spec.ts` \*use t-describe-it (if available)
+2. Import the LogService from `./log.service`
+3. Run the `npm test -- --watch log --no-cache` to run the log service tests in watch mode
+4. See the failure
+5. Create the `log.service` file - all green
+6. Create a `it` test case that the LogService instantiates
+7. See it fail - create LogService class - all green
+8. Add a `it` test case that the `error` method invokes the console.log (jest module mocking)
+9. See it fail - add the logic - all green
+10. Add a `it` test case that when `error` invoked with an `Error` the console.log is invoked with the message
+11. See it fail - add the logic - all green
+12. Congrats - now you are a TDD dev!
+13. Review
+14. See [help](./files/src/app/core/services/log.service.spec.ts.help)
+
+# DAY 2
+
+## 5. Automate unit test create/update
+
+Note - revisit the `notification.component` tests and do the setup manually.
 
 1. Install `npm install --save-dev scuri` (or short `npm i -D scuri`)
 2. Run `ng g scuri:spec src\app\shared\layout\header.component.ts`
 3. Run `ng g scuri:autospy` to generate the autospy
-    - move the created `auto-spy.ts` to `./src/app/auto-spy.ts`
+   - move the created `auto-spy.ts` to `./src/app/auto-spy.ts`
 4. Add the paths to tsconfig.json ([help](./files/tsconfig.json.help))
    ```json
    {
@@ -93,31 +114,18 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
     }
    ```
 6. Run `npm test` (or `npm test -- --watch`)
-7. Review
+7. Run `ng g scuri:spec --name ./src/app/shared/notifications.component.ts --force`
+   1. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
+   2. In VS Code - command - SCuri code - create test (overwrite)
 
-8. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
+8. Review
 
-# DAY 2
 
-## 5. TDD Test Driven Development
-1. Create a `log.service.spec.ts` *use t-describe-it (if available)
-2. Import the LogService from `./log.service`
-3. Run the `npm test -- --watch log --no-cache` to run the log service tests in watch mode
-4. See the failure
-5. Create the `log.service` file - all green
-6. Create a `it` test case that the LogService instantiates
-7. See it fail - create LogService class - all green
-8. Add a `it` test case that the `error` method invokes the console.log (jest module mocking)
-9. See it fail - add the logic - all green
-10. Add a `it` test case that when `error` invoked with an `Error` the console.log is invoked with the message
-11. See it fail - add the logic - all green
-12. Congrats - now you are a TDD dev!
-13. Review
-14. See [help](./files/src/app/core/services/log.service.spec.ts.help)
 
 ## 6. Promise testing - async and fake async
 
 ### 6.1. Async testing
+
 1. Create a `profile-resolver.service.spec.ts` (try using SCuri `ng g scuri:spec profile\profile-resolver.service.ts`)
 2. Create a test case for `when resolve is called and the profileService.get rejects should call router.navigate("/")`
 3. Use `async` to wrap it
@@ -135,18 +143,16 @@ _Example with the `flushMicrotasks thing` article and presentation._
 5. Add a test case for `addComments` promise rejects
 6. Add a test case for `deleteComment` success
 7. See [help](./files/src/app/article/article.component.spec.ts.help) file
+
 ### M Observable testing / Forms testing
-1. Auth component  - start test (automate?)
+
+1. Auth component - start test (automate?)
 2. Add test case for `when ngOnInit is called and url ends with 'login' should set title and authType`
 3. Add test case for `when ngOnInit is called and url ends with 'register' should set title and authType and add a 'username' control`
 4. // TODO check Add test case `when submitForm called it should set the isSubmitting to true and clear out the errors`
 5. // TODO check Add test case `when submitForm called it should call attemptAuth with the auth type and credentials`
 6. // TODO check Add test case `when submitForm called and attemptAuth result emits it should navigate to /`
 7. // TODO check Add test case `when submitForm called and attemptAuth result emits error it should set errors and isSubmitting to false`
-
-
-
-
 
 ### N State management
 
@@ -157,15 +163,12 @@ Home toggles between `Feed`, `Global feed` (i.e. latest) and `Tags` in the filte
 ProfileArticlesComponent, ProfileFavoritesComponent toggles between `Own` and `Favorites`.
 It seems the Article Service would not be ideal to keep the state (for now it's ok - since it's only shown in one place)
 
-
 What could be improved - we could store the state in the ArticlesService and only inform it that an event has happened:
 `onYourFeedPageEnter` would trigger the initial loading for that page and keep the result in memory.
 `onYourFeedAddAuthor` would renew the cache
 `onGlobalFeedEnter` would take the articles
 `onGlobalFeedSelectPage` would store the selected page in the filter for that - so that we could come back to the same result
 ..
-
-
 
 # Resources
 
@@ -187,8 +190,9 @@ IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2
 - Pusher - https://dashboard.pusher.com/apps/858014/keys, https://www.pusher.com/docs/channels/getting_started/javascript (UPDATE KEY)
 
 # TODO
+
 - review app.component's constructor and the Pusher init logic
 - Why jump from TestBed to setup?
- - control
- - speed (no need to compile components/for services - unneeded)
- - implementation details in tests! (mockReturnValue(of{})) and if we switch the type of response or need some extra stuff - go and change all tests for that
+- control
+- speed (no need to compile components/for services - unneeded)
+- implementation details in tests! (mockReturnValue(of{})) and if we switch the type of response or need some extra stuff - go and change all tests for that
