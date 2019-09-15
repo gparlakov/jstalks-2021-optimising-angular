@@ -147,8 +147,8 @@ _Example with the `flushMicrotasks thing` article and presentation._
 1. Auth component - start test (automate?)
 2. Add test case for `when ngOnInit is called and url ends with 'login' should set title and authType`
 3. Add test case for `when ngOnInit is called and url ends with 'register' should set title and authType and add a 'username' control`
-4. // TODO check Add test case `when submitForm called it should set the isSubmitting to true and clear out the errors`
-5. // TODO check Add test case `when submitForm called it should call attemptAuth with the auth type and credentials`
+4. Add test case `when submitForm called it should set the isSubmitting to true and clear out the errors`
+5. Add test case `when submitForm called it should call attemptAuth with the auth type and credentials`
 6. // TODO check Add test case `when submitForm called and attemptAuth result emits it should navigate to /`
 7. // TODO check Add test case `when submitForm called and attemptAuth result emits error it should set errors and isSubmitting to false`
 

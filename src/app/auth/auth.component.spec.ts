@@ -8,7 +8,9 @@ import { AuthComponent } from './auth.component';
 describe('AuthComponent', () => {
   it('when ngOnInit is called and url ends with `login` it should set the auth type and title', () => {
     // arrange
-    const { build } = setup().default().withRouteUrl('login');
+    const { build } = setup()
+      .default()
+      .withRouteUrl('login');
     const c = build();
     // act
     c.ngOnInit();
@@ -19,7 +21,9 @@ describe('AuthComponent', () => {
 
   it('when ngOnInit is called and url ends with `register` it should set the auth type and title and add one control', () => {
     // arrange
-    const { build } = setup().default().withRouteUrl('register');
+    const { build } = setup()
+      .default()
+      .withRouteUrl('register');
     const c = build();
     // act
     c.ngOnInit();
@@ -29,14 +33,31 @@ describe('AuthComponent', () => {
     expect(c.authForm.get('username')).toBeDefined();
   });
 
-  it('when submitForm is called it should', () => {
+  it('when submitForm called it should set the isSubmitting to true and clear out the errors', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
+    c.errors = { errors: { apiError: 'error message' } };
     // act
     c.submitForm();
     // assert
-    // expect(c).toEqual
+    expect(c.isSubmitting).toEqual(true);
+    expect(c.errors).toEqual({ errors: {} });
+  });
+
+  it('when submitForm called it should call attemptAuth with auth type and credentials form value', () => {
+    // arrange
+    const { build, userService } = setup().default();
+    const c = build();
+    c.authType = 'login';
+    c.authForm.patchValue({ email: 'test', password: 'mest' });
+    // act
+    c.submitForm();
+    // assert
+    expect(userService.attemptAuth).toHaveBeenCalledWith('login', {
+      email: 'test',
+      password: 'mest'
+    });
   });
 });
 
@@ -58,7 +79,7 @@ function setup() {
     },
     default() {
       builder.withRouteUrl('login');
-      userService.attemptAuth.mockReturnValue(of({} as User));
+      userService.attemptAuth.mockReturnValue(of('success' as 'success'));
       return builder;
     },
     build() {
