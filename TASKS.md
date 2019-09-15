@@ -165,6 +165,76 @@ _Example with the `flushMicrotasks thing` article and presentation._
 8. See [help](./files/src/app/auth/auth.component.spec.ts.help)
 9. Review
 
+# Day 3
+
+### 9. Setup E2E
+
+1. Install cypress `npm i cypress -D`
+2. Run it `node_modules\.bin\cypress open`
+   2.1. Add to package.json scripts:
+   `json scripts: { ... "cypress": "cypress", "cypress.open": "npm run cypress open" }`
+3. Add `{"baseUrl": "http://localhost:4200"}` to `cypress.json`
+4. Add `"allowJs": true, "checkJs": true` to tsconfig.json to allow ts to check our js test files
+5. [Optional] hide the examples from our dashboard by adding `  "ignoreTestFiles": "**/examples/*.*"` to `cypress.json`
+
+### 10. Setup Smoke tests?
+
+### Demo Auth component Sign Up
+1. Demo anonymous user - should see the banner and sign up/sign in buttons
+2. Demo sign-up tests [demo help](./files/cypress/integration/sign-up/sign-up.spec.js.help)
+
+### 11. End to end tests - Sign Up
+
+1. Create a folder in `cypress\integration\app\sign-up` and `sign-up.spec.js`
+2. Create a test case `should see the sign-up form with 2 "text" inputs - user and email`
+3. Create a test case `should see the sign-up form with 1 "password" input`
+4. Create a test case `should create user successfully and redirect to /`
+5. Review
+
+### 12. Key to end to end tests - login
+1. Create the `login` helper command - [command](./files/cypress/support/commands.js.help)
+2. Add the `env: {"API_URL": "https://conduit.productionready.io/api"}` in `cypress.json`
+3. Some intellisense help Add a `tsconfig.json` in `./cypress` with the following content and an `./cypress/support/index.d.ts`
+    ```json
+    {
+      "extends": "../tsconfig.json",
+      "compilerOptions": { "baseUrl": "." },
+      "include": ["./support/index.d.ts"]
+    }
+    ```
+    ```ts
+    /// <reference types="cypress" />
+
+    declare interface User {
+      email: string;
+      username: string;
+      password: string;
+    }
+
+    declare namespace Cypress {
+      interface Chainable<Subject> {
+        login(): Chainable<User>;
+      }
+    }
+    ```
+### 13. Settings tests
+1. Create the `./cypress/integration/settings/settings.spec.js`
+    ```js
+    context('Settings', () => {
+      /**  @type User */
+      let user;
+      beforeEach(() => {
+        cy.login().then(u => (user = u));
+        cy.visit('/settings');
+      });
+    })
+    ```
+2. Add test case `should be visible for logged in users`
+3. Add test case `should have the user name and email pre-filled`
+4. Add test case `should log out successfully`
+5. Review
+6. See [help](files/cypress/integration/settings/sign-up.spec.js.help)
+
 ### N State management
 
 // TODO test suggestion out

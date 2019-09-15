@@ -19,6 +19,8 @@
     "baseUrl": ".",
     "paths": {
       "autoSpy": ["./src/app/auto-spy"]
-    }
+    },
+    "allowJs": true,
+    "checkJs": true
   }
 }

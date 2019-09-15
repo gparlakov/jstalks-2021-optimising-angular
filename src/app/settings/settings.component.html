@@ -14,21 +14,24 @@
               <input class="form-control"
                 type="text"
                 placeholder="URL of profile picture"
-                formControlName="image" />
+                formControlName="image"
+                data-test="avatar-url" />
             </fieldset>
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
                 type="text"
                 placeholder="Username"
-                formControlName="username" />
+                formControlName="username"
+                data-test="username" />
             </fieldset>
 
             <fieldset class="form-group">
               <textarea class="form-control form-control-lg"
                 rows="8"
                 placeholder="Short bio about you"
-                formControlName="bio">
+                formControlName="bio"
+                data-test="bio">
               </textarea>
             </fieldset>
 
@@ -36,18 +39,21 @@
               <input class="form-control form-control-lg"
                 type="email"
                 placeholder="Email"
-                formControlName="email" />
+                formControlName="email"
+                data-test="email" />
             </fieldset>
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
                 type="password"
                 placeholder="New Password"
-                formControlName="password" />
+                formControlName="password"
+                data-test="password" />
             </fieldset>
 
             <button class="btn btn-lg btn-primary pull-xs-right"
-              type="submit">
+              type="submit"
+              data-test="submit">
               Update Settings
             </button>
 
@@ -58,7 +64,8 @@
         <hr />
 
         <button class="btn btn-outline-danger"
-          (click)="logout()">
+          (click)="logout()"
+          data-test="logout">
           Or click here to logout.
         </button>
 

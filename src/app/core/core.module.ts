@@ -13,7 +13,6 @@ import {
   TagsService,
   UserService
 } from './services';
-import { PusherService } from './services/pusher.service';
 
 @NgModule({
   imports: [
@@ -28,8 +27,7 @@ import { PusherService } from './services/pusher.service';
     JwtService,
     ProfilesService,
     TagsService,
-    UserService,
-    PusherService
+    UserService
   ],
   declarations: []
 })

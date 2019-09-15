@@ -17,21 +17,26 @@
                 placeholder="Username"
                 class="form-control form-control-lg"
                 type="text"
-                *ngIf="authType == 'register'" />
+                *ngIf="authType == 'register'"
+                data-test="user-input"
+                />
             </fieldset>
             <fieldset class="form-group">
               <input
                 formControlName="email"
                 placeholder="Email"
                 class="form-control form-control-lg"
-                type="text" />
+                type="text"
+                data-test="email-input"
+                />
             </fieldset>
             <fieldset class="form-group">
               <input
                 formControlName="password"
                 placeholder="Password"
                 class="form-control form-control-lg"
-                type="password" />
+                type="password"
+                data-test="password-input" />
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!authForm.valid" type="submit">
               {{ title }}
