@@ -68,7 +68,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
    - Copy paste the [this](./files/src/app/shared/notifications/notifications.component.ts.help) in the notifications.component.ts
    - Add injected dependency - the `NotificationService` in the providers (why?)
 4. Add a test for the case of success and for the case of error (populates the correct input) (see [help](./files/src/app/shared/notifications/notificatons.component.spec.ts.help))
-5. Review of 3
+5. Review
 
 ## 4. Automate unit test create/update
 
@@ -99,21 +99,21 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 
 # DAY 2
 
-## 5. TDD
-// TODO - try it out and add help
+## 5. TDD Test Driven Development
 1. Create a `log.service.spec.ts` *use t-describe-it (if available)
 2. Import the LogService from `./log.service`
-3. Run the `npm test -- --watch log` to run the log service tests in watch mode
+3. Run the `npm test -- --watch log --no-cache` to run the log service tests in watch mode
 4. See the failure
 5. Create the `log.service` file - all green
 6. Create a `it` test case that the LogService instantiates
 7. See it fail - create LogService class - all green
-8. Add a `it` test case that the LogService has a `error` method
-9. See it fail - create the `error` method - all green
-10. Add a `it` test case that the `error` method invokes the console.log (jest module mocking)
+8. Add a `it` test case that the `error` method invokes the console.log (jest module mocking)
+9. See it fail - add the logic - all green
+10. Add a `it` test case that when `error` invoked with an `Error` the console.log is invoked with the message
 11. See it fail - add the logic - all green
 12. Congrats - now you are a TDD dev!
 13. Review
+14. See [help](./files/src/app/core/services/log.service.spec.ts.help)
 
 ## 6. Promise testing - async and fake async
 
