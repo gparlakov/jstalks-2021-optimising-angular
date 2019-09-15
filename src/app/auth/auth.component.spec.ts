@@ -1,7 +1,7 @@
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { autoSpy } from 'autoSpy';
-import { ReplaySubject, of } from 'rxjs';
+import { ReplaySubject, of, throwError } from 'rxjs';
 import { UserService, User } from '../core';
 import { AuthComponent } from './auth.component';
 
@@ -59,6 +59,28 @@ describe('AuthComponent', () => {
       password: 'mest'
     });
   });
+
+  it('when submitForm called and attemptAuth result emits it should navigate to /', () => {
+    // arrange
+    const { build, router } = setup().default();
+    const c = build();
+    // act
+    c.submitForm();
+    // assert
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/');
+  });
+  it('when submitForm called and attemptAuth result emits error it should set errors and isSubmitting to false', () => {
+    // arrange
+    const { build } = setup()
+      .default()
+      .withAuthResponseFail({error: 'test'});
+    const c = build();
+    // act
+    c.submitForm();
+    // assert
+    expect(c.isSubmitting).toBe(false);
+    expect(c.errors).toEqual({error: 'test'});
+  });
 });
 
 function setup() {
@@ -73,6 +95,10 @@ function setup() {
     router,
     userService,
     fb,
+    withAuthResponseFail(e?: any) {
+      userService.attemptAuth.mockReturnValueOnce(throwError(e));
+      return builder;
+    },
     withRouteUrl(endsWith: 'login' | 'register') {
       url$.next([new UrlSegment(endsWith, {})]);
       return builder;
