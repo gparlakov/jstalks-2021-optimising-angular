@@ -1,0 +1,39 @@
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+
+import { NotificationsComponent } from './notifications.component';
+import { NotificationsService } from '../../core/services/notifications.service';
+import { Subject, ReplaySubject } from 'rxjs';
+import { NotificationModel } from '../../core/models/notification-model';
+
+describe('NotificationsComponent', () => {
+
+  it('should create', () => {
+    const component = setup().build();
+    expect(component).toBeTruthy();
+  });
+
+  it('when message$ emits success should populate local `success`', () => {
+    // arrange
+    const { build, service } = setup();
+    const componentLocal = build();
+    componentLocal.ngOnInit();
+    // act
+    service.message$.next(new NotificationModel('Test this'));
+    // assert
+    expect(componentLocal.success).toEqual('Test this');
+  });
+});
+
+function setup() {
+  const service: NotificationsService & { message$: Subject<any> } = {
+    message$: new Subject<any>()
+  } as any;
+  const builder = {
+    service,
+    build() {
+      return new NotificationsComponent(service);
+    }
+  };
+
+  return builder;
+}

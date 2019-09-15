@@ -6,7 +6,7 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root'
 })
 export class NotificationsService {
-  _message$ = new ReplaySubject<NotificationModel>(1);
+  private _message$ = new ReplaySubject<NotificationModel>(1);
   message$ = this._message$.asObservable();
 
   constructor() {  }
