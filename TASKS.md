@@ -117,9 +117,7 @@ Note - revisit the `notification.component` tests and do the setup manually.
 7. Run `ng g scuri:spec --name ./src/app/shared/notifications.component.ts --force`
    1. [OPTIONAL] For VS Code users - Install [SCuri code](https://marketplace.visualstudio.com/items?itemName=gparlakov.scuri-code)
    2. In VS Code - command - SCuri code - create test (overwrite)
-
 8. Review
-
 
 
 ## 6. Promise testing - async and fake async
