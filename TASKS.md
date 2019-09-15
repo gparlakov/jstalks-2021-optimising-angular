@@ -152,7 +152,8 @@ _Example with the `flushMicrotasks thing` article and presentation._
 5. Add test case `when submitForm called it should call attemptAuth with the auth type and credentials`
 6. Add test case `when submitForm called and attemptAuth result emits it should navigate to /`
 7. Add test case `when submitForm called and attemptAuth result emits error it should set errors and isSubmitting to false`
-
+8. See [help](./files/src/app/auth/auth.component.spec.ts.help)
+9. Review
 ### N State management
 
 // TODO test suggestion out
