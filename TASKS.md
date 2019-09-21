@@ -234,6 +234,15 @@ _Example with the `flushMicrotasks thing` article and presentation._
 5. Review
 6. See [help](files/cypress/integration/settings/sign-up.spec.js.help)
 
+### 14. Articles
+1. Create the `articles.spec.js`
+2. //TODO Add test case authenticated user can see UI for writing and article
+
+### 15. Comment
+1. Create the `comments.spec.js`
+1. //TODO Add test case authenticated user can comment
+
+
 ### N State management
 
 // TODO test suggestion out
@@ -271,8 +280,7 @@ IntelliJ plugin for snippets https://plugins.jetbrains.com/plugin/8395-angular-2
 
 # TODO
 
-- review app.component's constructor and the Pusher init logic
 - Why jump from TestBed to setup?
-- control
-- speed (no need to compile components/for services - unneeded)
-- implementation details in tests! (mockReturnValue(of{})) and if we switch the type of response or need some extra stuff - go and change all tests for that
+  - control
+  - speed (no need to compile components/for services - unneeded)
+  - implementation details in tests! (mockReturnValue(of{})) and if we switch the type of response or need some extra stuff - go and change all tests for that
