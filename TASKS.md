@@ -236,10 +236,13 @@ _Example with the `flushMicrotasks thing` article and presentation._
 
 ### 14. Articles
 1. Create the `articles.spec.js`
-2. //TODO Add test case authenticated user can see UI for writing and article
+2. Add test case authenticated user can see UI for writing and article
+3. Add test case authenticated user can publish artice
+4. Review ([help](files/cypress/integration/article/article.spec.js.help))
 
 ### 15. Comment
 1. Create the `comments.spec.js`
+2. Start with an article creation logic using the API (need a token first)
 1. //TODO Add test case authenticated user can comment
 
 
