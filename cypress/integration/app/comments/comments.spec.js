@@ -23,10 +23,19 @@ context('Comments', () => {
   });
 
   beforeEach(() => {
-    cy.visit(`/article/${article.slug}`)
+    console.warn(user, article)
+    cy.login(user);
+    cy.visit(`/article/${article.slug}`);
   });
 
   it('should be available for authenticated users', () => {
+    console.warn('user and article', user, article)
+    cy.get('textarea').type('my comment');
+    cy.get('button').click();
+  });
+
+
+  it('should be available for authenticated users 2', () => {
     console.warn('user and article', user, article)
     // cy.get('test');
   });

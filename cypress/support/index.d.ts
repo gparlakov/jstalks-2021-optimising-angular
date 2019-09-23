@@ -4,6 +4,7 @@ declare interface User {
   email: string;
   username: string;
   token: string;
+  password: string;
 }
 
 declare interface Author {
@@ -20,7 +21,7 @@ declare interface Article {
   favorited: boolean;
   favoritesCount: number;
   slug: string;
-  tagList: string [];
+  tagList: string[];
   title: string;
   updatedAt: Date;
 }
@@ -28,6 +29,6 @@ declare interface Article {
 declare namespace Cypress {
   interface Chainable<Subject> {
     register(): Chainable<User>;
-    login(u: { user: string; pass: string }): Chainable<User>;
+    login(u: { email: string; password: string }): Chainable<User>;
   }
 }

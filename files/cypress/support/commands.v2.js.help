@@ -42,19 +42,22 @@ Cypress.Commands.add('register', () => {
     .its('body')
     .then(v => {
       window.localStorage.setItem('jwtToken', v.user.token);
+      v.user.password = registerUserReq.password;
       return v.user;
     });
 });
 
 Cypress.Commands.add('login', u => {
-  if (u == null || u.email == null || u.pass == null) {
-    throw new Error('Need a {user: user, pass: mypass} to login! Received:' + u);
+  if (u == null || u.email == null || u.password == null) {
+    throw new Error(
+      'Need a {user: user, pass: mypass} to login! Received:' + u != null ? JSON.stringify(u) : u
+    );
   }
-  const userReq = { email: u.email, password: u.pass };
+  const userReq = { email: u.email, password: u.password };
 
   return cy
     .request('POST', `${Cypress.env('API_URL')}/users/login`, {
-      userReq
+      user: userReq
     })
     .its('body')
     .then(v => {
