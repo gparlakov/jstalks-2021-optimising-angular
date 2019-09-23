@@ -12,7 +12,7 @@ context('Article page for authenticated user', () => {
   let user;
 
   beforeEach(() => {
-    cy.login()
+    cy.register()
     cy.visit('/editor');
   })
 

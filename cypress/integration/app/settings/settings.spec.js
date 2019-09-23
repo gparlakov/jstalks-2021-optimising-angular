@@ -2,7 +2,7 @@ context('Settings page', () => {
   /**  @type User */
   let user;
   beforeEach(() => {
-    cy.login().then(u => (user = u));
+    cy.register().then(u => (user = u));
     cy.visit('/settings');
   });
 
