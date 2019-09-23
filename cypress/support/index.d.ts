@@ -8,6 +8,7 @@ declare interface User {
 
 declare namespace Cypress {
   interface Chainable<Subject> {
-    login(): Chainable<User>;
+    register(): Chainable<User>;
+
   }
 }
