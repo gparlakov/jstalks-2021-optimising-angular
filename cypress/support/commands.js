@@ -29,15 +29,36 @@ Cypress.Commands.add('register', () => {
     Math.random()
       .toString(36)
       .slice(2);
-  const user = { email: randUser + '@my.co', password: 'e2gpassword', username: randUser };
+  const registerUserReq = {
+    email: randUser + '@my.co',
+    password: 'e2gpassword',
+    username: randUser
+  };
 
   return cy
-    .request('POST', `${Cypress.env("API_URL")}/users`, {
-      user
+    .request('POST', `${Cypress.env('API_URL')}/users`, {
+      user: registerUserReq
     })
     .its('body')
     .then(v => {
       window.localStorage.setItem('jwtToken', v.user.token);
+      return v.user;
+    });
+});
+
+Cypress.Commands.add('login', u => {
+  if (u == null || u.email == null || u.pass == null) {
+    throw new Error('Need a {user: user, pass: mypass} to login! Received:' + u);
+  }
+  const userReq = { email: u.email, password: u.pass };
+
+  return cy
+    .request('POST', `${Cypress.env('API_URL')}/users/login`, {
+      userReq
     })
-    .then(() => user);
+    .its('body')
+    .then(v => {
+      window.localStorage.setItem('jwtToken', v.user.token);
+      return v.user;
+    });
 });

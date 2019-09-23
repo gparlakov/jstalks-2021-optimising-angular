@@ -3,12 +3,31 @@
 declare interface User {
   email: string;
   username: string;
-  password: string;
+  token: string;
+}
+
+declare interface Author {
+  username: string;
+  bio: string;
+  image: string;
+  following: false;
+}
+declare interface Article {
+  author: Author;
+  body: string;
+  createdAt: Date;
+  description: string;
+  favorited: boolean;
+  favoritesCount: number;
+  slug: string;
+  tagList: string [];
+  title: string;
+  updatedAt: Date;
 }
 
 declare namespace Cypress {
   interface Chainable<Subject> {
     register(): Chainable<User>;
-
+    login(u: { user: string; pass: string }): Chainable<User>;
   }
 }
