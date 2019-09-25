@@ -58,7 +58,7 @@ DEMO - using [snippets](https://github.com/BeastCode/VSCode-Angular-TypeScript-S
 5. Review
 6. See [help](./files/src/app/app.component.spec.ts.help)
 
-// Notes: Talk a bit about implementation details in tests ?
+// Notes: Talk a bit about implementation details in tests
 
 ## 3. Basic testing - Using the CLI generated tests
 

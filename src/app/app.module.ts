@@ -20,7 +20,8 @@ import { FooterComponent, HeaderComponent, SharedModule } from './shared';
     HomeModule,
     AuthModule,
     AppRoutingModule,
-    PusherModule.forRoot('bab3acb87e71b32c150b', {
+    // pusher.com account -> angularadvancedkiev@gmail.com
+    PusherModule.forRoot('__ca2cdccf4124e23ec32f__', {
       cluster: 'eu',
       forceTLS: true
     })
