@@ -103,7 +103,7 @@
               </div>
               <div class="card-footer">
                 <img [src]="currentUser.image" class="comment-author-img" />
-                <button class="btn btn-sm btn-primary" type="submit">
+                <button class="btn btn-sm btn-primary" type="submit" data-testid="submit-comment">
                  Post Comment
                 </button>
               </div>
@@ -111,7 +111,7 @@
           </form>
         </div>
 
-        <div *appShowAuthed="false">
+        <div *appShowAuthed="false" data-test-id="auth-to-comment">
           <a [routerLink]="['/login']">Sign in</a> or <a [routerLink]="['/register']">sign up</a> to add comments on this article.
         </div>
 

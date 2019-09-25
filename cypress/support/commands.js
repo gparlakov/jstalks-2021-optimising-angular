@@ -65,3 +65,7 @@ Cypress.Commands.add('login', u => {
       return v.user;
     });
 });
+
+Cypress.Commands.add('logout', () => {
+  window.localStorage.removeItem('jwtToken');
+});
