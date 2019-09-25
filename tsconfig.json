@@ -10,7 +10,11 @@
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [
-      "node_modules/@types"
+      "./node_modules/@types",
+      "./node_modules/pusher-js"
+    ],
+    "types": [
+      "jest", "pusher-js"
     ],
     "lib": [
       "es2017",
@@ -22,5 +26,6 @@
     },
     "allowJs": true,
     "checkJs": true
-  }
+  },
+  "include": ["./src/**/*.ts"]
 }
