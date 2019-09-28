@@ -251,15 +251,26 @@ B3. Add test case authenticated user can comment
 
 ### 16. Performance tools setup
 
-1. `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
-2. run `npm
+1. Run `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
+2. Run `ng build --prod --stats-json`
+3. Run `webpack-bundle-analyzer dist/stats.json`
+4. Notice
+    - settings module not
+    - moment locales - even though we need only few of them - us/de/ru
+    - pusher - even though we need to ask user for permission
+    - PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
+Demonstrate how to remove the moment js locales not in use
+
+
+
+# Day 5. State management
 
 
 ### N State management
 
 // TODO test suggestion out
 
-All 3 HomeComponent, ProfileArticlesComponent, ProfileFavoritesComponent use the articles filter functionality and separately change the filter of the articl.
+All 3 HomeComponent, ProfileArticlesComponent, ProfileFavoritesComponent use the articles filter functionality and separately change the filter of the article.
 Home toggles between `Feed`, `Global feed` (i.e. latest) and `Tags` in the filter
 ProfileArticlesComponent, ProfileFavoritesComponent toggles between `Own` and `Favorites`.
 It seems the Article Service would not be ideal to keep the state (for now it's ok - since it's only shown in one place)
@@ -270,6 +281,8 @@ What could be improved - we could store the state in the ArticlesService and onl
 `onGlobalFeedEnter` would take the articles
 `onGlobalFeedSelectPage` would store the selected page in the filter for that - so that we could come back to the same result
 ..
+
+### O. Business logic service + state-full services
 
 # Resources
 
