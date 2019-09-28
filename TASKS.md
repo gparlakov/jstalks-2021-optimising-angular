@@ -260,12 +260,18 @@ B3. Add test case authenticated user can comment
     - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
     - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
 
-5. Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
-6. Checkout the `main`, `secondary` and `third` components and see that only the used components end up in the bundles, even though using the shared module and its shared components
-7. Demo ivy. Angular 8 requires node 10 so use docker
-    - [optional] `docker build -t demo-ivy -f tools\demo-ivy-performance.dockerfile .`
-    - `docker run -p 8888:8888 gparlakov/demo-ivy`
-    - navigate to `localhost:8888`
+5. Explore what Angular does automatically with the tree shaker
+    - Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
+    - Checkout the `main`, `secondary` and `third` components and see that __only__ the used components end up in the bundles, even though using the shared module and its shared components
+6. Demo what Ivy does for us in terms of performance. __Angular 8__ requires __node 10__ so either use Docker or install Node 10 locally
+    - for local build
+        - `ng update @angular/cli @angular/core`
+        - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
+        - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
+        - navigate to `localhost:8888`
+    - for docker demo
+        - `docker run -p 8888:8888 gparlakov/demo-ivy`
+        - navigate to `localhost:8888`
 
 ### 17. Lazy loading
 1. Make Article module lazy
