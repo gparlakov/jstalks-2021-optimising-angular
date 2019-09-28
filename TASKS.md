@@ -253,23 +253,29 @@ B3. Add test case authenticated user can comment
 
 1. Run `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
 2. Run `ng build --prod --stats-json`
-3. Run `webpack-bundle-analyzer dist/stats.json`
+3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
 4. Notice
     - settings and article modules not lazy
-    - // TODO Add moment pipes and remove | all moment locales - even though we need only few of them - us/de/ru
+    - all moment locales - even though we need only few of them - us/ru
     - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
     - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
 Demonstrate how to remove the moment js locales not in use
 
-### Lazy loading
+### 17. Lazy loading
 1. Make Article module lazy
     - remove ArticleModule from AppModule
     - make the route use `loadChildren: "./article/article.module#ArticleModule"`
 2. Make Settings module lazy - same steps as above
 3. Note the bundles sizes change (run steps 2. and 3.)
+    `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
+4. Review (see [app-routing.module.ts](files/src/app/app-routing.module.ts.help) and [app.module.ts](files/src/app/app.module.ts.help))
 
-### Removal of extraneous modules manually
-1. Check out the
+### 18. Removal of unused modules manually
+1. Check out the moment locales (keep the browser tab open for comparison)
+2. Add `"postinstall": "node ./tools/remove-unused-locales.js"` to `scripts` section of package.json
+3. Run `npm i` to invoke the post install hook script
+4. `ng build --prod --stats-json` and `webpack-bundle-analyzer ./dist/stats.json` and `` and see the bundle size differ
+5. Review
 
 # Day 5. State management
 
