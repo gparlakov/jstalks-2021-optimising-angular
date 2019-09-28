@@ -6,9 +6,15 @@ import { PusherService } from './pusher.service';
 @NgModule({})
 export class PusherModule {
   static forRoot(key: string, config?: Config): ModuleWithProviders {
+    const pusherKey = 'pusher_key';
+    const pusherConfig = 'pusher_config';
     return {
       ngModule: PusherModule,
-      providers: [{ provide: PusherService, useFactory: pusherFactory }]
+      providers: [
+        { provide: pusherKey, useValue: key },
+        { provide: pusherConfig, useValue: config },
+        { provide: PusherService, useFactory: pusherFactory, deps: [pusherKey, pusherConfig] }
+      ]
     };
   }
 }

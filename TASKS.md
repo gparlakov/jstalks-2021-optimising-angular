@@ -243,7 +243,7 @@ _Example with the `flushMicrotasks thing` article and presentation._
 ### 15. Comment
 1. Create the `comments.spec.js`
 2. Start with an article creation logic using the API (need a token first)
-3. Add test case authenticated user can comment
+B3. Add test case authenticated user can comment
 4. Add test case anonymous user can not comment
 5. Review ([help](files/cypress/integration/comments/comments.spec.js.help))
 
