@@ -243,7 +243,16 @@ _Example with the `flushMicrotasks thing` article and presentation._
 ### 15. Comment
 1. Create the `comments.spec.js`
 2. Start with an article creation logic using the API (need a token first)
-1. //TODO Add test case authenticated user can comment
+3. Add test case authenticated user can comment
+4. Add test case anonymous user can not comment
+5. Review ([help](files/cypress/integration/comments/comments.spec.js.help))
+
+# Day 4. Performance
+
+### 16. Performance tools setup
+
+1. `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
+2. run `npm
 
 
 ### N State management
