@@ -259,7 +259,7 @@ B3. Add test case authenticated user can comment
     - all moment locales - even though we need only few of them - us/ru
     - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
     - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
-Demonstrate how to remove the moment js locales not in use
+
 
 ### 17. Lazy loading
 1. Make Article module lazy
@@ -276,6 +276,7 @@ Demonstrate how to remove the moment js locales not in use
 3. Run `npm i` to invoke the post install hook script
 4. `ng build --prod --stats-json` and `webpack-bundle-analyzer ./dist/stats.json` and `` and see the bundle size differ
 5. Review
+// Demonstrate how to remove the moment js (or any other) locales not in use
 
 # Day 5. State management
 
