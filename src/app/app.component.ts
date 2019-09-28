@@ -26,14 +26,14 @@ export class AppComponent implements OnInit {
     pusher: PusherService,
     notifications: NotificationsService
   ) {
-    currentUser
-      .pipe(
-        switchMap(u =>
-          u != null && u.email != null ? pusher.listenForNotifications(u.email) : EMPTY
-        )
-      )
-      .subscribe(u => {
-        notifications.success(u);
-      });
+    // currentUser
+    //   .pipe(
+    //     switchMap(u =>
+    //       u != null && u.email != null ? pusher.listenForNotifications(u.email) : EMPTY
+    //     )
+    //   )
+    //   .subscribe(u => {
+    //     notifications.success(u);
+    //   });
   }
 }

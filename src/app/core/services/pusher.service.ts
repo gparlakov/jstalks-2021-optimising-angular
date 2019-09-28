@@ -1,23 +1,40 @@
-import * as pusherConstructor from 'pusher-js';
-import { Pusher } from 'pusher-js';
-import { Observable } from 'rxjs';
+/// <reference types="pusher-js" />
+
+import { Observable, from } from 'rxjs';
 
 export class PusherService {
-  private instance: Pusher;
-  constructor(key: string, config: pusherConstructor.Config) {
-    this.instance = new pusherConstructor(key, config);
+  private instance: Pusher.Pusher;
+  constructor(private key: string, private config: Pusher.Config) {}
+
+  private init() {
+    // System.import('pusher-js').then(p => this.resolve(new p(this.key, this.config)));
   }
 
-  listenForNotifications(userEmail: string): Observable<string> {
-    return new Observable<string>(s => {
-      const channel = this.instance.subscribe(userEmail);
-      channel.bind('notify', function(data) {
-        s.next(JSON.stringify(data));
-      });
+  listenForNotifications(userEmail: string): Observable<any> {
+    // this.init();
 
-      return () => {
-        channel.unbind('notify');
-      };
-    });
+    return from(
+      import('pusher-js').then(p => {
+        if (this.instance == null) {
+          this.instance = new p(this.key, this.config);
+        }
+        return this.instance;
+      })
+    );
+    // return new Observable<string>(s => {
+    //   let channel;
+    //   this.instance.then(i => {
+    //     channel = i.subscribe(userEmail);
+    //     channel.bind('notify', function(data) {
+    //       s.next(JSON.stringify(data));
+    //     });
+    //   });
+
+    //   return () => {
+    //     if (channel != null) {
+    //       channel.unbind('notify');
+    //     }
+    //   };
+    // });
   }
 }

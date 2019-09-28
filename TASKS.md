@@ -290,6 +290,12 @@ B3. Add test case authenticated user can comment
 5. Review
 // Demonstrate how to remove the moment js (or any other) locales not in use
 
+### 19. Manual JS lazy module load
+
+1. Notice the `Pusher` is a large part of our main
+2. //TODO - imagine and describe steps to keep the current API but have a button (or user action property - localStorage.push) to actually start the pushing
+
+
 # Day 5. State management
 
 
