@@ -1,15 +1,15 @@
 <div class="article-meta">
   <a [routerLink]="['/profile', article.author.username]">
-    <img [src]="article.author.image" />
+    <img [src]="article?.author?.image || '/assets/empty.png'" />
   </a>
 
   <div class="info">
-    <a class="author"
-      [routerLink]="['/profile', article.author.username]">
-      {{ article.author.username }}
+    <a class="author" [routerLink]="['/profile', article.author.username]">
+      {{ article?.author?.username }}
     </a>
     <span class="date">
-      {{ article.createdAt | date: 'longDate' }}
+      {{ article?.createdAt | date: 'longDate' }}
+      <span *ngIf="article?.updatedAt">(Last updated {{ article?.updatedAt | amTimeAgo }})</span>
     </span>
   </div>
 

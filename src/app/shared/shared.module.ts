@@ -9,6 +9,7 @@ import { FavoriteButtonComponent, FollowButtonComponent } from './buttons';
 import { ListErrorsComponent } from './list-errors.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    MomentModule
   ],
   declarations: [
     ArticleListComponent,

@@ -249,19 +249,27 @@ B3. Add test case authenticated user can comment
 
 # Day 4. Performance
 
-### 16. Performance tools setup
+### 16. Bundle size
 
 1. Run `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
 2. Run `ng build --prod --stats-json`
 3. Run `webpack-bundle-analyzer dist/stats.json`
 4. Notice
-    - settings module not
-    - moment locales - even though we need only few of them - us/de/ru
-    - pusher - even though we need to ask user for permission
-    - PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
+    - settings and article modules not lazy
+    - // TODO Add moment pipes and remove | all moment locales - even though we need only few of them - us/de/ru
+    - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
+    - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
 Demonstrate how to remove the moment js locales not in use
 
+### Lazy loading
+1. Make Article module lazy
+    - remove ArticleModule from AppModule
+    - make the route use `loadChildren: "./article/article.module#ArticleModule"`
+2. Make Settings module lazy - same steps as above
+3. Note the bundles sizes change (run steps 2. and 3.)
 
+### Removal of extraneous modules manually
+1. Check out the
 
 # Day 5. State management
 
