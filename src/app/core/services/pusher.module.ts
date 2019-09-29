@@ -7,7 +7,7 @@ export const pusherKey = new InjectionToken('pusher_key');
 export const pusherConfig = new InjectionToken('pusher_config');
 
 export function pusherFactory(key: string, config: Config) {
-  return () => new PusherService(key, config);
+  return new PusherService(key, config);
 }
 
 @NgModule({

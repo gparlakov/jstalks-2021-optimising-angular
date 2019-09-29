@@ -27,7 +27,7 @@ import { MomentModule } from 'ngx-moment';
       }
     }),
     // pusher.com account -> angularadvancedkiev@gmail.com
-    PusherModule.forRoot('__ca2cdccf4124e23ec32f__', {
+    PusherModule.forRoot('ca2cdccf4124e23ec32f', {
       cluster: 'eu',
       forceTLS: true
     }),

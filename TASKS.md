@@ -175,15 +175,17 @@ _Example with the `flushMicrotasks thing` article and presentation._
    `json scripts: { ... "cypress": "cypress", "cypress.open": "npm run cypress open" }`
 3. Add `{"baseUrl": "http://localhost:4200"}` to `cypress.json`
 4. Add `"allowJs": true, "checkJs": true` to tsconfig.json to allow ts to check our js test files
-5. [Optional] hide the examples from our dashboard by adding `  "ignoreTestFiles": "**/examples/*.*"` to `cypress.json`
+5. [Optional] hide the examples from our dashboard by adding `"ignoreTestFiles": "**/examples/*.*"` to `cypress.json`
 
 ### 10. Setup Smoke tests?
 
 ### Demo Auth component Sign Up
+
 1. Demo anonymous user - should see the banner and sign up/sign in buttons
 2. Demo sign-up tests [demo help](./files/cypress/integration/sign-up/sign-up.spec.js.help)
 
 ### 11. End to end tests - Sign Up
+
 1. Create a folder in `cypress\integration\app\sign-up` and `sign-up.spec.js`
 2. Create a test case `should see the sign-up form with 2 "text" inputs - user and email`
 3. Create a test case `should see the sign-up form with 1 "password" input`
@@ -191,43 +193,48 @@ _Example with the `flushMicrotasks thing` article and presentation._
 5. Review
 
 ### 12. Key to end to end tests - login
+
 1. Create the `login` helper command - [command](./files/cypress/support/commands.js.help)
 2. Add the `env: {"API_URL": "https://conduit.productionready.io/api"}` in `cypress.json`
 3. Some intellisense help Add a `tsconfig.json` in `./cypress` with the following content and an `./cypress/support/index.d.ts`
-    ```json
-    {
-      "extends": "../tsconfig.json",
-      "compilerOptions": { "baseUrl": "." },
-      "include": ["./support/index.d.ts"]
-    }
-    ```
-    ```ts
-    /// <reference types="cypress" />
 
-    declare interface User {
-      email: string;
-      username: string;
-      password: string;
-    }
+   ```json
+   {
+     "extends": "../tsconfig.json",
+     "compilerOptions": { "baseUrl": "." },
+     "include": ["./support/index.d.ts"]
+   }
+   ```
 
-    declare namespace Cypress {
-      interface Chainable<Subject> {
-        login(): Chainable<User>;
-      }
-    }
-    ```
+   ```ts
+   /// <reference types="cypress" />
+
+   declare interface User {
+     email: string;
+     username: string;
+     password: string;
+   }
+
+   declare namespace Cypress {
+     interface Chainable<Subject> {
+       login(): Chainable<User>;
+     }
+   }
+   ```
+
 ### 13. Settings tests
+
 1. Create the `./cypress/integration/settings/settings.spec.js`
-    ```js
-    context('Settings', () => {
-      /**  @type User */
-      let user;
-      beforeEach(() => {
-        cy.register().then(u => (user = u));
-        cy.visit('/settings');
-      });
-    })
-    ```
+   ```js
+   context('Settings', () => {
+     /**  @type User */
+     let user;
+     beforeEach(() => {
+       cy.register().then(u => (user = u));
+       cy.visit('/settings');
+     });
+   });
+   ```
 2. Add test case `should be visible for logged in users`
 3. Add test case `should have the user name and email pre-filled`
 4. Add test case `should log out successfully`
@@ -235,17 +242,19 @@ _Example with the `flushMicrotasks thing` article and presentation._
 6. See [help](files/cypress/integration/settings/sign-up.spec.js.help)
 
 ### 14. Articles
+
 1. Create the `articles.spec.js`
 2. Add test case authenticated user can see UI for writing and article
 3. Add test case authenticated user can publish artice
 4. Review ([help](files/cypress/integration/article/article.spec.js.help))
 
 ### 15. Comment
+
 1. Create the `comments.spec.js`
 2. Start with an article creation logic using the API (need a token first)
-B3. Add test case authenticated user can comment
-4. Add test case anonymous user can not comment
-5. Review ([help](files/cypress/integration/comments/comments.spec.js.help))
+   B3. Add test case authenticated user can comment
+3. Add test case anonymous user can not comment
+4. Review ([help](files/cypress/integration/comments/comments.spec.js.help))
 
 # Day 4. Performance
 
@@ -255,49 +264,80 @@ B3. Add test case authenticated user can comment
 2. Run `ng build --prod --stats-json`
 3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
 4. Notice
-    - settings and article modules not lazy
-    - all moment locales - even though we need only few of them - us/ru
-    - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
-    - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
+
+   - settings and article modules not lazy
+   - all moment locales - even though we need only few of them - us/ru
+   - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
+   - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
 
 5. Explore what Angular does automatically with the tree shaker
-    - Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
-    - Checkout the `main`, `secondary` and `third` components and see that __only__ the used components end up in the bundles, even though using the shared module and its shared components
-6. Demo what Ivy does for us in terms of performance. __Angular 8__ requires __node 10__ so either use Docker or install Node 10 locally
-    - for local build
-        - `ng update @angular/cli @angular/core`
-        - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
-        - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
-        - navigate to `localhost:8888`
-    - for docker demo
-        - `docker run -p 8888:8888 gparlakov/demo-ivy`
-        - navigate to `localhost:8888`
+   - Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
+   - Checkout the `main`, `secondary` and `third` components and see that **only** the used components end up in the bundles, even though using the shared module and its shared components
+6. Demo what Ivy does for us in terms of performance. **Angular 8** requires **node 10** so either use Docker or install Node 10 locally
+   - for local build
+     - `ng update @angular/cli @angular/core`
+     - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
+     - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
+     - navigate to `localhost:8888`
+   - for docker demo
+     - `docker run -p 8888:8888 gparlakov/demo-ivy`
+     - navigate to `localhost:8888`
 
 ### 17. Lazy loading
+
 1. Make Article module lazy
-    - remove ArticleModule from AppModule
-    - make the route use `loadChildren: "./article/article.module#ArticleModule"`
+   - remove ArticleModule from AppModule
+   - make the route use `loadChildren: "./article/article.module#ArticleModule"`
 2. Make Settings module lazy - same steps as above
 3. Note the bundles sizes change (run steps 2. and 3.)
-    `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
+   `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
 4. Review (see [app-routing.module.ts](files/src/app/app-routing.module.ts.help) and [app.module.ts](files/src/app/app.module.ts.help))
 
 ### 18. Removal of unused modules manually
+
 1. Check out the moment locales (keep the browser tab open for comparison)
 2. Add `"postinstall": "node ./tools/remove-unused-locales.js"` to `scripts` section of package.json
 3. Run `npm i` to invoke the post install hook script
 4. `ng build --prod --stats-json` and `webpack-bundle-analyzer ./dist/stats.json` and `` and see the bundle size differ
 5. Review
-// Demonstrate how to remove the moment js (or any other) locales not in use
+   // Demonstrate how to remove the moment js (or any other) locales not in use
 
 ### 19. Manual JS lazy module load
 
-1. Notice the `Pusher` is a large part of our main bundle. Turns out the user needs to agree for us to send them notifications.
-2. //TODO - imagine and describe steps to keep the current API but have a button (or user action property - localStorage.push) to actually start the pushing
+1. Notice the `Pusher` is a large part of our main bundle. Turns out the user needs to agree for us to send them notifications. Let's make the pusher module lazy loaded - that's a JavaScript module (vs Angular Module - which gets lazy loaded via Routes primarily though there are [options](https://www.npmjs.com/package/@herodevs/hero-loader))
+2. Notice [pusher-service.ts](src/app/core/services/pusher.service.ts). It imports the Pusher library - no matter if anyone uses it or not:
+(i.e. if `I want notifications` has been pressed)
+    ```ts
+    import * as Pusher from 'pusher-js';
+    ```
+3. In order to lazy load that module we need to:
+    - change the `module` setting in `tsconfig.app.json` to `esnext`
+      ```json
+      "module": "esnext"
+      ```
+    - replace `getPusherInstance` method in pusher service with:
+      ```ts
+        private getPusherInstance() {
+          return import('pusher-js').then((p: any) => {
+            if (this.instance == null) {
+              // we know this is imported as { default: PusherStatic } contrary to what our import types this as
+              const Pusher: Pusher.PusherStatic = p.default;
+              this.instance = new Pusher(this.key, this.config);
+            }
+            return this.instance;
+          });
+        }
+      ```
+4. Now run the `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
+5. Review (see [help](files/src/app/core/services/pusher.service.ts.help))
+
+### 20. Angular performance - OnPush
+
+
+### 21. Angular performance - trackBy
 
 
 # Day 5. State management
-
 
 ### N State management
 

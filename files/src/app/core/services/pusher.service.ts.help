@@ -1,7 +1,6 @@
 /// <reference types="pusher-js" />
 
 import { Observable } from 'rxjs';
-import * as Pusher from 'pusher-js';
 
 export class PusherService {
   private instance: Pusher.Pusher;
@@ -28,20 +27,13 @@ export class PusherService {
   }
 
   private getPusherInstance() {
-    if (this.instance == null) {
-      this.instance = new Pusher(this.key, this.config);
-    }
-    return Promise.resolve(this.instance);
+    return import('pusher-js').then((p: any) => {
+      if (this.instance == null) {
+        // we know this is imported as { default: PusherStatic } contrary to what our import types this as
+        const Pusher: Pusher.PusherStatic = p.default;
+        this.instance = new Pusher(this.key, this.config);
+      }
+      return this.instance;
+    });
   }
-
-  // private getPusherInstance() {
-  //   return import('pusher-js').then((p: any) => {
-  //     if (this.instance == null) {
-  //       // we know this is imported as { default: PusherStatic } contrary to what our import types this as
-  //       const Pusher: Pusher.PusherStatic = p.default;
-  //       this.instance = new Pusher(this.key, this.config);
-  //     }
-  //     return this.instance;
-  //   });
-  // }
 }
