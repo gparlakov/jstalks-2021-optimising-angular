@@ -331,6 +331,10 @@ _Example with the `flushMicrotasks thing` article and presentation._
 4. Now run the `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
 5. Review (see [help](files/src/app/core/services/pusher.service.ts.help))
 
+
+// TODO for performance build Admin module
+// main page with a search form (debounce demo) that sends a request and draws the results (trackBy) demo and when user types checks the whole thing for changes (OnPush)
+
 ### 20. Angular performance - OnPush
 
 
