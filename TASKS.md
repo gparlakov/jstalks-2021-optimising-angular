@@ -292,7 +292,7 @@ B3. Add test case authenticated user can comment
 
 ### 19. Manual JS lazy module load
 
-1. Notice the `Pusher` is a large part of our main
+1. Notice the `Pusher` is a large part of our main bundle. Turns out the user needs to agree for us to send them notifications.
 2. //TODO - imagine and describe steps to keep the current API but have a button (or user action property - localStorage.push) to actually start the pushing
 
 
