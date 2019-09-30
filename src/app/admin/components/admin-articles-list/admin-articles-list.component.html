@@ -1,3 +1,1 @@
-<p>
-  admin-articles-list works!
-</p>
+<app-admin-article *ngFor="let a of articles$ | async" [article]="a"></app-admin-article>

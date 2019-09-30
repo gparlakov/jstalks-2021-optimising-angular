@@ -1,0 +1,18 @@
+span {
+  display: inline-block;
+  border-right: 1px solid darkblue;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+button {
+  border: none;
+  background: none;
+}
+
+button.plus {
+  color: cyan;
+}
+
+button.minus {
+  color: rgb(128, 251, 159);
+}

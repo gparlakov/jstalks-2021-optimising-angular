@@ -6,23 +6,27 @@ export class TextWidthService {
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
   fitTextIn(text: string, maxWidthPx: number, maxHeightPx: number) {
-    document = this.document;
-    const p = document.createElement('p');
-    p.innerText = text;
-    p.style.width = maxWidthPx + 'px';
-    p.style.maxWidth = maxWidthPx + 'px';
+    const w = 5.88235294;
+    const h = 8;
+    const length = text.length;
 
-    p.style.height = maxHeightPx + 'px';
-    p.style.maxHeight = maxHeightPx + 'px';
+    let row = 0;
+    let width = 0;
+    let i = 0;
+    while (i < length) {
+      width += w;
+      if (width >= maxWidthPx) {
+        width = 0;
+        row += 1;
+      }
+      if ((row * h) >= maxHeightPx) {
+        return text.slice(0, i);
+      }
+      i += 1;
+      console.log('cycle');
+    }
 
-    p.style.overflowY = 'hidden';
-    p.style.textOverflow = 'ellipsis';
-
-    p.style.visibility = 'hidden';
-    document.body.appendChild(p);
-    const cutOffText = p.innerText;
-
-    document.body.removeChild(p);
-    return cutOffText;
+    // we never returned from above so
+    return text;
   }
 }

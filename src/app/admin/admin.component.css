@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+app-admin-articles-list {
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 50%;
+}
