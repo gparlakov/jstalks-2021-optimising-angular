@@ -13,6 +13,7 @@ import {
   TagsService,
   UserService
 } from './services';
+import { TextWidthService } from './services/text-width.service';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {
     JwtService,
     ProfilesService,
     TagsService,
-    UserService
+    UserService,
+    TextWidthService
   ],
   declarations: []
 })
