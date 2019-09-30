@@ -7,6 +7,11 @@ import { ArticleResolver } from './article/article-resolver.service';
 
 const routes: Routes = [
   {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule'
+    // canActivate: [AdminGuard] - as an exercise for the reader
+  },
+  {
     path: 'settings',
     component: SettingsComponent,
     canActivate: [AuthGuard]
