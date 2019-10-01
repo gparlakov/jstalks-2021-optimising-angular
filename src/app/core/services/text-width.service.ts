@@ -1,9 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TextWidthService {
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor() {}
 
   fitTextIn(text: string, maxWidthPx: number, maxHeightPx: number) {
     const w = 5.88235294;
@@ -19,14 +18,13 @@ export class TextWidthService {
         width = 0;
         row += 1;
       }
-      if ((row * h) >= maxHeightPx) {
+      if (row * h >= maxHeightPx) {
         return text.slice(0, i);
       }
       i += 1;
-      console.log('cycle');
     }
 
-    // we never returned from above so
+    // we never returned from above so just return the text
     return text;
   }
 }

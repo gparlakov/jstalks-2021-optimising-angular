@@ -10,6 +10,7 @@ import { ListErrorsComponent } from './list-errors.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MomentModule } from 'ngx-moment';
+import { CounterComponent } from './counter/counter.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { MomentModule } from 'ngx-moment';
     FollowButtonComponent,
     ListErrorsComponent,
     ShowAuthedDirective,
-    NotificationsComponent
+    NotificationsComponent,
+    CounterComponent
   ],
   exports: [
     ArticleListComponent,
@@ -43,7 +45,8 @@ import { MomentModule } from 'ngx-moment';
     ListErrorsComponent,
     RouterModule,
     ShowAuthedDirective,
-    NotificationsComponent
+    NotificationsComponent,
+    CounterComponent
   ]
 })
 export class SharedModule {}

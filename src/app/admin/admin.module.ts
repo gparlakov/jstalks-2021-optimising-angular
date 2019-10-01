@@ -1,13 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgModule } from '@angular/core';
+import { AdminArticleService } from './admin-article.service';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
-import { SearchComponent } from './components/search/search.component';
+import {
+  AdminArticleComponent} from './components/admin-article/admin-article.component';
+import { AdminArticleComponentService } from "./model/Props";
 import { AdminArticlesListComponent } from './components/admin-articles-list/admin-articles-list.component';
-import { AdminArticleComponent } from './components/admin-article/admin-article.component';
-import { AdminArticleService } from './admin-article.service';
 import { DomIndicatorComponent } from './components/dom-indicator/dom-indicator.component';
+import { SearchComponent } from './components/search/search.component';
+import { SharedModule } from '../shared';
+
 @NgModule({
   declarations: [
     AdminComponent,
@@ -16,7 +19,10 @@ import { DomIndicatorComponent } from './components/dom-indicator/dom-indicator.
     AdminArticleComponent,
     DomIndicatorComponent
   ],
-  imports: [CommonModule, AdminRoutingModule],
-  providers: [AdminArticleService]
+  imports: [CommonModule, AdminRoutingModule, SharedModule],
+  providers: [
+    AdminArticleService,
+    { provide: AdminArticleComponentService, useExisting: AdminArticleService }
+  ]
 })
 export class AdminModule {}

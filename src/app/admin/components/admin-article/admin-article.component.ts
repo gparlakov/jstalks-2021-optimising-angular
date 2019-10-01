@@ -1,16 +1,9 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  DoCheck,
-  ChangeDetectorRef
-} from '@angular/core';
-import { AdminArticle } from '../../model/admin-article';
-import { TextWidthService } from '../../../core/services/text-width.service';
-import { config } from '../../model/config';
+import { Component, DoCheck, Input } from '@angular/core';
 import { take } from 'rxjs/operators';
+import { TextWidthService } from '../../../core/services/text-width.service';
+import { AdminArticle } from '../../model/admin-article';
+import { config } from '../../model/config';
+import { AdminArticleComponentService } from '../../model/Props';
 
 let all = 1;
 @Component({
@@ -18,7 +11,7 @@ let all = 1;
   templateUrl: './admin-article.component.html',
   styleUrls: ['./admin-article.component.css']
 })
-export class AdminArticleComponent implements OnInit, OnChanges, DoCheck {
+export class AdminArticleComponent implements DoCheck {
   @Input()
   article: AdminArticle;
 
@@ -29,24 +22,21 @@ export class AdminArticleComponent implements OnInit, OnChanges, DoCheck {
   seeMore = true;
   showEllipsis: boolean;
 
-  constructor(private textWidth: TextWidthService, private changeRef: ChangeDetectorRef) {
+  constructor(
+    private textWidth: TextWidthService,
+    private configService: AdminArticleComponentService
+  ) {
     all += 1;
   }
 
-  ngOnInit() {}
-
-  ngOnChanges() {
+  ngDoCheck(): void {
     if (this.article) {
-      config.pipe(take(1)).subscribe(({ repetitions }) => {
-        for (let i = 0; i < repetitions; i++) {
-          this.shortText = this.textWidth.fitTextIn(this.article.body, 90, 20);
-          this.showEllipsis = this.shortText !== this.article.body;
-        }
+      this.configService.articleConfig$.pipe(take(1)).subscribe(({ width, height }) => {
+        this.shortText = this.textWidth.fitTextIn(this.article.body, width, height);
+        this.showEllipsis = this.shortText !== this.article.body;
+        console.log('cycle');
       });
     }
-  }
-  ngDoCheck(): void {
-    this.changeRef.detectChanges();
   }
 
   buttonToggleSeeMoreClick() {
