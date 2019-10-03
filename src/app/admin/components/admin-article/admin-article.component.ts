@@ -1,11 +1,8 @@
 import { Component, DoCheck, Input } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { TextWidthService } from '../../../core/services/text-width.service';
 import { AdminArticle } from '../../model/admin-article';
-import { config } from '../../model/config';
-import { AdminArticleComponentService } from '../../model/Props';
 
-let all = 1;
+let componentInstancesCount = 1;
 @Component({
   selector: 'app-admin-article',
   templateUrl: './admin-article.component.html',
@@ -15,27 +12,23 @@ export class AdminArticleComponent implements DoCheck {
   @Input()
   article: AdminArticle;
 
-  articles = all;
+  count = componentInstancesCount;
 
   shortText: string;
 
   seeMore = true;
   showEllipsis: boolean;
 
-  constructor(
-    private textWidth: TextWidthService,
-    private configService: AdminArticleComponentService
-  ) {
-    all += 1;
+  constructor(private textWidth: TextWidthService) {
+    componentInstancesCount += 1;
   }
 
   ngDoCheck(): void {
     if (this.article) {
-      this.configService.articleConfig$.pipe(take(1)).subscribe(({ width, height }) => {
-        this.shortText = this.textWidth.fitTextIn(this.article.body, width, height);
-        this.showEllipsis = this.shortText !== this.article.body;
-        console.log('cycle');
-      });
+      const { body, width, height } = this.article;
+      this.shortText = this.article.shortText = this.textWidth.fitTextIn(body, width, height);
+      this.showEllipsis = this.shortText !== body;
+      console.log('cycle');
     }
   }
 

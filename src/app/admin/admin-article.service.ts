@@ -1,31 +1,27 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, merge } from 'rxjs';
-import { AdminArticle } from './model/admin-article';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { map, scan } from 'rxjs/operators';
 import { ApiService } from '../core';
-import { scan, take } from 'rxjs/operators';
-import { AdminArticleComponentService, ArticleComponentConfig, Props as ArticleConfigProps } from "./model/Props";
+import { AdminArticle } from './model/admin-article';
+import { ArticleDimensionProps, ArticleDimensions } from './model/admin-article-dimensions';
 
 @Injectable()
-export class AdminArticleService implements AdminArticleComponentService {
-  articles = new BehaviorSubject<AdminArticle[]>([]);
+export class AdminArticleService {
+  private fetchArticlesSubject = new Subject();
+  private articles = new BehaviorSubject<AdminArticle[]>([]);
   articles$ = this.articles.asObservable();
 
-  articleConfig = new BehaviorSubject<ArticleComponentConfig>(ArticleComponentConfig.default);
+  private articleConfig = new BehaviorSubject<ArticleDimensions>(ArticleDimensions.default);
   articleConfig$ = this.articleConfig.asObservable();
 
   constructor(private apiClient: ApiService) {}
 
   onAdminEnter() {
-    merge(
-      this.fetchArticles(100, 0),
-      this.fetchArticles(100, 100),
-      this.fetchArticles(100, 200),
-      this.fetchArticles(100, 300),
-      this.fetchArticles(100, 400)
-    )
+    combineLatest([this.fetchArticles(100), this.articleConfig])
       .pipe(
-        take(5),
-        scan((acc, next) => [...acc, ...next.articles], [] as AdminArticle[])
+        map(([articles, config]) =>
+          articles.map(a => ({ ...a, width: config.width, height: config.height }))
+        )
       )
       .subscribe(
         articles => this.articles.next(articles),
@@ -36,16 +32,21 @@ export class AdminArticleService implements AdminArticleComponentService {
       );
   }
 
-  private fetchArticles(count: number, skip?: number) {
+  private fetchArticles(count: number, skip?: number): Observable<AdminArticle[]> {
     skip = skip || 0;
-    return this.apiClient.get(`/articles?limit=${count}&skip=${skip}`);
+    return (
+      this.apiClient
+        .get(`/articles?limit=${count}&skip=${skip}`)
+        // response returns an object with articles property -> {articles: Article[]}
+        .pipe(map(r => r.articles))
+    );
   }
 
   onSearch() {
     // todo implement
   }
 
-  onArticleChange(p: ArticleConfigProps, v: ArticleComponentConfig[ArticleConfigProps]) {
+  onArticleChange(p: ArticleDimensionProps, v: number) {
     this.articleConfig.next(this.articleConfig.value.with(p, v));
   }
 }

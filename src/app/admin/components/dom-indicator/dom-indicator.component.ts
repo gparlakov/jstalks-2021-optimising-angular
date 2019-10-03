@@ -1,8 +1,7 @@
-import { Component, OnInit, DoCheck, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { config } from '../../model/config';
-import { take, map } from 'rxjs/operators';
+import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { map, take } from 'rxjs/operators';
 import { AdminArticleService } from '../../admin-article.service';
-import { Props } from '../../model/Props';
+import { ArticleDimensionProps } from '../../model/admin-article-dimensions';
 
 @Component({
   selector: 'app-dom-indicator',
@@ -52,7 +51,7 @@ export class DomIndicatorComponent {
     this.doChange(event, 'height');
   }
 
-  private doChange(event: string, p: Props) {
+  private doChange(event: string, p: ArticleDimensionProps) {
     this.articleService.articleConfig$.pipe(take(1)).subscribe(v => {
       let value = v.by;
       if (p === 'by') {

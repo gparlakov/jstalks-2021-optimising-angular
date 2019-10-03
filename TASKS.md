@@ -335,10 +335,17 @@ _Example with the `flushMicrotasks thing` article and presentation._
 // TODO for performance build Admin module
 // main page with a search form (debounce demo) that sends a request and draws the results (trackBy) demo and when user types checks the whole thing for changes (OnPush)
 
-### 20. Angular performance - OnPush
+### 20. Angular performance - trackBy
+
+// TODO write tasks
+1. Notice the /admin route of the app
+
+help [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help)
 
 
-### 21. Angular performance - trackBy
+### 21. Angular performance - OnPush
+
+
 
 
 # Day 5. State management
