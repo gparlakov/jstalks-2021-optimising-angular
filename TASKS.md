@@ -331,16 +331,16 @@ _Example with the `flushMicrotasks thing` article and presentation._
 4. Now run the `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
 5. Review (see [help](files/src/app/core/services/pusher.service.ts.help))
 
-
-// TODO for performance build Admin module
-// main page with a search form (debounce demo) that sends a request and draws the results (trackBy) demo and when user types checks the whole thing for changes (OnPush)
-
 ### 20. Angular performance - trackBy
 
-// TODO write tasks
-1. Notice the /admin route of the app
-
-help [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help)
+1. Notice the /admin route of the app. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [admin-article.service](src/app/admin/admin-article.service.ts#l23) with the input provided in the admin-article-visualize-control.component (i.e. the aforementioned controls - width, height, by).
+2. Add a `articleSlug` property in the `admin-article-list.component`
+3. Let it be of type `TrackByFunction<AdminArticle>`
+4. Assign a function to the property that accepts index and an item if type `AdminArticle` and return the slug of the article.
+5. Now notice the template of `admin-article-list.component`.
+6. Add a `;trackBy=articleSlug` to the end of the `*ngFor` declaration. That will instruct Angular to take the returned value and check that for equality with the previous one instead of just comparing object references.
+7. Notice how the controls no longer cause the redrawing of the whole list and rather make the existing components change.
+8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
 
 
 ### 21. Angular performance - OnPush

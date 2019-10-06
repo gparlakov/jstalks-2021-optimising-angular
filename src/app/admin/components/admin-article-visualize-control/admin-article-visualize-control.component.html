@@ -1,0 +1,3 @@
+<app-counter [count]="width$ | async" (countChange)="onChangeWithInputChange($event)">Width</app-counter>
+<app-counter [count]="height$ | async" (countChange)="onChangeHeightInputChange($event)">Height</app-counter>
+<app-counter [count]="by$ | async" (countChange)="onChangeByInputChange($event)">By</app-counter>
