@@ -29,7 +29,7 @@ export class AdminArticleVisualizeControlComponent implements OnInit {
     this.doChange(event, 'height');
   }
 
-  private doChange(event: string, p: ArticleDimensionProps) {
+  private doChange(event: 'increment' | 'decrement', p: ArticleDimensionProps) {
     this.articleService.articleConfig$.pipe(take(1)).subscribe(v => {
       let value = v.by;
       if (p === 'by') {
