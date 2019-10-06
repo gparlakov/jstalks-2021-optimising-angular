@@ -10,6 +10,8 @@ import { AdminArticleComponent } from './components/admin-article/admin-article.
 import { AdminArticlesListComponent } from './components/admin-articles-list/admin-articles-list.component';
 import { DomIndicatorComponent } from './components/dom-indicator/dom-indicator.component';
 import { SearchComponent } from './components/search/search.component';
+import { AdminSearchComponent } from './components/search/admin-search/admin-search.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,10 @@ import { SearchComponent } from './components/search/search.component';
     AdminArticlesListComponent,
     AdminArticleComponent,
     DomIndicatorComponent,
-    AdminArticleVisualizeControlComponent
+    AdminArticleVisualizeControlComponent,
+    AdminSearchComponent
   ],
-  imports: [CommonModule, AdminRoutingModule, SharedModule],
+  imports: [CommonModule, AdminRoutingModule, SharedModule, ReactiveFormsModule],
   providers: [AdminArticleService]
 })
 export class AdminModule {}

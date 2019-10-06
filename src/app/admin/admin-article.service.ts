@@ -1,15 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { map, scan } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subject, empty, ReplaySubject } from 'rxjs';
+import { map, mergeMap, startWith } from 'rxjs/operators';
 import { ApiService } from '../core';
 import { AdminArticle } from './model/admin-article';
 import { ArticleDimensionProps, ArticleDimensions } from './model/admin-article-dimensions';
 
 @Injectable()
 export class AdminArticleService {
-  private fetchArticlesSubject = new Subject();
+  private searchAggregated = new ReplaySubject<Observable<string>>(1);
+  private search = this.searchAggregated.pipe(
+    mergeMap(s => s),
+    startWith('')
+  );
+
   private articles = new BehaviorSubject<AdminArticle[]>([]);
-  articles$ = this.articles.asObservable();
+  articles$ = combineLatest([this.articles, this.search]).pipe(
+    map(([articles, search]) =>
+      search && search.length > 1
+        ? // implement search if there is at least one char
+          articles.filter(
+            a => (a.title && a.title.includes(search)) || (a.body && a.body.includes(search))
+          )
+        : articles
+    )
+  );
 
   private articleConfig = new BehaviorSubject<ArticleDimensions>(ArticleDimensions.default);
   articleConfig$ = this.articleConfig.asObservable();
@@ -19,6 +33,7 @@ export class AdminArticleService {
   onAdminEnter() {
     combineLatest([this.fetchArticles(100), this.articleConfig])
       .pipe(
+        // implement article short text
         map(([articles, config]) =>
           articles.map(a => ({ ...a, width: config.width, height: config.height }))
         )
@@ -42,8 +57,8 @@ export class AdminArticleService {
     );
   }
 
-  onSearch() {
-    // todo implement
+  onSearch(searchInput$: Observable<string>) {
+    this.searchAggregated.next(searchInput$);
   }
 
   onArticleChange(p: ArticleDimensionProps, v: number) {

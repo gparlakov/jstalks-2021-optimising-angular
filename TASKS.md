@@ -346,7 +346,8 @@ _Example with the `flushMicrotasks thing` article and presentation._
 ### 21. Angular performance - OnPush
 
 
-
+### 22. Angular performance - debounce
+search is the obvious candidate here
 
 # Day 5. State management
 

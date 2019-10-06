@@ -3,12 +3,10 @@
   position: relative;
 }
 
-app-admin-articles-list {
+app-admin-article-visualize-control,
+app-admin-search {
   display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 80%;
+  width: 20%
 }
 
 app-dom-indicator {
@@ -16,5 +14,12 @@ app-dom-indicator {
   position: absolute;
   left: 0;
   top: 0;
-  width: 20%;
+}
+
+app-admin-articles-list {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 80%;
 }
