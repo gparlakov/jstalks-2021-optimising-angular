@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private notifications: NotificationsService,
     // for the bonus task add dependency -> private pusher: PusherService
-    private pusher: PusherService
+    // private pusher: PusherService
   ) {}
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   onUserWantsNotificationsButtonClick() {
     // bonus - uncomment and add a test case
-    this.listenForPushNotifications(this.userService.currentUser, this.pusher, this.notifications);
+    // this.listenForPushNotifications(this.userService.currentUser, this.pusher, this.notifications);
     this.notificationsButtonVisible = false;
   }
 
