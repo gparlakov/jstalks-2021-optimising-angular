@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subject, empty, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { map, mergeMap, startWith } from 'rxjs/operators';
 import { ApiService } from '../core';
 import { AdminArticle } from './model/admin-article';
@@ -17,10 +17,8 @@ export class AdminArticleService {
   articles$ = combineLatest([this.articles, this.search]).pipe(
     map(([articles, search]) =>
       search && search.length > 1
-        ? // implement search if there is at least one char
-          articles.filter(
-            a => (a.title && a.title.includes(search)) || (a.body && a.body.includes(search))
-          )
+        ? // implement search - do search only if there is at least one char
+          articles.filter(a => a.body && a.body.includes(search))
         : articles
     )
   );

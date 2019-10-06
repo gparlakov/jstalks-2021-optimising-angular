@@ -306,28 +306,26 @@ _Example with the `flushMicrotasks thing` article and presentation._
 
 1. Notice the `Pusher` is a large part of our main bundle. Turns out the user needs to agree for us to send them notifications. Let's make the pusher module lazy loaded - that's a JavaScript module (vs Angular Module - which gets lazy loaded via Routes primarily though there are [options](https://www.npmjs.com/package/@herodevs/hero-loader))
 2. Notice [pusher-service.ts](src/app/core/services/pusher.service.ts). It imports the Pusher library - no matter if anyone uses it or not:
-(i.e. if `I want notifications` has been pressed)
-    ```ts
-    import * as Pusher from 'pusher-js';
-    ```
+   (i.e. if `I want notifications` has been pressed)
+   `ts import * as Pusher from 'pusher-js';`
 3. In order to lazy load that module we need to:
-    - change the `module` setting in `tsconfig.app.json` to `esnext`
-      ```json
-      "module": "esnext"
-      ```
-    - replace `getPusherInstance` method in pusher service with:
-      ```ts
-        private getPusherInstance() {
-          return import('pusher-js').then((p: any) => {
-            if (this.instance == null) {
-              // we know this is imported as { default: PusherStatic } contrary to what our import types this as
-              const Pusher: Pusher.PusherStatic = p.default;
-              this.instance = new Pusher(this.key, this.config);
-            }
-            return this.instance;
-          });
-        }
-      ```
+   - change the `module` setting in `tsconfig.app.json` to `esnext`
+     ```json
+     "module": "esnext"
+     ```
+   - replace `getPusherInstance` method in pusher service with:
+     ```ts
+       private getPusherInstance() {
+         return import('pusher-js').then((p: any) => {
+           if (this.instance == null) {
+             // we know this is imported as { default: PusherStatic } contrary to what our import types this as
+             const Pusher: Pusher.PusherStatic = p.default;
+             this.instance = new Pusher(this.key, this.config);
+           }
+           return this.instance;
+         });
+       }
+     ```
 4. Now run the `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
 5. Review (see [help](files/src/app/core/services/pusher.service.ts.help))
 
@@ -342,11 +340,14 @@ _Example with the `flushMicrotasks thing` article and presentation._
 7. Notice how the controls no longer cause the redrawing of the whole list and rather make the existing components change.
 8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
 
+// TODO - have a route demonstrating onPush and another one demonstrating debounce
+// on push would show some unconnected thing on the left and how all articles redraw even if not required
+// debounce will use the server search and visualize the articles
 
 ### 21. Angular performance - OnPush
 
-
 ### 22. Angular performance - debounce
+
 search is the obvious candidate here
 
 # Day 5. State management
