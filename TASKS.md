@@ -340,15 +340,15 @@ _Example with the `flushMicrotasks thing` article and presentation._
 7. Notice how the controls no longer cause the redrawing of the whole list and rather make the existing components change.
 8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
 
-// TODO - have a route demonstrating onPush and another one demonstrating debounce
-// on push would show some unconnected thing on the left and how all articles redraw even if not required
-// debounce will use the server search and visualize the articles
-
 ### 21. Angular performance - OnPush
+1. Notice the `./admin/on-push` route. See how writing in the input triggers change detection in all of the `admin-article.component`-s with no visible changes.
+2. Adjust the change detection strategy of the `admin-article.component` to on-push.
+3. Try typing in the input again and notice if the change detection is triggered in the article
+4. Review (for help see [admin-article.component.ts.help](files/src/app/admin/admin-article/admin-article.component.ts.help))
 
 ### 22. Angular performance - debounce
 
-search is the obvious candidate here
+// TODO search is the obvious candidate here
 
 # Day 5. State management
 
