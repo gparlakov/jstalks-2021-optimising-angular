@@ -1,0 +1,8 @@
+form {
+  display: inline-block;
+  width: 20%;
+}
+app-admin-articles-list {
+  display: inline-block;
+  width: 80%;
+}

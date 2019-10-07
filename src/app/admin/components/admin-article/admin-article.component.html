@@ -6,4 +6,4 @@
 >
   {{ seeMore ? '+' : '-' }}
 </button>
-<span> {{ count }}. {{ text() }} </span>
+<span> {{ counterType == 'changeDetections'? changeDetections : count }}. {{ text() }} </span>

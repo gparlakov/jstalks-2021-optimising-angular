@@ -5,5 +5,5 @@ export interface AdminArticle {
   width: number;
   height: number;
   shortText: string;
+  counterType?: 'changeDetections';
 }
-

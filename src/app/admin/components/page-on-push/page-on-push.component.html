@@ -1,0 +1,10 @@
+<form (submit)="mockHandleEvent($event)">
+  <h2>My delete form article</h2>
+  <input
+    (change)="mockHandleEvent($event)"
+    (keyup)="mockHandleEvent($event)"
+    placeholder="article id"
+  />
+  <button type="submit">Delete selected</button>
+</form>
+<app-admin-articles-list [articles]="articles$ | async"></app-admin-articles-list>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
-import { map, mergeMap, startWith } from 'rxjs/operators';
+import { map, mergeMap, startWith, share, take } from 'rxjs/operators';
 import { ApiService } from '../core';
 import { AdminArticle } from './model/admin-article';
 import { ArticleDimensionProps, ArticleDimensions } from './model/admin-article-dimensions';
@@ -25,6 +25,8 @@ export class AdminArticleService {
 
   private articleConfig = new BehaviorSubject<ArticleDimensions>(ArticleDimensions.default);
   articleConfig$ = this.articleConfig.asObservable();
+
+  private articleCache = new BehaviorSubject<AdminArticle[]>(undefined);
 
   constructor(private apiClient: ApiService) {}
 
@@ -61,5 +63,14 @@ export class AdminArticleService {
 
   onArticleChange(p: ArticleDimensionProps, v: number) {
     this.articleConfig.next(this.articleConfig.value.with(p, v));
+  }
+
+  article100Cache() {
+    if (!this.articleCache.value) {
+      this.fetchArticles(200)
+        .pipe(take(1))
+        .subscribe(articles => (this.articleCache.next(articles)));
+    }
+    return this.articleCache;
   }
 }

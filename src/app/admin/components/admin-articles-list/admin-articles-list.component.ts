@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AdminArticleService } from '../../admin-article.service';
-
-import { Observable } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 import { AdminArticle } from '../../model/admin-article';
+
 
 @Component({
   selector: 'app-admin-articles-list',
@@ -10,13 +8,11 @@ import { AdminArticle } from '../../model/admin-article';
   styleUrls: ['./admin-articles-list.component.css']
 })
 export class AdminArticlesListComponent implements OnInit {
-  articles$: Observable<AdminArticle[]>;
+  @Input()
+  articles: AdminArticle[];
 
-  constructor(private service: AdminArticleService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.articles$ = this.service.articles$;
-    // inform our admin service that the admin has entered
-    this.service.onAdminEnter();
   }
 }

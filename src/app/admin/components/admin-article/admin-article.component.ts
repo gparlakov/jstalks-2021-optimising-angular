@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input } from '@angular/core';
+import { Component, DoCheck, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TextWidthService } from '../../../core/services/text-width.service';
 import { AdminArticle } from '../../model/admin-article';
 
@@ -13,6 +13,8 @@ export class AdminArticleComponent implements DoCheck {
   article: AdminArticle;
 
   count = componentInstancesCount;
+  counterType: string;
+  changeDetections = 1;
 
   shortText: string;
 
@@ -25,11 +27,13 @@ export class AdminArticleComponent implements DoCheck {
 
   ngDoCheck(): void {
     if (this.article) {
-      const { body, width, height } = this.article;
+      const { body, width, height, counterType } = this.article;
+      this.counterType = counterType;
       this.shortText = this.article.shortText = this.textWidth.fitTextIn(body, width, height);
       this.showEllipsis = this.shortText !== body;
       console.log('cycle');
     }
+    this.changeDetections += 1;
   }
 
   buttonToggleSeeMoreClick() {

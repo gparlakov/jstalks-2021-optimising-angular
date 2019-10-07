@@ -12,6 +12,8 @@ import { DomIndicatorComponent } from './components/dom-indicator/dom-indicator.
 import { SearchComponent } from './components/search/search.component';
 import { AdminSearchComponent } from './components/search/admin-search/admin-search.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PageOnPushComponent } from './components/page-on-push/page-on-push.component';
+import { PageDebounceComponent } from './components/page-debounce/page-debounce.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AdminArticleComponent,
     DomIndicatorComponent,
     AdminArticleVisualizeControlComponent,
-    AdminSearchComponent
+    AdminSearchComponent,
+    PageOnPushComponent,
+    PageDebounceComponent
   ],
   imports: [CommonModule, AdminRoutingModule, SharedModule, ReactiveFormsModule],
   providers: [AdminArticleService]

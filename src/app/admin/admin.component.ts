@@ -1,4 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { AdminArticleService } from './admin-article.service';
+import { AdminArticle } from './model/admin-article';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -6,12 +9,16 @@ import { Component, OnInit, HostListener } from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  constructor() {}
+  articles$: Observable<AdminArticle[]>;
+  constructor(private adminService: AdminArticleService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // inform our admin service that the admin has entered
+    this.adminService.onAdminEnter();
+
+    this.articles$ = this.adminService.articles$;
+  }
 
   @HostListener('window: hover')
-  check() {
-
-  }
+  check() {}
 }
