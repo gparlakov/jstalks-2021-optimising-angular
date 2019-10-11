@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
-import { map, mergeMap, startWith, share, take } from 'rxjs/operators';
+import { map, mergeMap, startWith, share, take, concatMap } from 'rxjs/operators';
 import { ApiService } from '../core';
 import { AdminArticle } from './model/admin-article';
 import { ArticleDimensionProps, ArticleDimensions } from './model/admin-article-dimensions';
@@ -27,6 +27,17 @@ export class AdminArticleService {
   articleConfig$ = this.articleConfig.asObservable();
 
   private articleCache = new BehaviorSubject<AdminArticle[]>(undefined);
+
+  articlesFromSearch = this.search.pipe(
+    concatMap(s => this.fetchArticles(100).pipe(map(a => [a, s] as [AdminArticle[], string]))),
+    map(([as, s]) =>
+      as.filter(
+        a =>
+          a.body.toLowerCase().includes(s.toLowerCase()) ||
+          a.title.toLowerCase().includes(s.toLowerCase())
+      )
+    )
+  );
 
   constructor(private apiClient: ApiService) {}
 
@@ -57,7 +68,7 @@ export class AdminArticleService {
     );
   }
 
-  onSearch(searchInput$: Observable<string>) {
+  onSearchInit(searchInput$: Observable<string>) {
     this.searchAggregated.next(searchInput$);
   }
 
@@ -69,7 +80,7 @@ export class AdminArticleService {
     if (!this.articleCache.value) {
       this.fetchArticles(200)
         .pipe(take(1))
-        .subscribe(articles => (this.articleCache.next(articles)));
+        .subscribe(articles => this.articleCache.next(articles));
     }
     return this.articleCache;
   }

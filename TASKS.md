@@ -341,14 +341,21 @@ _Example with the `flushMicrotasks thing` article and presentation._
 8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
 
 ### 21. Angular performance - OnPush
-1. Notice the `./admin/on-push` route. See how writing in the input triggers change detection in all of the `admin-article.component`-s with no visible changes.
+1. Notice the `/admin/on-push` route. See how writing in the input triggers change detection in all of the `admin-article.component`-s with no visible changes.
+2. This happens because the ngFor difference strategy relies on object reference comparison and since `admin-article.service` emits a new object every time, Angular has to destroy the component and create a new one for the new object reference. We **`can`** affect that by the `trackBy` input of the ngFor structural directive
 2. Adjust the change detection strategy of the `admin-article.component` to on-push.
 3. Try typing in the input again and notice if the change detection is triggered in the article
 4. Review (for help see [admin-article.component.ts.help](files/src/app/admin/admin-article/admin-article.component.ts.help))
 
 ### 22. Angular performance - debounce
 
-// TODO search is the obvious candidate here
+1. Notice the `/admin/debounce` route.
+
+2. The `admin-search.component` initializes the search by providing the changes observable. Then the `admin-article.service` will construct the (mock) request out of each emission of that observable.
+3. The effect is manifested by typing in the search resulting in a **request** for **each** typed character
+4. Apply the `debounceTime` operator in the `admin-search.component` (ex `debounceTime(400)`)
+5. Notice that the request waits for you to finish writing before sending the request (mock request)
+6. Review (for help see [component](files/src/app/admin/admin-search/admin-search.component.ts.help))
 
 # Day 5. State management
 

@@ -3,3 +3,5 @@
   [formControl]="searchControl"
   placeholder="search for article by name or content"
 />
+
+<p *ngFor="let a of articles | async">{{ a.title }}: {{ a.body }}</p>
