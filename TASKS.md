@@ -359,6 +359,22 @@ _Example with the `flushMicrotasks thing` article and presentation._
 
 # Day 5. State management
 
+### 23. State management basic
+1. Go to https://angular.io/generated/live-examples/getting-started/stackblitz.html and get to know the app
+2. Implement the following feature
+      - show the number of items next to the `Checkout` button  <img src ="./files/button.png" width="100" alt="![huhh! the button.png is missing]"></img>
+3. Steps:
+    - notice the state being kept in the `CartService`
+    - notice the button being part of the `TopBarComponent`
+    - inject the `CartService` in the `TopBarComponent`
+    - populate a `itemsCount` property with `cartService.getItems().length`
+    - notice that no changes are happening - why is that?
+    - implement a `ngDoCheck` method (when does it get called?)
+    - inside re- populate a `itemsCount` property with `cartService.getItems().length` (i.e.  `this.itemsCount = this.cartService.getItems().lenght`)
+
+ 4. Review.
+    - For help  see [final result](https://stackblitz.com/edit/angular-data-simple-angular-advanced-workshop-kiev?file=src/app/top-bar/top-bar.component.ts)
+
 ### N State management
 
 // TODO test suggestion out
