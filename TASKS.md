@@ -376,15 +376,29 @@ _Example with the `flushMicrotasks thing` article and presentation._
     - For help  see [final result](https://stackblitz.com/edit/angular-data-simple-angular-advanced-workshop-kiev?file=src/app/top-bar/top-bar.component.ts)
 
 ### M. NgRx Setup and replace User service
-1. Setup
+
+Keep in mind that importing from `src/app/..` might break the build...
+
+1. Setup. By using the `ng add`, which in turn uses the `Schematics` capabilities we can quickly and automatically setup ngrx in our app
+    - `ng add @ngrx/schematics --defaultCollection false` - add a schematic to assist in creation of new reducers/actions/effects
     - `ng add @ngrx/store --statePath state` - the base of the NgRx Redux implementation - the store, reducer, action etc types and helpers
     - `ng add @ngrx/store-devtools` - instrument for use with the Redux DevTools Extensions http://extension.remotedev.io/
-    - `ng add @ngrx/schematics` - add a schematic to assist in creation of new reducers/actions/effects
     - `ng add @ngrx/effects` - add the effects part of NgRx - handles side effects like persist etc.
+    - IMPORTANT verify installed versions of @ngrx libs are 8.4.0 (or above) in package.json
 2. User state (reducer)
     - `ng g @ngrx/schematics:reducer state/user/user -c` - creates the user reducer under state/user folder (we'll keep the state separated by feature rather than by type i.e. state/user and state/articles vs state/reducers/user.reducer.ts and state/reducers/article.ts)
     - in the `user.reducer.ts` file
         - add to the `State` `user: User` and the `initialState` to `{user: User.empty}` (importing the `User` type)
+            ```ts
+            export interface State {
+              user: User;
+              loading?: boolean;
+            }
+
+            export const initialState: State = {
+              user: User.empty
+            };
+            ```
     - in the `state/index.ts` file import the just created State and reducer and add them to the app's state
       ```ts
       import { userFeatureKey, State as UserState, reducer as userReducer } from './user/user.reducer';
@@ -398,12 +412,12 @@ _Example with the `flushMicrotasks thing` article and presentation._
       };
       ```
 3. User actions
-    - `ng g @ngrx/schematics:reducer state/user/user -a -c` - create the action file and scaffold the users load action
-    - rename UsersLoad UsersLoadSuccess and UsersLoadFailure to UserLoad UserLoadSuccess and UserLoadFailure  - we are loading a single user
+    - `ng g @ngrx/schematics:action state/user/user --api --creators` - create the action file and scaffold the users load action
+    - rename `loadUsersFailure` `loadUsersFailure` and `loadUsersFailure` to `loadUserFailure` `loadUserFailure` and `loadUserFailure` - we are loading a single user
     - rename `[User] Load Users` to `[User] Load User` - same reason
         - Why do we need the `[User]` thing?
 4. User effects
-    - `ng g @ngrx/schematics:effect state/user/user -a -m app --root` - to create the user effect class and add the it to app root's effects
+    - `ng g @ngrx/schematics:effect state/user/user --module app --root` - to create the user effect class and add the it to app root's effects
     - inject `ApiService` and the `JwtService` in the newly created `user.effects.ts`
       ```ts
       constructor(private actions$: Actions, private api: ApiService, private jwt: JwtService) {}
@@ -425,7 +439,7 @@ _Example with the `flushMicrotasks thing` article and presentation._
       );
       ```
 5. Initiate user loading with starting the app
-  - inject the `Store` in the `app.module`'s constructor
+  - inject the `Store` in the `app.module`'s constructor (that's **not** the app.component)
     ```ts
     constructor(store: Store<State>) {
       store.dispatch(loadUser());
@@ -434,7 +448,7 @@ _Example with the `flushMicrotasks thing` article and presentation._
   - open the ReduxDevTools console and watch for the emitted events. You should see both `[User] Load User` and `[User] Load User Success`
 
 6. Update the reducer -
-    - in `user.reducer.ts` import the action `userLoadSuccess`
+    - in `user.reducer.ts` import the actions from `user.actions.ts` i.e. `userLoadSuccess`, etc.
     - then update the reducer
       ```ts
       export const reducer = createReducer(
@@ -455,7 +469,7 @@ _Example with the `flushMicrotasks thing` article and presentation._
         - notice how you get type safety in the function implementing the reduction of the state - the action is of the expected type - thanks @ngrx/store
     - open the ReduxDevTools console and now you should see change of the store too
 7. Add selectors for user state
-    - in `user.reducer.ts` add the following selectors deffinition
+    - in `user.reducer.ts` add the following selectors definition
       ```ts
       export const userState = createFeatureSelector<State>(userFeatureKey);
       export const userSelector = createSelector(userState, s => s.user);
@@ -484,6 +498,8 @@ _Example with the `flushMicrotasks thing` article and presentation._
       </ng-container>
     ``
   - verify user email is still visible
+9. Review. See branch [feature/ngrx](https://github.com/gparlakov/angular-realworld-example-app/tree/feature/ngrx) for help or simply checkout
+9.1. What we did - we set up NgRx root using it's schematics. Then created a reducer, some actions, selectors, an effect to handle user load, load success and failure.
 
 
 ### N State management
