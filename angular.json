@@ -196,6 +196,18 @@
     "@schematics/angular:directive": {
       "prefix": "app",
       "spec": false
+    },
+    "@ngrx/schematics:reducer": {
+      "spec": false,
+      "flat": true
+    },
+    "@ngrx/schematics:action": {
+      "spec": false,
+      "flat": true
+    },
+    "@ngrx/schematics:effect": {
+      "spec": false,
+      "flat": true
     }
   }
 }

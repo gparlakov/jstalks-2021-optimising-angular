@@ -5,3 +5,7 @@ export interface User {
   bio: string;
   image: string;
 }
+
+export module User {
+  export const empty: User = {} as User;
+}
