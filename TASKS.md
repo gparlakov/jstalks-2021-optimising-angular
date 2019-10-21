@@ -341,11 +341,12 @@ _Example with the `flushMicrotasks thing` article and presentation._
 8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
 
 ### 21. Angular performance - OnPush
+
 1. Notice the `/admin/on-push` route. See how writing in the input triggers change detection in all of the `admin-article.component`-s with no visible changes.
 2. This happens because the ngFor difference strategy relies on object reference comparison and since `admin-article.service` emits a new object every time, Angular has to destroy the component and create a new one for the new object reference. We **`can`** affect that by the `trackBy` input of the ngFor structural directive
-2. Adjust the change detection strategy of the `admin-article.component` to on-push.
-3. Try typing in the input again and notice if the change detection is triggered in the article
-4. Review (for help see [admin-article.component.ts.help](files/src/app/admin/admin-article/admin-article.component.ts.help))
+3. Adjust the change detection strategy of the `admin-article.component` to on-push.
+4. Try typing in the input again and notice if the change detection is triggered in the article
+5. Review (for help see [admin-article.component.ts.help](files/src/app/admin/admin-article/admin-article.component.ts.help))
 
 ### 22. Angular performance - debounce
 
@@ -360,160 +361,317 @@ _Example with the `flushMicrotasks thing` article and presentation._
 # Day 5. State management
 
 ### 23. State management basic
+
 1. Go to https://angular.io/generated/live-examples/getting-started/stackblitz.html and get to know the app
 2. Implement the following feature
-      - show the number of items next to the `Checkout` button  <img src ="./files/button.png" width="100" alt="![huhh! the button.png is missing]"></img>
+   - show the number of items next to the `Checkout` button <img src ="./files/button.png" width="100" alt="![huhh! the button.png is missing]"></img>
 3. Steps:
-    - notice the state being kept in the `CartService`
-    - notice the button being part of the `TopBarComponent`
-    - inject the `CartService` in the `TopBarComponent`
-    - populate a `itemsCount` property with `cartService.getItems().length`
-    - notice that no changes are happening - why is that?
-    - implement a `ngDoCheck` method (when does it get called?)
-    - inside re- populate a `itemsCount` property with `cartService.getItems().length` (i.e.  `this.itemsCount = this.cartService.getItems().lenght`)
+
+   - notice the state being kept in the `CartService`
+   - notice the button being part of the `TopBarComponent`
+   - inject the `CartService` in the `TopBarComponent`
+   - populate a `itemsCount` property with `cartService.getItems().length`
+   - notice that no changes are happening - why is that?
+   - implement a `ngDoCheck` method (when does it get called?)
+   - inside re- populate a `itemsCount` property with `cartService.getItems().length` (i.e. `this.itemsCount = this.cartService.getItems().lenght`)
 
 4. Review.
-    - For help  see [final result](https://stackblitz.com/edit/angular-data-simple-angular-advanced-workshop-kiev?file=src/app/top-bar/top-bar.component.ts)
+   - For help see [final result](https://stackblitz.com/edit/angular-data-simple-angular-advanced-workshop-kiev?file=src/app/top-bar/top-bar.component.ts)
 
 ### 24. State management - Service with a Subject / Facade
-1. Notice the `user.service.ts`. It has methods for initiating the user, purging the auth info and exposes the current user state as an observable.
- - This is what some call [Facade](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) others [Subject service](https://medium.com/@weswhite/angular-behaviorsubject-service-60485ef064fc)
- - Very nice property of this abstraction level is that it's easy to start and feels natural, which is not the case with say NgRx and the whole Redux parade of actions, reducers, selectors, effects, containers and so on...
- - Also when/if project decides to move to a more involved data management solution like Akita or NgXs or NgRx the Service can stay and work with that or beside it with little change required.
- - can serve as a stepping stone to a more powerful state management.
-// TODO 2. For now we'll do nothing but get to know the `user.service.ts` and later we'll try and revisit it
 
+1. Notice the `user.service.ts`. It has methods for initiating the user, purging the auth info and exposes the current user state as an observable.
+
+- This is what some call [Facade](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) others [Subject service](https://medium.com/@weswhite/angular-behaviorsubject-service-60485ef064fc)
+- Very nice property of this abstraction level is that it's easy to start and feels natural, which is not the case with say NgRx and the whole Redux parade of actions, reducers, selectors, effects, containers and so on...
+- Also when/if project decides to move to a more involved data management solution like Akita or NgXs or NgRx the Service can stay and work with that or beside it with little change required.
+- can serve as a stepping stone to a more powerful state management.
+  // TODO 2. For now we'll do nothing but get to know the `user.service.ts` and later we'll try and revisit it
 
 ### 25. NgRx Setup and replace User service
 
 Keep in mind that importing from `src/app/..` might break the build...
 
 1. Setup. By using the `ng add`, which in turn uses the `Schematics` capabilities we can quickly setup ngrx in our app with minimal manual steps
-    - `ng add @ngrx/schematics --defaultCollection false` - add a schematic to assist in creation of new reducers/actions/effects
-    - `ng add @ngrx/store --statePath state` - the base of the NgRx Redux implementation - the store, reducer, action etc types and helpers
-    - `ng add @ngrx/store-devtools` - instrument for use with the Redux DevTools Extensions http://extension.remotedev.io/
-    - `ng add @ngrx/effects` - add the effects part of NgRx - handles side effects like persist etc.
-    - IMPORTANT verify installed versions of @ngrx libs are 8.4.0 (or above) in package.json
+   - `ng add @ngrx/schematics --defaultCollection false` - add a schematic to assist in creation of new reducers/actions/effects
+   - `ng add @ngrx/store --statePath state` - the base of the NgRx Redux implementation - the store, reducer, action etc types and helpers
+   - `ng add @ngrx/store-devtools` - instrument for use with the Redux DevTools Extensions http://extension.remotedev.io/
+   - `ng add @ngrx/effects` - add the effects part of NgRx - handles side effects like persist etc.
+   - IMPORTANT verify installed versions of @ngrx libs are 8.4.0 (or above) in package.json
 2. User state (reducer)
-    - `ng g @ngrx/schematics:reducer state/user/user -c` - creates the user reducer under state/user folder (we'll keep the state separated by feature rather than by type i.e. state/user and state/articles vs state/reducers/user.reducer.ts and state/reducers/article.ts)
-    - in the `user.reducer.ts` file
-        - add to the `State` `user: User` and the `initialState` to `{user: User.empty}` (importing the `User` type)
-            ```ts
-            export interface State {
-              user: User;
-              loading?: boolean;
-            }
 
-            export const initialState: State = {
-              user: User.empty
-            };
-            ```
-    - in the `state/index.ts` file import the just created State and reducer and add them to the app's state
-      ```ts
-      import { userFeatureKey, State as UserState, reducer as userReducer } from './user/user.reducer';
+   - `ng g @ngrx/schematics:reducer state/user/user -c` - creates the user reducer under state/user folder (we'll keep the state separated by feature rather than by type i.e. state/user and state/articles vs state/reducers/user.reducer.ts and state/reducers/article.ts)
+   - in the `user.reducer.ts` file
 
-      export interface State {
-        [userFeatureKey]: UserState;
-      }
+     - add to the `State` `user: User` and the `initialState` to `{user: User.empty}` (importing the `User` type)
 
-      export const reducers: ActionReducerMap<State> = {
-        [userFeatureKey]: userReducer
-      };
-      ```
+       ```ts
+       export interface State {
+         user: User;
+         loading?: boolean;
+       }
+
+       export const initialState: State = {
+         user: User.empty
+       };
+       ```
+
+   - in the `state/index.ts` file import the just created State and reducer and add them to the app's state
+
+     ```ts
+     import {
+       userFeatureKey,
+       State as UserState,
+       reducer as userReducer
+     } from './user/user.reducer';
+
+     export interface State {
+       [userFeatureKey]: UserState;
+     }
+
+     export const reducers: ActionReducerMap<State> = {
+       [userFeatureKey]: userReducer
+     };
+     ```
+
 3. User actions
-    - `ng g @ngrx/schematics:action state/user/user --api --creators` - create the action file and scaffold the users load action
-    - rename `loadUsersFailure` `loadUsersFailure` and `loadUsersFailure` to `loadUserFailure` `loadUserFailure` and `loadUserFailure` - we are loading a single user
-    - rename `[User] Load Users` to `[User] Load User` - same reason
-        - Why do we need the `[User]` thing?
+   - `ng g @ngrx/schematics:action state/user/user --api --creators` - create the action file and scaffold the users load action
+   - rename `loadUsersFailure` `loadUsersFailure` and `loadUsersFailure` to `loadUserFailure` `loadUserFailure` and `loadUserFailure` - we are loading a single user
+   - rename `[User] Load Users` to `[User] Load User` - same reason
+     - Why do we need the `[User]` thing?
 4. User effects
-    - `ng g @ngrx/schematics:effect state/user/user --module app --root` - to create the user effect class and add the it to app root's effects
-    - inject `ApiService` and the `JwtService` in the newly created `user.effects.ts`
-      ```ts
-      constructor(private actions$: Actions, private api: ApiService, private jwt: JwtService) {}
-      ```
-    - implement the `loadUser` effect
-      ```ts
+   - `ng g @ngrx/schematics:effect state/user/user --module app --root` - to create the user effect class and add the it to app root's effects
+   - inject `ApiService` and the `JwtService` in the newly created `user.effects.ts`
+     ```ts
+     constructor(private actions$: Actions, private api: ApiService, private jwt: JwtService) {}
+     ```
+   - implement the `loadUser` effect
+     ```ts
+     loadUser = createEffect(
+       () =>
+         this.actions$.pipe(
+           ofType('[User] Load User'),
+           switchMap(_ => {
+             return this.jwt.getToken()
+               ? (this.api.get('/user') as Observable<{ user: User }>)
+               : of({ user: User.empty });
+           }),
+           map(d => loadUserSuccess({ data: d.user }))
+         ),
+       {}
+     );
+     ```
+5. Initiate user loading with starting the app
+
+- inject the `Store` in the `app.module`'s constructor (that's **not** the app.component)
+  ```ts
+  constructor(store: Store<State>) {
+    store.dispatch(loadUser());
+  }
+  ```
+- open the ReduxDevTools console and watch for the emitted events. You should see both `[User] Load User` and `[User] Load User Success`
+
+6. Update the reducer -
+   - in `user.reducer.ts` import the actions from `user.actions.ts` i.e. `userLoadSuccess`, etc.
+   - then update the reducer
+     ```ts
+     export const reducer = createReducer(
+       initialState,
+       // initially set the loading to true
+       on(loadUser, state => ({ ...state, loading: true })),
+       // when load succeeds - set the user and stop the loading
+       on(loadUserSuccess, (state, action) => ({ ...state, user: action.data, loading: false })),
+       // on failure - add the error and stop the loading
+       on(loadUserFailure, (state, action) => ({
+         ...state,
+         user: User.empty,
+         loading: false,
+         error: action.error
+       }))
+     );
+     ```
+     - notice how you get type safety in the function implementing the reduction of the state - the action is of the expected type - thanks @ngrx/store
+   - open the ReduxDevTools console and now you should see change of the store too
+7. Add selectors for user state
+   - in `user.reducer.ts` add the following selectors definition
+     ```ts
+     export const userState = createFeatureSelector<State>(userFeatureKey);
+     export const userSelector = createSelector(
+       userState,
+       s => s.user
+     );
+     ```
+8. Update `Header` component
+
+- in `header.component.ts` inject `Store` in the constructor and select the user:
+  ```ts
+    currentUser$: Observable<User> = this.store.pipe(select(s => userSelector(s)));
+    // no need to provide type for store at this point - up to you
+    // would be State<AppStore> where import {State as AppStore} from 'state';
+    constructor(private userService: UserService, private store: State<any>) {}
+  ```
+- in `header.component.template.html` wrap the current user view with a `ng-container` and extract the current user from `currentUser$` i.e. replace lines 63-70 with
+  ```html
+  <ng-container *ngIf="currentUser$ | async as currentUser">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [routerLink]="['/profile', currentUser.username]"
+        routerLinkActive="active"
+      >
+        <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" />
+        {{ currentUser.username + ' from store' }}
+      </a>
+    </li>
+  </ng-container>
+  ``
+  ```
+- verify user email is still visible
+
+9. Review. See branch [feature/ngrx](https://github.com/gparlakov/angular-realworld-example-app/tree/feature/ngrx) for help or simply checkout
+   9.1. What we did - we set up NgRx root using it's schematics. Then created a reducer, some actions, selectors, an effect to handle user load, load success and failure.
+
+### 25. Incorporate User service into NgRx flow
+
+1. We'll retouch the `user.service` and incorporate it in the NgRx flow
+2. In `user.actions.ts` add the following action
+    ```ts
+    export const clearUser = createAction('[User] Clear User');
+    ```
+
+    - that will be the signal to remove user from store and tokens from JasonWebToken local storage
+
+3. In `user.effects` change the class to the following
+    ```ts
+    @Injectable()
+    export class UserEffects {
       loadUser = createEffect(
         () =>
           this.actions$.pipe(
             ofType('[User] Load User'),
             switchMap(_ => {
               return this.jwt.getToken()
-                ? (this.api.get('/user') as Observable<{ user: User }>)
-                : of({ user: User.empty });
+                ? (this.api
+                    .get('/user')
+                    // if get user fails - emit the empty user
+                    .pipe(catchError((u, e) => of({ user: User.empty }))) as Observable<{
+                    user: User;
+                  }>)
+                : // if no tokens - emit the empty user
+                  of({ user: User.empty });
             }),
-            map(d => loadUserSuccess({ data: d.user }))
+            map(u =>
+              u == null || u.user === User.empty ? clearUser() : loadUserSuccess({ data: u.user })
+            )
           ),
         {}
       );
-      ```
-5. Initiate user loading with starting the app
-  - inject the `Store` in the `app.module`'s constructor (that's **not** the app.component)
-    ```ts
-    constructor(store: Store<State>) {
-      store.dispatch(loadUser());
+
+      clearUser = createEffect(
+        () =>
+          this.actions$.pipe(
+            ofType('[User] Clear User'),
+            tap(() => this.jwt.destroyToken())
+          ),
+        { dispatch: false }
+      );
+
+      constructor(private actions$: Actions, private api: ApiService, private jwt: JwtService) {}
     }
     ```
-  - open the ReduxDevTools console and watch for the emitted events. You should see both `[User] Load User` and `[User] Load User Success`
 
-6. Update the reducer -
-    - in `user.reducer.ts` import the actions from `user.actions.ts` i.e. `userLoadSuccess`, etc.
-    - then update the reducer
-      ```ts
-      export const reducer = createReducer(
-        initialState,
-        // initially set the loading to true
-        on(loadUser, state => ({ ...state, loading: true })),
-        // when load succeeds - set the user and stop the loading
-        on(loadUserSuccess, (state, action) => ({ ...state, user: action.data, loading: false })),
-        // on failure - add the error and stop the loading
-        on(loadUserFailure, (state, action) => ({
-          ...state,
-          user: User.empty,
-          loading: false,
-          error: action.error
-        }))
-      );
-      ```
-        - notice how you get type safety in the function implementing the reduction of the state - the action is of the expected type - thanks @ngrx/store
-    - open the ReduxDevTools console and now you should see change of the store too
-7. Add selectors for user state
-    - in `user.reducer.ts` add the following selectors definition
-      ```ts
-      export const userState = createFeatureSelector<State>(userFeatureKey);
-      export const userSelector = createSelector(userState, s => s.user);
-      ```
-8. Update `Header` component
-  - in `header.component.ts` inject `Store` in the constructor and select the user:
+    - the `loadUser` effect is extended to emit the `clearUser` action if fetch fails or there are is no token in local storage
+    - adding the `clearUser` effect to clear the Jason Web Token from local storage
+    - `clearUser` will not emit any more actions so we set `dispatch: false`
+4. Update the reducer  `user.reducers`
+    - add a reducer fot the `clearUser` action:
+        ```ts
+        on(clearUser, state => ({...state, user: User.empty}))
+        ```
+    - that will take care to set the user in store to the Empty User
+
+5. Update the `user.service`
     ```ts
-      currentUser$: Observable<User> = this.store.pipe(select(s => userSelector(s)));
-      // no need to provide type for store at this point - up to you
-      // would be State<AppStore> where import {State as AppStore} from 'state';
-      constructor(private userService: UserService, private store: State<any>) {}
+    import { HttpClient } from '@angular/common/http';
+    import { Injectable } from '@angular/core';
+    import { select, Store } from '@ngrx/store';
+    import { Observable } from 'rxjs';
+    import { map } from 'rxjs/operators';
+    import { clearUser, loadUser } from '../../state/user/user.actions';
+    import { userSelector } from '../../state/user/user.reducer';
+    import { User } from '../models';
+    import { ApiService } from './api.service';
+    import { JwtService } from './jwt.service';
+
+
+    @Injectable()
+    export class UserService {
+      public currentUser = this.store.pipe(select(userSelector));
+
+      public isAuthenticated = this.currentUser.pipe(
+        map(u => u && u !== User.empty && u.token !== null)
+      );
+      user: User;
+
+      constructor(
+        private apiService: ApiService,
+        private http: HttpClient,
+        private jwtService: JwtService,
+        private store: Store<any>
+      ) {}
+
+      // Verify JWT in localstorage with server & load user's info.
+      // This runs once on application startup.
+      populate() {
+        // If JWT detected, attempt to get & store user's info
+        if (this.jwtService.getToken()) {
+          this.store.dispatch(loadUser());
+        } else {
+          this.store.dispatch(clearUser());
+        }
+
+        this.currentUser.subscribe(u => (this.user = u));
+      }
+
+      // kept for backwards compatibility
+      purgeAuth() {
+        // let the effects handle this
+        this.store.dispatch(clearUser());
+      }
+
+      attemptAuth(type, credentials): Observable<'success'> {
+        const route = type === 'login' ? '/login' : '';
+        return this.apiService.post('/users' + route, { user: credentials }).pipe(
+          map(
+            (): 'success' => {
+              this.store.dispatch(loadUser());
+              return 'success';
+            }
+          )
+        );
+      }
+
+      getCurrentUser(): User {
+        return this.user;
+      }
+
+      // Update the user on the server (email, pass, etc)
+      update(user): Observable<User> {
+        return this.apiService.put('/user', { user }).pipe(
+          map(data => {
+            // Will update the currentUser observable - eventually
+            this.store.dispatch(loadUser());
+            return data.user;
+          })
+        );
+      }
+    }
     ```
-  - in `header.component.template.html` wrap the current user view with a `ng-container` and extract the current user from `currentUser$` i.e. replace lines 63-70 with
-    ```html
-      <ng-container *ngIf="currentUser$ | async as currentUser">
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [routerLink]="['/profile', currentUser.username]"
-            routerLinkActive="active"
-          >
-            <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" />
-            {{ currentUser.username + ' from store' }}
-          </a>
-        </li>
-      </ng-container>
-    ``
-  - verify user email is still visible
-9. Review. See branch [feature/ngrx](https://github.com/gparlakov/angular-realworld-example-app/tree/feature/ngrx) for help or simply checkout
-9.1. What we did - we set up NgRx root using it's schematics. Then created a reducer, some actions, selectors, an effect to handle user load, load success and failure.
+    - thus we replace the local state in the `user.service` with the store state
+    - and the `side-effects` like API calls and local storage tokens clear is now handled by effects
+    - `update` and `attemptAuth` should also be delegated to the effects to keep all effects in one place (left as exercise to the reader)
 
-
-### 25. Incorporate User service into NgRx flow
-1.
-
+  6. Review. See feature/ngrx-user-service branch for help.
 ### N State management
 
 // TODO test suggestion out
