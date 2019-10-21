@@ -375,11 +375,20 @@ _Example with the `flushMicrotasks thing` article and presentation._
 4. Review.
     - For help  see [final result](https://stackblitz.com/edit/angular-data-simple-angular-advanced-workshop-kiev?file=src/app/top-bar/top-bar.component.ts)
 
-### M. NgRx Setup and replace User service
+### 24. State management - Service with a Subject / Facade
+1. Notice the `user.service.ts`. It has methods for initiating the user, purging the auth info and exposes the current user state as an observable.
+ - This is what some call [Facade](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) others [Subject service](https://medium.com/@weswhite/angular-behaviorsubject-service-60485ef064fc)
+ - Very nice property of this abstraction level is that it's easy to start and feels natural, which is not the case with say NgRx and the whole Redux parade of actions, reducers, selectors, effects, containers and so on...
+ - Also when/if project decides to move to a more involved data management solution like Akita or NgXs or NgRx the Service can stay and work with that or beside it with little change required.
+ - can serve as a stepping stone to a more powerful state management.
+// TODO 2. For now we'll do nothing but get to know the `user.service.ts` and later we'll try and revisit it
+
+
+### 25. NgRx Setup and replace User service
 
 Keep in mind that importing from `src/app/..` might break the build...
 
-1. Setup. By using the `ng add`, which in turn uses the `Schematics` capabilities we can quickly and automatically setup ngrx in our app
+1. Setup. By using the `ng add`, which in turn uses the `Schematics` capabilities we can quickly setup ngrx in our app with minimal manual steps
     - `ng add @ngrx/schematics --defaultCollection false` - add a schematic to assist in creation of new reducers/actions/effects
     - `ng add @ngrx/store --statePath state` - the base of the NgRx Redux implementation - the store, reducer, action etc types and helpers
     - `ng add @ngrx/store-devtools` - instrument for use with the Redux DevTools Extensions http://extension.remotedev.io/
@@ -501,6 +510,9 @@ Keep in mind that importing from `src/app/..` might break the build...
 9. Review. See branch [feature/ngrx](https://github.com/gparlakov/angular-realworld-example-app/tree/feature/ngrx) for help or simply checkout
 9.1. What we did - we set up NgRx root using it's schematics. Then created a reducer, some actions, selectors, an effect to handle user load, load success and failure.
 
+
+### 25. Incorporate User service into NgRx flow
+1.
 
 ### N State management
 
