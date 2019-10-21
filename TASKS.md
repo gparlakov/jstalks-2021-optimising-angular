@@ -381,14 +381,13 @@ _Example with the `flushMicrotasks thing` article and presentation._
 ### 24. State management - Service with a Subject / Facade
 
 1. Notice the `user.service.ts`. It has methods for initiating the user, purging the auth info and exposes the current user state as an observable.
+  - This is what some call [Facade](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) others [Subject service](https://medium.com/@weswhite/angular-behaviorsubject-service-60485ef064fc)
+  - Very nice property of this abstraction level is that it's easy to start and feels natural, which is not the case with say NgRx and the whole Redux parade of actions, reducers, selectors, effects, containers and so on...
+  - Also when/if project decides to move to a more involved data management solution like Akita or NgXs or NgRx the Service can stay and work with that or beside it with little change required.
+  - can serve as a stepping stone to a more powerful state management.
+2. For now we'll do nothing but get to know the `user.service.ts` and later we'll try and revisit it
 
-- This is what some call [Facade](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) others [Subject service](https://medium.com/@weswhite/angular-behaviorsubject-service-60485ef064fc)
-- Very nice property of this abstraction level is that it's easy to start and feels natural, which is not the case with say NgRx and the whole Redux parade of actions, reducers, selectors, effects, containers and so on...
-- Also when/if project decides to move to a more involved data management solution like Akita or NgXs or NgRx the Service can stay and work with that or beside it with little change required.
-- can serve as a stepping stone to a more powerful state management.
-  // TODO 2. For now we'll do nothing but get to know the `user.service.ts` and later we'll try and revisit it
-
-### 25. NgRx Setup and replace User service
+### 25. [NgRx](https://ngrx.io/docs) Setup and replace User service
 
 Keep in mind that importing from `src/app/..` might break the build...
 
@@ -531,7 +530,7 @@ Keep in mind that importing from `src/app/..` might break the build...
 9. Review. See branch [feature/ngrx](https://github.com/gparlakov/angular-realworld-example-app/tree/feature/ngrx) for help or simply checkout
    9.1. What we did - we set up NgRx root using it's schematics. Then created a reducer, some actions, selectors, an effect to handle user load, load success and failure.
 
-### 25. Incorporate User service into NgRx flow
+### 26. Incorporate User service into NgRx flow
 
 1. We'll retouch the `user.service` and incorporate it in the NgRx flow
 2. In `user.actions.ts` add the following action
@@ -672,6 +671,12 @@ Keep in mind that importing from `src/app/..` might break the build...
     - `update` and `attemptAuth` should also be delegated to the effects to keep all effects in one place (left as exercise to the reader)
 
   6. Review. See feature/ngrx-user-service branch for help.
+
+### 27. Test the effects
+// TODO 1. The effects runner https://ngrx.io/guide/store/testing https://ngrx.io/guide/effects/testing
+
+
+
 ### N State management
 
 // TODO test suggestion out
@@ -679,7 +684,6 @@ Keep in mind that importing from `src/app/..` might break the build...
 All 3 HomeComponent, ProfileArticlesComponent, ProfileFavoritesComponent use the articles filter functionality and separately change the filter of the article.
 Home toggles between `Feed`, `Global feed` (i.e. latest) and `Tags` in the filter
 ProfileArticlesComponent, ProfileFavoritesComponent toggles between `Own` and `Favorites`.
-It seems the Article Service would not be ideal to keep the state (for now it's ok - since it's only shown in one place)
 
 What could be improved - we could store the state in the ArticlesService and only inform it that an event has happened:
 `onYourFeedPageEnter` would trigger the initial loading for that page and keep the result in memory.
@@ -688,7 +692,6 @@ What could be improved - we could store the state in the ArticlesService and onl
 `onGlobalFeedSelectPage` would store the selected page in the filter for that - so that we could come back to the same result
 ..
 
-### O. Business logic service + state-full services
 
 # Resources
 
