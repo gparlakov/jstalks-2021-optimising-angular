@@ -685,6 +685,7 @@ Keep in mind that importing from `src/app/..` might break the build...
 
 ### 27. Test the effects
 // TODO 1. The effects runner https://ngrx.io/guide/store/testing https://ngrx.io/guide/effects/testing
+// TODO mention e2e tests using exposed store
 
 
 
