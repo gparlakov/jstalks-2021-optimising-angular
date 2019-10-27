@@ -284,6 +284,15 @@ _Example with the [flushMicrotasks thing](https://medium.com/ng-gotchas/what-was
    - for docker demo
      - `docker run -p 8888:8888 gparlakov/demo-ivy`
      - navigate to `localhost:8888`
+   - using nvm (node version manger)
+     - install nvm ([linux/MacOs](https://github.com/nvm-sh/nvm)) ([windows](https://github.com/coreybutler/nvm-windows))
+     - run `nvm install 10.13.0`
+     - run `nvm use 10.13.0`
+     - run the scripts
+        - `ng update @angular/cli @angular/core`
+        - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
+        - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
+
 
 ### 17. Lazy loading
 
