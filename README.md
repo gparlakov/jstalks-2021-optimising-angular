@@ -1,80 +1,124 @@
-[![RealWorld Frontend](https://img.shields.io/badge/realworld-frontend-%23783578.svg)](http://realworld.io)
-[![Build Status](https://travis-ci.org/gothinkster/angular-realworld-example-app.svg?branch=master)](https://travis-ci.org/gothinkster/angular-realworld-example-app)
+# Optimising Angular
 
-# ![Angular Example App](logo.png)
+## Performance
 
-> ### Angular codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API.
+- on the Module level (slow loading)
+- on the Component level (low performance)
 
+Page - what the user sees as a page (could be one or more components)
 
-<a href="https://stackblitz.com/edit/angular-realworld" target="_blank"><img width="187" src="https://github.com/gothinkster/realworld/blob/master/media/edit_on_blitz.png?raw=true" /></a>&nbsp;&nbsp;<a href="https://thinkster.io/tutorials/building-real-world-angular-2-apps" target="_blank"><img width="384" src="https://raw.githubusercontent.com/gothinkster/realworld/master/media/learn-btn-hr.png" /></a>
+## Slow loading
+### Bundle size
 
-### [Demo](https://angular.realworld.io)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
+1. Run `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
+2. Run `ng build --prod --stats-json`
+3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
+4. Notice
 
+   - settings and article modules not lazy
+   - all moment locales - even though we need only few of them - us/ru
+   - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
+   - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
 
-
-This codebase was created to demonstrate a fully fledged application built with Angular that interacts with an actual backend server including CRUD operations, authentication, routing, pagination, and more. We've gone to great lengths to adhere to the [Angular Styleguide](https://angular.io/styleguide) & best practices.
-
-Additionally, there is an Angular 1.5 version of this codebase that you can [fork](https://github.com/gothinkster/angularjs-realworld-example-app) and/or [learn how to recreate](https://thinkster.io/angularjs-es6-tutorial).
-
-
-# How it works
-
-We're currently working on some docs for the codebase (explaining where functionality is located, how it works, etc) but the codebase should be straightforward to follow as is. We've also released a [step-by-step tutorial w/ screencasts](https://thinkster.io/tutorials/building-real-world-angular-2-apps) that teaches you how to recreate the codebase from scratch.
-
-### Making requests to the backend API
-
-For convenience, we have a live API server running at https://conduit.productionready.io/api for the application to make requests against. You can view [the API spec here](https://github.com/GoThinkster/productionready/blob/master/api) which contains all routes & responses for the server.
-
-The source code for the backend server (available for Node, Rails and Django) can be found in the [main RealWorld repo](https://github.com/gothinkster/realworld).
-
-If you want to change the API URL to a local server, simply edit `src/environments/environment.ts` and change `api_url` to the local server's URL (i.e. `localhost:3000/api`)
-
-
-# Getting started
-
-Make sure you have the [Angular CLI](https://github.com/angular/angular-cli#installation) installed globally. We use [Yarn](https://yarnpkg.com) to manage the dependencies, so we strongly recommend you to use it. you can install it from [Here](https://yarnpkg.com/en/docs/install), then run `yarn install` to resolve all dependencies (might take a minute).
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-### Building the project
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-
-## Functionality overview
-
-The example application is a social blogging site (i.e. a Medium.com clone) called "Conduit". It uses a custom API for all requests, including authentication. You can view a live demo over at https://angular.realworld.io
-
-**General functionality:**
-
-- Authenticate users via JWT (login/signup pages + logout button on settings page)
-- CRU* users (sign up & settings page - no deleting required)
-- CRUD Articles
-- CR*D Comments on articles (no updating required)
-- GET and display paginated lists of articles
-- Favorite articles
-- Follow other users
-
-**The general page breakdown looks like this:**
-
-- Home page (URL: /#/ )
-    - List of tags
-    - List of articles pulled from either Feed, Global, or by Tag
-    - Pagination for list of articles
-- Sign in/Sign up pages (URL: /#/login, /#/register )
-    - Uses JWT (store the token in localStorage)
-    - Authentication can be easily switched to session/cookie based
-- Settings page (URL: /#/settings )
-- Editor page to create/edit articles (URL: /#/editor, /#/editor/article-slug-here )
-- Article page (URL: /#/article/article-slug-here )
-    - Delete article button (only shown to article's author)
-    - Render markdown from server client side
-    - Comments section at bottom of page
-    - Delete comment button (only shown to comment's author)
-- Profile page (URL: /#/profile/:username, /#/profile/:username/favorites )
-    - Show basic user info
-    - List of articles populated from author's created articles or author's favorited articles
+5. Explore what Angular does automatically with the tree shaker
+   - Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
+   - Checkout the `main`, `secondary` and `third` components and see that **only** the used components end up in the bundles, even though using the shared module and its shared components
+6. Demo what Ivy does for us in terms of performance. **Angular 8** requires **node 10** so either use Docker or install Node 10 locally
+   - for local build
+     - `ng update @angular/cli @angular/core`
+     - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
+     - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
+     - navigate to `localhost:8888`
+   - for docker demo
+     - `docker run -p 8888:8888 gparlakov/demo-ivy`
+     - navigate to `localhost:8888`
+   - using nvm (node version manger)
+     - install nvm ([linux/MacOs](https://github.com/nvm-sh/nvm)) ([windows](https://github.com/coreybutler/nvm-windows))
+     - run `nvm install 10.13.0`
+     - run `nvm use 10.13.0`
+     - run the scripts
+        - `ng update @angular/cli @angular/core`
+        - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
+        - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
 
 
-<br />
+### Lazy loading
 
-[![Brought to you by Thinkster](https://raw.githubusercontent.com/gothinkster/realworld/master/media/end.png)](https://thinkster.io)
+1. Make Article module lazy
+   - remove ArticleModule from AppModule
+   - make the route use `loadChildren: "./article/article.module#ArticleModule"`
+2. Make Settings module lazy - same steps as above
+3. Note the bundles sizes change (run steps 2. and 3.)
+   `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
+4. Review (see [app-routing.module.ts](files/src/app/app-routing.module.ts.help) and [app.module.ts](files/src/app/app.module.ts.help))
+
+## Low performance
+
+### Angular performance - trackBy
+
+1. Notice the /admin route of the app. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [admin-article.service](src/app/admin/admin-article.service.ts#l23) with the input provided in the admin-article-visualize-control.component (i.e. the aforementioned controls - width, height, by).
+2. Add a `articleSlug` property in the `admin-article-list.component`
+3. Let it be of type `TrackByFunction<AdminArticle>`
+4. Assign a function to the property that accepts index and an item if type `AdminArticle` and return the slug of the article.
+5. Now notice the template of `admin-article-list.component`.
+6. Add a `;trackBy=articleSlug` to the end of the `*ngFor` declaration. That will instruct Angular to take the returned value and check that for equality with the previous one instead of just comparing object references.
+7. Notice how the controls no longer cause the redrawing of the whole list and rather make the existing components change.
+8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
+
+### Angular performance - OnPush
+
+1. Notice the `/admin/on-push` route. See how writing in the input triggers change detection in all of the `admin-article.component`-s with no visible changes.
+2. This happens because the ngFor difference strategy relies on object reference comparison and since `admin-article.service` emits a new object every time, Angular has to destroy the component and create a new one for the new object reference. We **`can`** affect that by the `trackBy` input of the ngFor structural directive
+3. Adjust the change detection strategy of the `admin-article.component` to on-push.
+4. Try typing in the input again and notice if the change detection is triggered in the article
+5. Review (for help see [admin-article.component.ts.help](files/src/app/admin/admin-article/admin-article.component.ts.help))
+
+### Angular performance - debounce
+
+1. Notice the `/admin/debounce` route.
+
+2. The `admin-search.component` initializes the search by providing the changes observable. Then the `admin-article.service` will construct the (mock) request out of each emission of that observable.
+3. The effect is manifested by typing in the search resulting in a **request** for **each** typed character
+4. Apply the `debounceTime` operator in the `admin-search.component` (ex `debounceTime(400)`)
+5. Notice that the request waits for you to finish writing before sending the request (mock request)
+6. Review (for help see [component](files/src/app/admin/admin-search/admin-search.component.ts.help))
+
+
+
+
+## More slow loading
+### Removal of unused modules manually
+
+1. Check out the moment locales (keep the browser tab open for comparison)
+2. Add `"postinstall": "node ./tools/remove-unused-locales.js"` to `scripts` section of package.json
+3. Run `npm i` to invoke the post install hook script
+4. `ng build --prod --stats-json` and `webpack-bundle-analyzer ./dist/stats.json` and `` and see the bundle size differ
+5. Review
+   // Demonstrate how to remove the moment js (or any other) locales not in use
+
+### Manual JS lazy module load
+
+1. Notice the `Pusher` is a large part of our main bundle. Turns out the user needs to agree for us to send them notifications. Let's make the pusher module lazy loaded - that's a JavaScript module (vs Angular Module - which gets lazy loaded via Routes primarily though there are [options](https://www.npmjs.com/package/@herodevs/hero-loader))
+2. Notice [pusher-service.ts](src/app/core/services/pusher.service.ts). It imports the Pusher library - no matter if anyone uses it or not:
+   (i.e. if `I want notifications` has been pressed)
+   `ts import * as Pusher from 'pusher-js';`
+3. In order to lazy load that module we need to:
+   - change the `module` setting in `tsconfig.app.json` to `esnext`
+     ```json
+     "module": "esnext"
+     ```
+   - replace `getPusherInstance` method in pusher service with:
+     ```ts
+       private getPusherInstance() {
+         return import('pusher-js').then((p: any) => {
+           if (this.instance == null) {
+             // we know this is imported as { default: PusherStatic } contrary to what our import types this as
+             const Pusher: Pusher.PusherStatic = p.default;
+             this.instance = new Pusher(this.key, this.config);
+           }
+           return this.instance;
+         });
+       }
+     ```
+4. Now run the `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
+5. Review (see [help](files/src/app/core/services/pusher.service.ts.help))
