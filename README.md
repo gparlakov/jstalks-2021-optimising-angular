@@ -1,56 +1,17 @@
 # Optimising Angular
 
+## TODO
+
+- upgrade to latest angular
+- use the angular dev tools to demo check
+- Window:mousein
+
 ## Performance
 
-- on the Module level (slow loading)
 - on the Component level (low performance)
+- on the Module level (slow loading)
 
 Page - what the user sees as a page (could be one or more components)
-
-## Slow loading
-### Bundle size
-
-1. Run `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
-2. Run `ng build --prod --stats-json`
-3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
-4. Notice
-
-   - settings and article modules not lazy
-   - all moment locales - even though we need only few of them - us/ru
-   - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
-   - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
-
-5. Explore what Angular does automatically with the tree shaker
-   - Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
-   - Checkout the `main`, `secondary` and `third` components and see that **only** the used components end up in the bundles, even though using the shared module and its shared components
-6. Demo what Ivy does for us in terms of performance. **Angular 8** requires **node 10** so either use Docker or install Node 10 locally
-   - for local build
-     - `ng update @angular/cli @angular/core`
-     - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
-     - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
-     - navigate to `localhost:8888`
-   - for docker demo
-     - `docker run -p 8888:8888 gparlakov/demo-ivy`
-     - navigate to `localhost:8888`
-   - using nvm (node version manger)
-     - install nvm ([linux/MacOs](https://github.com/nvm-sh/nvm)) ([windows](https://github.com/coreybutler/nvm-windows))
-     - run `nvm install 10.13.0`
-     - run `nvm use 10.13.0`
-     - run the scripts
-        - `ng update @angular/cli @angular/core`
-        - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
-        - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
-
-
-### Lazy loading
-
-1. Make Article module lazy
-   - remove ArticleModule from AppModule
-   - make the route use `loadChildren: "./article/article.module#ArticleModule"`
-2. Make Settings module lazy - same steps as above
-3. Note the bundles sizes change (run steps 2. and 3.)
-   `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
-4. Review (see [app-routing.module.ts](files/src/app/app-routing.module.ts.help) and [app.module.ts](files/src/app/app.module.ts.help))
 
 ## Low performance
 
@@ -83,10 +44,53 @@ Page - what the user sees as a page (could be one or more components)
 5. Notice that the request waits for you to finish writing before sending the request (mock request)
 6. Review (for help see [component](files/src/app/admin/admin-search/admin-search.component.ts.help))
 
-
-
-
 ## More slow loading
+
+## Slow loading
+
+### Bundle size
+
+1. Run `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
+2. Run `ng build --prod --stats-json`
+3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
+4. Notice
+
+   - settings and article modules not lazy
+   - all moment locales - even though we need only few of them - us/ru
+   - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
+   - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
+
+5. Explore what Angular does automatically with the tree shaker
+   - Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
+   - Checkout the `main`, `secondary` and `third` components and see that **only** the used components end up in the bundles, even though using the shared module and its shared components
+6. Demo what Ivy does for us in terms of performance. **Angular 8** requires **node 10** so either use Docker or install Node 10 locally
+   - for local build
+     - `ng update @angular/cli @angular/core`
+     - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
+     - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
+     - navigate to `localhost:8888`
+   - for docker demo
+     - `docker run -p 8888:8888 gparlakov/demo-ivy`
+     - navigate to `localhost:8888`
+   - using nvm (node version manger)
+     - install nvm ([linux/MacOs](https://github.com/nvm-sh/nvm)) ([windows](https://github.com/coreybutler/nvm-windows))
+     - run `nvm install 10.13.0`
+     - run `nvm use 10.13.0`
+     - run the scripts
+       - `ng update @angular/cli @angular/core`
+       - `ng build ts --prod --common-chunk false --stats-json` (notice we build `ts` app))
+       - `webpack-bundle-analyzer dist/ts/stats-es2015.json`
+
+### Lazy loading
+
+1. Make Article module lazy
+   - remove ArticleModule from AppModule
+   - make the route use `loadChildren: "./article/article.module#ArticleModule"`
+2. Make Settings module lazy - same steps as above
+3. Note the bundles sizes change (run steps 2. and 3.)
+   `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
+4. Review (see [app-routing.module.ts](files/src/app/app-routing.module.ts.help) and [app.module.ts](files/src/app/app.module.ts.help))
+
 ### Removal of unused modules manually
 
 1. Check out the moment locales (keep the browser tab open for comparison)
