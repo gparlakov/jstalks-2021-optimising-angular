@@ -5,6 +5,8 @@
 - upgrade to latest angular
 - use the angular dev tools to demo check
 - Window:mousein
+- do a test run
+
 
 ## Performance
 
