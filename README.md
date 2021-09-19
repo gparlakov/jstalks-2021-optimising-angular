@@ -2,12 +2,22 @@
 
 ## TODO
 
-- upgrade to latest angular
-- use the angular dev tools to demo check
-- Window:mousein
 - do a test run
+- Window:mousein
+- upgrade to the latest angular
+- use the angular dev tools to demo check
+- have a script and some slides
+  - add https://bit.ly/ng-perf-hack21 above to enable finding it easy
+  - get the people's names and desires or some trivia about themselves (Me - Georgi (joro) and to be a Christmas-time dad while skiing)
+  - talk about the app - what is it and why is it
+  - we use an actual app to get as close to real-world experience
+  - talk about performance on the component level and on the module level - what is the difference and why address both
 
+## Setup
 
+- clone
+- npm i
+-
 ## Performance
 
 - on the Component level (low performance)
@@ -19,7 +29,7 @@ Page - what the user sees as a page (could be one or more components)
 
 ### Angular performance - trackBy
 
-1. Notice the /admin route of the app. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [admin-article.service](src/app/admin/admin-article.service.ts#l23) with the input provided in the admin-article-visualize-control.component (i.e. the aforementioned controls - width, height, by).
+1. Notice the `/admin` route of the app. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [`admin-article.service` (link)](src/app/admin/admin-article.service.ts#l23) with the input provided in the `admin-article-visualize-control.component` (i.e. the aforementioned controls - width, height, by).
 2. Add a `articleSlug` property in the `admin-article-list.component`
 3. Let it be of type `TrackByFunction<AdminArticle>`
 4. Assign a function to the property that accepts index and an item if type `AdminArticle` and return the slug of the article.
@@ -57,9 +67,9 @@ Page - what the user sees as a page (could be one or more components)
 3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
 4. Notice
 
-   - settings and article modules not lazy
-   - all moment locales - even though we need only few of them - us/ru
-   - // TODO - think of how to move to a separate module | pusher - even though we need to ask user for permission
+   - settings and article modules are not lazy
+   - all moment locales - even though we need only a few of them - us/ru
+   - // TODO - think of how to move to a separate module | pusher - even though we need to ask the user for permission
    - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
 
 5. Explore what Angular does automatically with the tree shaker
@@ -85,11 +95,11 @@ Page - what the user sees as a page (could be one or more components)
 
 ### Lazy loading
 
-1. Make Article module lazy
+1. Make the Article module lazy
    - remove ArticleModule from AppModule
    - make the route use `loadChildren: "./article/article.module#ArticleModule"`
 2. Make Settings module lazy - same steps as above
-3. Note the bundles sizes change (run steps 2. and 3.)
+3. Note the bundle sizes change (run steps 2. and 3.)
    `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
 4. Review (see [app-routing.module.ts](files/src/app/app-routing.module.ts.help) and [app.module.ts](files/src/app/app.module.ts.help))
 
@@ -97,18 +107,18 @@ Page - what the user sees as a page (could be one or more components)
 
 1. Check out the moment locales (keep the browser tab open for comparison)
 2. Add `"postinstall": "node ./tools/remove-unused-locales.js"` to `scripts` section of package.json
-3. Run `npm i` to invoke the post install hook script
+3. Run `npm i` to invoke the post-install hook script
 4. `ng build --prod --stats-json` and `webpack-bundle-analyzer ./dist/stats.json` and `` and see the bundle size differ
 5. Review
-   // Demonstrate how to remove the moment js (or any other) locales not in use
+   // Demonstrate how to remove the moment js (or any other) locales, not in use
 
 ### Manual JS lazy module load
 
-1. Notice the `Pusher` is a large part of our main bundle. Turns out the user needs to agree for us to send them notifications. Let's make the pusher module lazy loaded - that's a JavaScript module (vs Angular Module - which gets lazy loaded via Routes primarily though there are [options](https://www.npmjs.com/package/@herodevs/hero-loader))
+1. Notice the `Pusher` is a large part of our main bundle. Turns out the user needs to agree for us to send them notifications. Let's make the pusher module lazy-loaded - that's a JavaScript module (vs Angular Module - which gets lazy-loaded via Routes primarily though there are [options](https://www.npmjs.com/package/@herodevs/hero-loader))
 2. Notice [pusher-service.ts](src/app/core/services/pusher.service.ts). It imports the Pusher library - no matter if anyone uses it or not:
    (i.e. if `I want notifications` has been pressed)
    `ts import * as Pusher from 'pusher-js';`
-3. In order to lazy load that module we need to:
+3. To lazy load that module we need to:
    - change the `module` setting in `tsconfig.app.json` to `esnext`
      ```json
      "module": "esnext"
