@@ -10,7 +10,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class AdminSearchComponent implements OnInit {
   searchControl = new FormControl('');
-  articles = this.adminArticlesService.articlesFromSearch;
+  articles = this.adminArticlesService.articlesFromSearch$;
 
   constructor(private adminArticlesService: AdminArticleService) {}
 
