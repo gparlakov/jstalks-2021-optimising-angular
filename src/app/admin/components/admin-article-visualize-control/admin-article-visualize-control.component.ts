@@ -21,7 +21,7 @@ export class AdminArticleVisualizeControlComponent implements OnInit {
     this.doChange(event, 'by');
   }
 
-  onChangeWithInputChange(event: 'increment' | 'decrement') {
+  onChangeWidthInputChange(event: 'increment' | 'decrement') {
     this.doChange(event, 'width');
   }
 

@@ -32,6 +32,8 @@ export class AdminArticleComponent implements DoCheck {
       this.shortText = this.article.shortText = this.textWidth.fitTextIn(body, width, height);
       this.showEllipsis = this.shortText !== body;
       console.log('cycle');
+
+      this.twoMsOperation();
     }
     this.changeDetections += 1;
   }
@@ -46,5 +48,21 @@ export class AdminArticleComponent implements DoCheck {
       : this.article != null
       ? this.article.body
       : '';
+  }
+
+  private twoMsOperation() {
+    // const d = new Date();
+    for (let i = 0; i < 400; i++) {
+      const x = document.querySelectorAll('*').length;
+    }
+    // console.log(new Date().valueOf() - d.valueOf());
+  }
+
+  private fiveMsOperation() {
+    // const d = new Date();
+    for (let i = 0; i < 800; i++) {
+      const x = document.querySelectorAll('*').length;
+    }
+    // console.log(new Date().valueOf() - d.valueOf());
   }
 }

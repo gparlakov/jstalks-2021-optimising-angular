@@ -12,6 +12,7 @@
   - talk about the app - what is it and why is it
     - we use an actual app to get as close to real-world experience as possible
   - performance on the component level
+    - lots of change detect cycles are the worst contributing factor to low performance
   - performance on the module level
   - what is the difference and why address both
   - what to expect
@@ -34,9 +35,12 @@ Page - what the user sees as a page (could be one or more components)
 
 ## Low performance
 
-### Angular performance - trackBy
+### Angular performance - trackBy (ngFor)
 
 1. Notice the `/admin` route of the app. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [`admin-article.service` (link)](src/app/admin/admin-article.service.ts#l23) with the input provided in the `admin-article-visualize-control.component` (i.e. the aforementioned controls - width, height, by).
+
+  - each time we interact we cause as many change detections
+
 2. Add a `articleSlug` property in the `admin-article-list.component`
 3. Let it be of type `TrackByFunction<AdminArticle>`
 4. Assign a function to the property that accepts index and an item if type `AdminArticle` and return the slug of the article.
