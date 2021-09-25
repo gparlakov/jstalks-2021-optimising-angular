@@ -3,7 +3,14 @@
 ## TODO
 
 - do a test run
-- Window:mousein
+
+  - finish
+
+- redo the onpush
+- review the debounce
+- consider sharedReplay(1)
+- consider (window:onhover), mouseout, mouseover, Window:mousein
+
 - upgrade to the latest angular
 - use the angular dev tools to demo check
 - have a script and some slides
@@ -38,14 +45,16 @@ Page - what the user sees as a page (could be one or more components)
 ### Angular performance - trackBy (ngFor)
 
 1. Notice the `/admin` route of the app. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [`admin-article.service` (link)](src/app/admin/admin-article.service.ts#l23) with the input provided in the `admin-article-visualize-control.component` (i.e. the aforementioned controls - width, height, by).
-
-  - each time we interact we cause as many change detections
-
+  - the number in front of the component indicates the serial number of the component instance - the first is 1., second 2. and so on
+    ![missing image for numbered instances](./files/onpush-numbered-instances.png)
+  - notice how every time we interact with the width controls that causes a whole set of new components to be instantiated
+  - and there is a slow operation to demonstrate a sluggish user experience
+  - this might be avoided by using the `trackBy` capability of the `ngFor` directive
 2. Add a `articleSlug` property in the `admin-article-list.component`
 3. Let it be of type `TrackByFunction<AdminArticle>`
 4. Assign a function to the property that accepts index and an item if type `AdminArticle` and return the slug of the article.
 5. Now notice the template of `admin-article-list.component`.
-6. Add a `;trackBy=articleSlug` to the end of the `*ngFor` declaration. That will instruct Angular to take the returned value and check that for equality with the previous one instead of just comparing object references.
+6. Add a `;trackBy:articleSlug` to the end of the `*ngFor` declaration. That will instruct Angular to take the returned value and check that for equality with the previous one instead of just comparing object references.
 7. Notice how the controls no longer cause the redrawing of the whole list and rather make the existing components change.
 8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
 
@@ -131,10 +140,13 @@ Page - what the user sees as a page (could be one or more components)
    `ts import * as Pusher from 'pusher-js';`
 3. To lazy load that module we need to:
    - change the `module` setting in `tsconfig.app.json` to `esnext`
+
      ```json
      "module": "esnext"
      ```
+
    - replace `getPusherInstance` method in pusher service with:
+
      ```ts
        private getPusherInstance() {
          return import('pusher-js').then((p: any) => {
@@ -147,5 +159,6 @@ Page - what the user sees as a page (could be one or more components)
          });
        }
      ```
+
 4. Now run the `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
 5. Review (see [help](files/src/app/core/services/pusher.service.ts.help))
