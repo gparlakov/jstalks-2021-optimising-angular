@@ -1,0 +1,9 @@
+<button
+  *ngIf="showEllipsis"
+  type="button"
+  (click)="buttonToggleSeeMoreClick()"
+  class="{{ seeMore ? 'plus' : 'minus' }}"
+>
+  {{ seeMore ? '+' : '-' }}
+</button>
+<span> {{ count }}. {{ text() }} </span>

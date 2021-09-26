@@ -1,0 +1,1 @@
+<app-admin-article *ngFor="let a of articles; trackBy: articleSlug" [article]="a" ></app-admin-article>
