@@ -8,21 +8,33 @@ import { ArticleResolver } from './article/article-resolver.service';
 const routes: Routes = [
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule'
+    loadChildren: './admin/admin.module#AdminModule',
     // canActivate: [AdminGuard] - as an exercise for the reader
+  },
+  {
+    path: 'onpush',
+    loadChildren: './task-onpush/onpush.module#OnPushModule'
+  },
+  {
+    path: 'trackby',
+    loadChildren: './task-trackby/trackby.module#TrackByModule'
+  },
+  {
+    path: 'debounce',
+    loadChildren: './task-debounce/debounce.module#DebounceModule'
   },
   {
     path: 'settings',
     component: SettingsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'profile',
-    loadChildren: './profile/profile.module#ProfileModule'
+    loadChildren: './profile/profile.module#ProfileModule',
   },
   {
     path: 'editor',
-    loadChildren: './editor/editor.module#EditorModule'
+    loadChildren: './editor/editor.module#EditorModule',
   },
   {
     path: 'article',
@@ -31,11 +43,11 @@ const routes: Routes = [
         path: ':slug',
         component: ArticleComponent,
         resolve: {
-          article: ArticleResolver
-        }
-      }
-    ]
-  }
+          article: ArticleResolver,
+        },
+      },
+    ],
+  },
 ];
 
 @NgModule({
@@ -44,9 +56,9 @@ const routes: Routes = [
       // preload all modules; optionally we could
       // implement a custom preloading strategy for just some
       // of the modules (PRs welcome 😉)
-      preloadingStrategy: PreloadAllModules
-    })
+      preloadingStrategy: PreloadAllModules,
+    }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

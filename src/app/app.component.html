@@ -1,12 +1,5 @@
-<app-layout-header></app-layout-header>
-<button
-  class="push-notifications-button btn btn-sm"
-  data-testid="push-notifications-button"
-  *ngIf="notificationsButtonVisible"
-  (click)="onUserWantsNotificationsButtonClick()"
->
-  I want notifications
-</button>
+<app-layout-header (notificationsEnable)="onUserWantsNotificationsButtonClick()"></app-layout-header>
+
 <router-outlet></router-outlet>
 
 <!-- <app-layout-footer></app-layout-footer> -->

@@ -26,7 +26,7 @@ import { MomentModule } from 'ngx-moment';
         h: 14
       }
     }),
-    // pusher.com account -> angularadvancedkiev@gmat.com
+    // pusher.com account required
     PusherModule.forRoot(/** add the key see agenda doc */ null, {
       cluster: 'eu',
       forceTLS: true

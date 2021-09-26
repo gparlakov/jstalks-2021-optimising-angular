@@ -3,10 +3,6 @@
 ## TODO
 
 - do a test run
-
-  - finish
-
-- redo the onpush
 - review the debounce
 - consider sharedReplay(1)
 - consider (window:onhover), mouseout, mouseover, Window:mousein
@@ -33,40 +29,60 @@
 - npm i
 - npm start (-> localhost:4200)
 
-## Performance
+## What influences the app performance?
 
-- on the Component level (low performance)
-- on the Module level (slow loading)
+- On the Component level (low performance). That's usually caused by unnecessary Change Detection cycles or too many of them.
+- On the Module level (slow loading)
 
 Page - what the user sees as a page (could be one or more components)
 
-## Low performance
+## Low performance (components)
 
-### Angular performance - trackBy (ngFor)
+### Performance - trackBy (ngFor)
 
-1. Notice the `/admin` route of the app. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [`admin-article.service` (link)](src/app/admin/admin-article.service.ts#l23) with the input provided in the `admin-article-visualize-control.component` (i.e. the aforementioned controls - width, height, by).
-  - the number in front of the component indicates the serial number of the component instance - the first is 1., second 2. and so on
-    ![missing image for numbered instances](./files/onpush-numbered-instances.png)
-  - notice how every time we interact with the width controls that causes a whole set of new components to be instantiated
-  - and there is a slow operation to demonstrate a sluggish user experience
-  - this might be avoided by using the `trackBy` capability of the `ngFor` directive
-2. Add a `articleSlug` property in the `admin-article-list.component`
+1. Notice the `/trackby` route of the app accessible via the Task TrackBy on the navigation. Interact with the controls on the left (width, height, by) and notice the updating count of all components. That's because we keep changing the referenced objects filtered and updated by the [`trackby-article.service` (link)](src/app/task-trackby/trackby-article.service.ts#28) with the input provided in the `admin-article-visualize-control.component` (i.e. the aforementioned controls - width, height, by). Every new component instance will prompt Angular to destroy the old instance and replace it with the new in the DOM.
+
+   - the number in front of the component indicates the serial number of the component instance - the first is 1., second 2. and so on
+     ![missing image for numbered instances](./files/trackby-numbered-instances.png)
+   - notice how every time we interact with the width controls that causes a whole set of new components to be instantiated
+   - and there is a slow operation to demonstrate a sluggish user experience
+   - this might be avoided by using the `trackBy` capability of the `ngFor` directive
+
+2. Add an `articleSlug` property in the `admin-article-list.component`
 3. Let it be of type `TrackByFunction<AdminArticle>`
 4. Assign a function to the property that accepts index and an item if type `AdminArticle` and return the slug of the article.
 5. Now notice the template of `admin-article-list.component`.
 6. Add a `;trackBy:articleSlug` to the end of the `*ngFor` declaration. That will instruct Angular to take the returned value and check that for equality with the previous one instead of just comparing object references.
 7. Notice how the controls no longer cause the redrawing of the whole list and rather make the existing components change.
-8. Review (for help see [component](files/src/app/admin/admin-article-list/admin-articles-list.component.ts.help) and [template](files/src/app/admin/admin-article-list/admin-articles-list.component.html.help))
+8. Review (for help see [component](files/src/app/task-trackby/article-list/articles-list.component.ts.help) and [template](files/src/app/task-trackby/article-list/articles-list.component.html.help))
 
-### Angular performance - OnPush
+### Performance - OnPush
 
-1. Notice the `/admin/on-push` route. See how writing in the input triggers change detection in all of the `admin-article.component`-s with no visible changes.
-2. This happens because the ngFor difference strategy relies on object reference comparison and since `admin-article.service` emits a new object every time, Angular has to destroy the component and create a new one for the new object reference. We **`can`** affect that by the `trackBy` input of the ngFor structural directive
-3. Adjust the change detection strategy of the `admin-article.component` to on-push.
-4. Try typing in the input again and notice if the change detection is triggered in the article
-5. Review (for help see [admin-article.component.ts.help](files/src/app/admin/admin-article/admin-article.component.ts.help))
+1. Notice the `/on-push` route accessible via the Task OnPush on the navigation.
 
-### Angular performance - debounce
+   - notice the number in front of the article preview
+   - it counts how many times each component has done its change detection ![missing image for onpush change detections](/files/onpush-change-detections.png)
+
+2. What is happening?
+
+   - the initial number is caused by router events (see app.component ngOnInit and uncomment router events logging)
+   - the first of the component gets twice as many changes because it's getting used for the debugChangeDetection second cycle which gives us the infamous `expressionChangedAfterItHasBeenCheckedError` only in dev mode
+     - run `ng serve --prod` to verify that's not the case in a production build where we do not get the debugChangeDetection second cycle
+   - each event that triggers change detection triggers change detection for each of the article components, including:
+     - typing in the input (each letter counts as an event)
+     - interacting with the `[+]`, `[-]` buttons
+
+3. How to fix?
+
+   - using change detections strategy OnPush
+   - each article component will only run change detection if its input changes
+   - any async pipe input counts too
+
+4. Adjust the change detection strategy of the `admin-article.component` to on-push.
+5. Try typing in the input again and notice if the change detection is triggered in the article
+6. Review (for help see [task-onpush/article.component.ts.help](files/src/app/task-onpush/article/article.component.ts.help))
+
+### Performance - debounce
 
 1. Notice the `/admin/debounce` route.
 
@@ -76,9 +92,10 @@ Page - what the user sees as a page (could be one or more components)
 5. Notice that the request waits for you to finish writing before sending the request (mock request)
 6. Review (for help see [component](files/src/app/admin/admin-search/admin-search.component.ts.help))
 
-## More slow loading
-
 ## Slow loading
+
+- long running operations
+- multiple data fetching with no data change
 
 ### Bundle size
 
@@ -139,6 +156,7 @@ Page - what the user sees as a page (could be one or more components)
    (i.e. if `I want notifications` has been pressed)
    `ts import * as Pusher from 'pusher-js';`
 3. To lazy load that module we need to:
+
    - change the `module` setting in `tsconfig.app.json` to `esnext`
 
      ```json

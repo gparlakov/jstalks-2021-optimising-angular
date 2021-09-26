@@ -1,0 +1,10 @@
+form {
+  display: inline-block;
+  width: 20%;
+  text-align: start;
+  vertical-align: top;
+}
+.articles-list {
+  display: inline-block;
+  width: 80%;
+}

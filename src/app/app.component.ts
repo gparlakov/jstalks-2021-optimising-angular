@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserService, User } from './core';
@@ -8,6 +9,7 @@ import { PusherService } from './core/services/pusher.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styles: ['app.component.css']
 })
 export class AppComponent implements OnInit {
   notificationsButtonVisible = true;
@@ -15,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor(
     private userService: UserService,
     private notifications: NotificationsService,
+    private router: Router,
     // for the bonus task add dependency -> private pusher: PusherService
     // private pusher: PusherService
   ) {}
@@ -22,6 +25,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.userService.populate();
     this.notifications.success('Welcome!');
+
+    // uncomment to see router events
+    // this.router.events.subscribe(e => console.log(e));
   }
 
   onUserWantsNotificationsButtonClick() {

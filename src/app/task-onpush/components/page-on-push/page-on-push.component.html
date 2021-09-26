@@ -1,0 +1,12 @@
+<form (submit)="mockHandleEvent($event)">
+  <h2>My delete form article</h2>
+  <input
+    (keyup)="mockHandleEvent($event)"
+    placeholder="article id"
+  />
+  <button type="submit">Delete selected</button>
+  <div>
+    Change detect cycles total: {{cdCycles}}
+  </div>
+</form>
+<app-onpush-articles-list class="articles-list" [articles]="articles$ | async"></app-onpush-articles-list>

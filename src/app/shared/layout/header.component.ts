@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { User, UserService } from '../../core';
 
@@ -13,11 +13,21 @@ export class HeaderComponent implements OnInit {
 
   currentUser: User;
 
+  @Output()
+  notificationsEnable = new EventEmitter();
+
+  notificationsButtonVisible = true;
+
   ngOnInit() {
     this.userService.currentUser.subscribe(
       (userData) => {
         this.currentUser = userData;
       }
     );
+  }
+
+  onUserWantsNotificationsButtonClick() {
+    this.notificationsEnable.emit(true);
+    this.notificationsButtonVisible = false;
   }
 }

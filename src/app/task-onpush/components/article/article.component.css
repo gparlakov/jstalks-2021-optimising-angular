@@ -1,0 +1,17 @@
+/* span {
+  display: inline-block;
+  padding-right: 10px;
+  padding-left: 10px;
+} */
+button {
+  border: none;
+  background: none;
+}
+
+button.plus {
+  color:blue;
+}
+
+button.minus {
+  color:green;
+}
