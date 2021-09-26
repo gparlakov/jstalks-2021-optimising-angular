@@ -3,9 +3,9 @@
 ## TODO
 
 - do a test run
-- review the debounce
 - consider sharedReplay(1)
 - consider (window:onhover), mouseout, mouseover, Window:mousein
+- bundles and lazy load
 
 - upgrade to the latest angular
 - use the angular dev tools to demo check
@@ -84,13 +84,21 @@ Page - what the user sees as a page (could be one or more components)
 
 ### Performance - debounce
 
-1. Notice the `/admin/debounce` route.
+1. Notice the `/debounce` route accessible via the Task Debounce nav link.
 
-2. The `admin-search.component` initializes the search by providing the changes observable. Then the `admin-article.service` will construct the (mock) request out of each emission of that observable.
+   - It allows searching of articles.
+   - It makes a request for every keystroke of the search input. That might be a slow and costly operation.
+   - The number of requests are visualized next to the input field:
+     ![missing debounce network requests](/files/debounce-network-requests.png)
+
+2. The `debounce-search.component` initializes the search by providing the changes observable to the `debounce-article.service.ts`. Then the service will construct the (mock) request out of each emission of that observable.
 3. The effect is manifested by typing in the search resulting in a **request** for **each** typed character
-4. Apply the `debounceTime` operator in the `admin-search.component` (ex `debounceTime(400)`)
-5. Notice that the request waits for you to finish writing before sending the request (mock request)
-6. Review (for help see [component](files/src/app/admin/admin-search/admin-search.component.ts.help))
+4. Apply the `debounceTime` operator in the `debounce-search.component` (ex `debounceTime(400)`)
+
+   - or in the `debounce-article.service.ts`
+
+5. Notice that the service waits for you to finish writing before sending the request
+6. Review (for help see [component](files/src/app/task-debounce/debounce-search.component.ts.help) or [service](files/src/app/task-debounce/debounce-article.service.ts.help))
 
 ## Slow loading
 
