@@ -112,10 +112,8 @@ Page - what the user sees as a page (could be one or more components)
 3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
 4. Notice
 
-   - settings and article modules are not lazy
-   - all moment locales - even though we need only a few of them - us/ru
-   - // TODO - think of how to move to a separate module | pusher - even though we need to ask the user for permission
-   - // TODO decide if to add it (it is a bit contrived) and make it only part of one module | PDFViewer - only used in one component but part of vendor js (no vendor in prod?)
+   - article and settings modules are not lazy as opposed to profile, editor, and the task modules
+   - all moment locales - even though we need only a few of them - us/ru ![bundles image missing](/files/bundles.png)
 
 5. Explore what Angular does automatically with the tree shaker
    - Run `ng build ts --prod --common-chunk false --stats-json && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
@@ -144,7 +142,7 @@ Page - what the user sees as a page (could be one or more components)
    - remove ArticleModule from AppModule
    - make the route use `loadChildren: "./article/article.module#ArticleModule"`
 2. Make Settings module lazy - same steps as above
-3. Note the bundle sizes change (run steps 2. and 3.)
+3. Note the bundle sizes change (run steps 2. and 3. from the Bundle Size section above)
    `ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json`
 4. Review (see [app-routing.module.ts](files/src/app/app-routing.module.ts.help) and [app.module.ts](files/src/app/app.module.ts.help))
 
@@ -155,7 +153,6 @@ Page - what the user sees as a page (could be one or more components)
 3. Run `npm i` to invoke the post-install hook script
 4. `ng build --prod --stats-json` and `webpack-bundle-analyzer ./dist/stats.json` and `` and see the bundle size differ
 5. Review
-   // Demonstrate how to remove the moment js (or any other) locales, not in use
 
 ### Manual JS lazy module load
 
@@ -175,8 +172,10 @@ Page - what the user sees as a page (could be one or more components)
 
      ```ts
        private getPusherInstance() {
-         return import('pusher-js').then((p: any) => {
-           if (this.instance == null) {
+          if (this.instance == null) {
+            return Promise.resolve(this.instance);
+          }
+          return import('pusher-js').then((p: any) => {
              // we know this is imported as { default: PusherStatic } contrary to what our import types this as
              const Pusher: Pusher.PusherStatic = p.default;
              this.instance = new Pusher(this.key, this.config);

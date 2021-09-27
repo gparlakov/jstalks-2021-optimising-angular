@@ -33,15 +33,4 @@ export class PusherService {
     }
     return Promise.resolve(this.instance);
   }
-
-  // private getPusherInstance() {
-  //   return import('pusher-js').then((p: any) => {
-  //     if (this.instance == null) {
-  //       // we know this is imported as { default: PusherStatic } contrary to what our import types this as
-  //       const Pusher: Pusher.PusherStatic = p.default;
-  //       this.instance = new Pusher(this.key, this.config);
-  //     }
-  //     return this.instance;
-  //   });
-  // }
 }
