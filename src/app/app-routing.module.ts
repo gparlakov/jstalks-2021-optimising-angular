@@ -8,24 +8,24 @@ import { ArticleResolver } from './article/article-resolver.service';
 const routes: Routes = [
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
     // canActivate: [AdminGuard] - as an exercise for the reader
   },
   {
     path: 'trackby',
-    loadChildren: './task-trackby/trackby.module#TrackByModule'
+    loadChildren: () => import('./task-trackby/trackby.module').then(m => m.TrackByModule)
   },
   {
     path: 'onpush',
-    loadChildren: './task-onpush/onpush.module#OnPushModule'
+    loadChildren: () => import('./task-onpush/onpush.module').then(m => m.OnPushModule)
   },
   {
     path: 'debounce',
-    loadChildren: './task-debounce/debounce.module#DebounceModule'
+    loadChildren: () => import('./task-debounce/debounce.module').then(m => m.DebounceModule)
   },
   {
     path: 'listener',
-    loadChildren: './task-listener/listener.module#ListenerModule'
+    loadChildren: () => import('./task-listener/listener.module').then(m => m.ListenerModule)
   },
   {
     path: 'settings',
@@ -34,11 +34,11 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: './profile/profile.module#ProfileModule',
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
   },
   {
     path: 'editor',
-    loadChildren: './editor/editor.module#EditorModule',
+    loadChildren: () => import('./editor/editor.module').then(m => m.EditorModule),
   },
   {
     path: 'article',
