@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod  --base-href ./ && cp CNAME dist/CNAME",
+    "build": "ng build --configuration production  --base-href ./ && cp CNAME dist/CNAME",
     "test": "jest",
     "lint": "echo disabling this for now ng lint --force",
     "e2e": "ng e2e",
@@ -33,11 +33,11 @@
     "pusher-js": "^5.0.1",
     "rxjs": "^7.3.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1102.14",
-    "@angular/cli": "^11.2.14",
+    "@angular-devkit/build-angular": "~12.2.7",
+    "@angular/cli": "^12.2.7",
     "@angular/compiler-cli": "12.2.7",
     "@angular/language-service": "12.2.7",
     "@types/jest": "^24.0.18",
