@@ -12,16 +12,20 @@ const routes: Routes = [
     // canActivate: [AdminGuard] - as an exercise for the reader
   },
   {
-    path: 'onpush',
-    loadChildren: './task-onpush/onpush.module#OnPushModule'
-  },
-  {
     path: 'trackby',
     loadChildren: './task-trackby/trackby.module#TrackByModule'
   },
   {
+    path: 'onpush',
+    loadChildren: './task-onpush/onpush.module#OnPushModule'
+  },
+  {
     path: 'debounce',
     loadChildren: './task-debounce/debounce.module#DebounceModule'
+  },
+  {
+    path: 'listener',
+    loadChildren: './task-listener/listener.module#ListenerModule'
   },
   {
     path: 'settings',

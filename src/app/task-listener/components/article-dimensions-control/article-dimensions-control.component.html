@@ -1,0 +1,6 @@
+<app-counter [count]="width$ | async" (countChange)="onWidthInput($event)">Width</app-counter>
+<sup>
+  controls the preview width
+</sup>
+<app-counter [count]="by$ | async" (countChange)="onChangeByInput($event)">By</app-counter>
+<sup>controls the rate of change</sup>

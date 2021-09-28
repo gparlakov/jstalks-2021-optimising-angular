@@ -1,0 +1,11 @@
+.article {
+  display: block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 1px;
+  background-color: antiquewhite;
+
+}
+.article:hover {
+  border-color: cyan;
+}

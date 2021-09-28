@@ -100,6 +100,13 @@ Page - what the user sees as a page (could be one or more components)
 5. Notice that the service waits for you to finish writing before sending the request
 6. Review (for help see [component](files/src/app/task-debounce/debounce-search.component.ts.help) or [service](files/src/app/task-debounce/debounce-article.service.ts.help))
 
+### Performance - window:mouseout
+
+1. Visit the `/listener` app route.
+2. Try interacting with the articles and notice the app "freezes". There is an indicator which spins while the app renders smoothly and stops if the main loop is blocked
+3. Use the Angular tools or Browser perf tools to notice where the main thread spends its time
+
+
 ## Slow loading
 
 - long running operations
