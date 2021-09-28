@@ -8,8 +8,8 @@ import { PusherService } from './core/services/pusher.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styles: ['app.component.css']
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.css']
 })
 export class AppComponent implements OnInit {
   notificationsButtonVisible = true;
