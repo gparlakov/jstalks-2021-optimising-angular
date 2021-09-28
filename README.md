@@ -25,9 +25,10 @@
 
 ## Setup
 
+- **node 12 required**
 - clone
-- npm i
-- npm start (-> localhost:4200)
+- `npm i` (or `yarn` as you prefer)
+- `npm start` (browser -> localhost:4200)
 
 ## What influences the app performance?
 
@@ -105,7 +106,6 @@ Page - what the user sees as a page (could be one or more components)
 1. Visit the `/listener` app route.
 2. Try interacting with the articles and notice the app "freezes". There is an indicator which spins while the app renders smoothly and stops if the main loop is blocked
 3. Use the Angular tools or Browser perf tools to notice where the main thread spends its time
-
 
 ## Slow loading
 
