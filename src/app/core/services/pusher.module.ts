@@ -14,7 +14,7 @@ export function pusherFactory(key: string, config: Config) {
   providers: []
 })
 export class PusherModule {
-  static forRoot(key: string, config?: Config): ModuleWithProviders {
+  static forRoot(key: string, config?: Config): ModuleWithProviders<PusherModule> {
     return {
       ngModule: PusherModule,
       providers: [
