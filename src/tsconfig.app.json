@@ -5,9 +5,11 @@
     "baseUrl": "./",
     "types": []
   },
-  "exclude": [
-    "setup-jest.ts",
-    "**/*.spec.ts",
-    "./app/auto-spy.ts"
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
   ]
 }
