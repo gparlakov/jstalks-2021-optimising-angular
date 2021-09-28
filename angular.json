@@ -124,10 +124,14 @@
             "main": "projects/ts/src/main.ts",
             "polyfills": "projects/ts/src/polyfills.ts",
             "tsConfig": "projects/ts/tsconfig.app.json",
-            "assets": ["projects/ts/src/favicon.ico", "projects/ts/src/assets"],
-            "styles": ["projects/ts/src/styles.css"],
+            "assets": [
+              "projects/ts/src/favicon.ico",
+              "projects/ts/src/assets"
+            ],
+            "styles": [
+              "projects/ts/src/styles.css"
+            ],
             "scripts": [],
-            "es5BrowserSupport": true,
             "aot": true
           },
           "configurations": {
