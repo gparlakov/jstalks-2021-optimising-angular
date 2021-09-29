@@ -3,12 +3,14 @@
 ## TODO
 
 - do a test run
-- consider sharedReplay(1)
-- consider (window:onhover), mouseout, mouseover, Window:mousein
-- bundles and lazy load
-
-- upgrade to the latest angular
 - use the angular dev tools to demo check
+- consider sharedReplay(1)
+- add links to the article and minko's presentation
+
+  - https://medium.com/@guptagaruda/angular-2-4-visualizing-change-detection-default-vs-onpush-3d7ed1f69f8e
+  - https://www.mokkapps.de/blog/the-last-guide-for-angular-change-detection-you-will-ever-need/
+  - https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwi5yan2o6PzAhWegv0HHU7zCBoQwqsBegQIBRAB&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dl8mCutUMh78&usg=AOvVaw1kCanWwIdtOSmQx4qQlzCy
+
 - have a script and some slides
   - add https://bit.ly/ng-perf-hack21 in the above to enable finding it easy
   - get the people's names and desires or some trivia about themselves (Me - Georgi (joro) about to be a Christmas-time dad while skiing)
