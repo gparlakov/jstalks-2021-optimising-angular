@@ -204,8 +204,24 @@
 Explore what Angular does automatically with the tree shaker
 
 - Note the `projects/ts` folder. (ts = tree shaker)
-- Note the `main`, `secondary` and `third` components and see that **only** the used components end up in the bundles, even though using the shared module and its shared components
-- Run `ng build ts --prod --common-chunk false --stats-json --named-chunks && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
+- There are 2 components in the `SharedModule`
+  - `AppHeader`
+  - `AppFooter`
+- Note the `main`, `secondary` and `third` components and
+  - see that `MainComponent` only uses the `AppHeader`
+  - see that `SecondaryComponent` only uses the `AppFooter`
+  - see that `ThirdComponent`  uses both the `AppHeader` and `AppFooter`
+- Run `ng build ts --prod --common-chunk false --stats-json --named-chunks && webpack-bundle-analyzer dist/ts/stats.json`
+  - notice we are building the [ts project](./projects/ts/src/app/app.component.ts)
+  - see that **only** the used components end up in the lazy loading bundles, even though each imports the whole `SharedModule` using the shared module and its shared components
+  - the `--common-chunk false` prevents Angular build from bunching up all those in one bundle (remove it and see where they end up)
+  - the `--prod` makes Angular build use the tree shaker to remove the unused components from the modules (try the stats without it)
+
+## The es5 vs es2015
+
+How does the browser know which version to load?
+
+See the `index.html` resulting from the `ng build`. Notice how there is `type="module"` in the es2015 script. That will be ignored by older browsers because they only know about `type="application/javascript"` and not about `"module"`. So the older browsers will skip this one and load the others. On the other hand the newer browsers will skip the `script` tags that have the `nomodule` attribute.
 
 ## Links
 
