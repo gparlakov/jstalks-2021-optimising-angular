@@ -8,7 +8,7 @@ var chalk = require('chalk');
 /**
  *  add locales to this array to keep them after `npm install` (see https://github.com/moment/moment/tree/develop/src/locale for list of all supported locales)
  */
-var keep = ['ru.js'];
+var keep = ['bg.js'];
 
 var locales = fs.readdirSync(path.join(__dirname, '..', 'node_modules', 'moment', 'locale'));
 

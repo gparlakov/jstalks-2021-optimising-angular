@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { UserService, User } from './core';
 import { NotificationsService } from './core/services/notifications.service';
 import { PusherService } from './core/services/pusher.service';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -13,13 +13,13 @@ import { PusherService } from './core/services/pusher.service';
 })
 export class AppComponent implements OnInit {
   notificationsButtonVisible = true;
+  time = moment().format('H:mm:ss');
 
   constructor(
     private userService: UserService,
     private notifications: NotificationsService,
     private router: Router,
-    // for the bonus task add dependency -> private pusher: PusherService
-    // private pusher: PusherService
+    private pusher: PusherService
   ) {}
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
 
   onUserWantsNotificationsButtonClick() {
     // bonus - uncomment and add a test case
-    // this.listenForPushNotifications(this.userService.currentUser, this.pusher, this.notifications);
+    this.listenForPushNotifications(this.userService.currentUser, this.pusher, this.notifications);
     this.notificationsButtonVisible = false;
   }
 

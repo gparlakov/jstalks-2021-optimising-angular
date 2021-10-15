@@ -52,6 +52,24 @@
     <!-- Show this for logged in users -->
     <ul *appShowAuthed="true" class="nav navbar-nav pull-xs-right">
       <li class="nav-item">
+        <a class="nav-link" routerLink="/trackby">
+          Task TrackBy
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/onpush">
+          Task OnPush
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/debounce">
+          Task Debounce
+        </a>
+      </li>
+
+      <li class="nav-item">
         <a
           class="nav-link"
           routerLink="/"
@@ -88,6 +106,14 @@
           {{ currentUser.username }}
         </a>
       </li>
+      <button
+        class="btn btn-sm"
+        data-testid="push-notifications-button"
+        *ngIf="notificationsButtonVisible"
+        (click)="onUserWantsNotificationsButtonClick()"
+      >
+        I want notifications
+      </button>
     </ul>
   </div>
 </nav>
