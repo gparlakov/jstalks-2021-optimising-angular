@@ -12,3 +12,4 @@
   - a few tasks
   - a review after each task
     - volunteers to share their code and review would take the most out of this
+- setup breaks (60 - 10 - 50 - 10 - 40) - two breaks (use the band/app)
