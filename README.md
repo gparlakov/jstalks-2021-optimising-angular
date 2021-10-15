@@ -203,7 +203,7 @@
 
 Explore what Angular does automatically with the tree shaker
 
-- Note the `projects/ts` folder.
+- Note the `projects/ts` folder. (ts = tree shaker)
 - Note the `main`, `secondary` and `third` components and see that **only** the used components end up in the bundles, even though using the shared module and its shared components
 - Run `ng build ts --prod --common-chunk false --stats-json --named-chunks && webpack-bundle-analyzer dist/ts/stats.json` (notice we are building the [ts project](./projects/ts/src/app/app.component.ts))
 
