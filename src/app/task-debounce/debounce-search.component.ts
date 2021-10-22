@@ -9,7 +9,7 @@ import { DebounceArticleService } from './debounce-article.service';
   styleUrls: ['./debounce-search.component.css']
 })
 export class DebounceSearchComponent implements OnInit {
-  searchControl = new FormControl('cy');
+  searchControl = new FormControl('hack');
   articles = this.articlesService.articlesFromSearch$;
   articleSearchRequests$ = this.articlesService.articleSearchRequests$;
 
