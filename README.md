@@ -42,12 +42,12 @@
 
 2. What is happening?
 
-   - the initial number is caused by router events (see app.component ngOnInit and uncomment router events logging)
-   - the first of the component gets twice as many changes because it's getting used for the debugChangeDetection second cycle which gives us the infamous `expressionChangedAfterItHasBeenCheckedError` only in dev mode
-     - How to check if that's not the case in a production build? Run `ng serve --prod` for prod build serve, where we do not get the debugChangeDetection second cycle.
    - each event that triggers change detection triggers change detection for each of the article components, including:
      - typing in the input (each letter counts as an event)
      - interacting with the `[+]`, `[-]` buttons
+   - the initial number is caused by router events (see app.component ngOnInit and uncomment router events logging)
+      - the first of the component gets twice as many changes because it's getting used for the debugChangeDetection second cycle which gives us the infamous `expressionChangedAfterItHasBeenCheckedError` only in dev mode
+      - How to check if that's not the case in a production build? Run `ng serve --prod` for prod build serve, where we do not get the debugChangeDetection second cycle.
 
 3. How to fix?
 
@@ -56,34 +56,6 @@
    - any async pipe input counts too
 
 4. Adjust the change detection strategy of the `task-onpush/components/article.component`([link](src/app/task-onpush/components/article/article.component.ts)) to on-push.
-5. Try typing in the input again and notice if the change detection is triggered in the article
-6. Review (for help see [task-onpush/article.component.ts.help](files/src/app/task-onpush/article/article.component.ts.help))
-
-1. Notice the `/on-push` route accessible via the Task OnPush on the navigation.
-
-   - notice the number in front of the article preview
-   - it counts how many times each component has done its change detection ![missing image for onpush change detections](/files/onpush-change-detections.png)
-
-   - It allows searching of articles.
-   - It makes a request for every keystroke of the search input. That might be a slow and costly operation.
-     - _for demo purposes we've disabled the actual search operation and cached 100 articles locally_
-   - The number of requests are visualized next to the input field:
-     ![missing debounce network requests](/files/debounce-network-requests.png)
-
-   - the initial number is caused by router events (see app.component ngOnInit and uncomment router events logging)
-   - the first of the component gets twice as many changes because it's getting used for the debugChangeDetection second cycle which gives us the infamous `expressionChangedAfterItHasBeenCheckedError` only in dev mode
-     - run `ng serve --prod` to verify that's not the case in a production build where we do not get the debugChangeDetection second cycle
-   - each event that triggers change detection triggers change detection for each of the article components, including:
-     - typing in the input (each letter counts as an event)
-     - interacting with the `[+]`, `[-]` buttons
-
-3. How to fix?
-
-   - using change detections strategy OnPush
-   - each article component will only run change detection if its input changes
-   - any async pipe input counts too
-
-4. Adjust the change detection strategy of the `admin-article.component` to on-push.
 5. Try typing in the input again and notice if the change detection is triggered in the article
 6. Review (for help see [task-onpush/article.component.ts.help](files/src/app/task-onpush/article/article.component.ts.help))
 
