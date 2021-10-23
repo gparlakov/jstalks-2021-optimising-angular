@@ -90,7 +90,7 @@
 
 ### Bundle size
 
-1. [SETUP step] Run `npm i -g webpack-bundle-analyzer` see [help](webpack-bundle-analyzer)
+1. [SETUP step] Run `npm i -g webpack-bundle-analyzer` see [help](https://github.com/webpack-contrib/webpack-bundle-analyzer#install)
 2. Run `ng build --prod --stats-json --named-chunks`
 3. Run `webpack-bundle-analyzer dist/stats.json` (keep tab open for comparison)
 
