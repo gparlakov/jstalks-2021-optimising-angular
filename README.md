@@ -140,18 +140,17 @@
    - replace `getPusherInstance` method in pusher service with:
 
      ```ts
-       private getPusherInstance() {
-          if (this.instance == null) {
+      private getPusherInstance() {
+          if (this.instance != null) {
             return Promise.resolve(this.instance);
           }
           return import('pusher-js').then((p: any) => {
-             // we know this is imported as { default: PusherStatic } contrary to what our import types this as
-             const Pusher: Pusher.PusherStatic = p.default;
-             this.instance = new Pusher(this.key, this.config);
-           }
-           return this.instance;
-         });
-       }
+            // we know this is imported as { default: PusherStatic } contrary to what our import types this as
+            const Pusher: Pusher.PusherStatic = p.default;
+            this.instance = new Pusher(this.key, this.config);
+            return this.instance;
+          });
+      }
      ```
 
 4. Now run the `ng build --prod --stats-json --named-chunks && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
