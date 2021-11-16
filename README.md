@@ -9,9 +9,10 @@
 
 ## What influences the app performance?
 
-- On the Component level (low performance). That's usually caused by unnecessary Change Detection cycles or too many of them.
+- On the Component level (low performance). That's usually caused by unnecessary Change Detection cycles or too many of them. 
+  - ![change detect cycles image](cd-cycle.gif)
+  - [Change detection visalization app in StackBlitz](https://stackblitz.com/edit/change-detection-visualization)
 - On the Module level (slow loading)
-
 ## Low performance (components)
 
 ### Performance - trackBy (ngFor)
@@ -31,6 +32,8 @@
 6. Add a `;trackBy:articleSlug` to the end of the `*ngFor` declaration. That will instruct Angular to take the returned value and check that for equality with the previous one instead of just comparing object references.
 7. Notice how the controls no longer cause the redrawing of the whole list and rather make the existing components change.
 8. Review (for help see [component](files/src/app/task-trackby/article-list/articles-list.component.ts.help) and [template](files/src/app/task-trackby/article-list/articles-list.component.html.help))
+
+**Performance hit - redundant component instances**
 
 ### Performance - OnPush
 
@@ -59,6 +62,7 @@
 5. Try typing in the input again and notice if the change detection is triggered in the article
 6. Review (for help see [task-onpush/article.component.ts.help](files/src/app/task-onpush/article/article.component.ts.help))
 
+**Performance hit - too many change detections**
 ### Performance - debounce
 
 1. Notice the `/debounce` route accessible via the Task Debounce nav link.
@@ -77,12 +81,15 @@
 5. Notice that the service waits for you to finish writing before sending the request
 6. Review (for help see [component](files/src/app/task-debounce/debounce-search.component.ts.help) or [service](files/src/app/task-debounce/debounce-article.service.ts.help))
 
+**Performance hit - too many change detections**
+
 ### Performance - window:mouseout
 
 1. Visit the `/listener` app route.
 2. Try interacting with the articles and notice the app "freezes". There is an indicator which spins while the app renders smoothly and stops if the main loop is blocked
 3. Use the Angular tools or Browser perf tools to notice where the main thread spends its time
 
+**Performance hit - too many change detections**
 ## Slow loading
 
 - long running operations
