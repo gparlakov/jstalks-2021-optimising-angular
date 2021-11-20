@@ -5,6 +5,7 @@
 - **node 12 required**
 - clone
 - `npm i` (or `yarn` as you prefer)
+  `npm ci` if you encounter errors
 - `npm start` (browser -> localhost:4200)
 
 ## What influences the app performance?
