@@ -1,17 +1,17 @@
 /// <reference types="pusher-js" />
 
 import { Observable } from 'rxjs';
-// import { Config, Pusher} from 'pusher-js';
+import Pusher, { Channel, Options } from 'pusher-js';
 
 export class PusherService {
-  private instance: Pusher.Pusher;
+  private instance: Pusher;
 
-  constructor(private key: string, /**private config: Pusher.Config*/) {}
+  constructor(private key: string, private config: Options) {}
 
   listenForNotifications(email: string): Observable<string> {
     // create a new observable and have the receiving party handle subscribe and use logic and then unsubscribe
     return new Observable(s => {
-      let userChannel: Pusher.Channel;
+      let userChannel: Channel;
 
       this.getPusherInstance().then(i => {
         userChannel = i.subscribe(email);
@@ -29,7 +29,7 @@ export class PusherService {
 
   private getPusherInstance() {
     if (this.instance == null) {
-      // this.instance = new Pusher(this.key, this.config);
+      this.instance = new Pusher(this.key, this.config);
     }
     return Promise.resolve(this.instance);
   }
