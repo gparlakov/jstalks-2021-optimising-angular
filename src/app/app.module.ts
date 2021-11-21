@@ -27,7 +27,7 @@ import { MomentModule } from 'ngx-moment';
       }
     }),
     // pusher.com account required
-    PusherModule.forRoot(/** add the key see agenda doc */ null, {
+    PusherModule.forRoot(/** Add the key. See readme.md file header `### Pusher config` */ null, {
       cluster: 'eu',
       forceTLS: true
     }),

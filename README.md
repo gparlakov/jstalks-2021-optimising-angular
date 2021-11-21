@@ -164,6 +164,7 @@
 4. Now run the `ng build --prod --stats-json --named-chunks && webpack-bundle-analyzer dist/stats.json` and notice now Pusher has its own bundle
 5. Review (see [help](files/src/app/core/services/pusher.service.ts.help))
 
+### Pusher config
 [Bonus] How to actually use pusher
 
 - sign in with the Conduit app - your user email will be the "channel"
